@@ -1,6 +1,6 @@
 with import <nixpkgs> {};
 
-pkgsi686Linux.stdenv.mkDerivation {
+pkgsi686Linux.stdenvNoCC.mkDerivation {
   name="i686 cross compile environment";
 
   buildInputs = [
