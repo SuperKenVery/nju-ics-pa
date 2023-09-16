@@ -1,5 +1,4 @@
 #include "cpu/cpu.h"
-#include <readline/rltypedefs.h>
 
 // Add: DEST <- DEST + SRC
 // Flags: OF, SF, ZF, AF, CF, PF
