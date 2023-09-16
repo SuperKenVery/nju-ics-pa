@@ -5,6 +5,7 @@ let
       # crossSystem="i686-linux";
       system="i686-linux";
     };
+    newpkgs = import <nixpkgs> {};
 
     myPkg = pkgs.gcc-unwrapped;
 in
@@ -14,5 +15,6 @@ in
       gcc
       readline
       SDL
+      newpkgs.bear
     ];
   }
