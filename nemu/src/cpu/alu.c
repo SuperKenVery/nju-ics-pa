@@ -8,6 +8,7 @@ bool positive(i32 x, usize size){
 
 i32 cut(i32 x, usize size){
 	u32 mask=(1<<size)-1;
+	printf("Mask for %u bit is %p\n",size,(void*)mask);
 	return x&mask;	
 }
 
