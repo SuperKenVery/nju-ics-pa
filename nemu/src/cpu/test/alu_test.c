@@ -161,7 +161,7 @@ void alu_test_adc() {
 	for(i = 0 ; i < 1000000 ; i++) {
 		a = rand();
 		b = rand();
-		printf("a=%u, b=%u\n",a,b);
+		printf("a=%p, b=%p\n",(void*)a,(void*)b);
 		{internel_alu_test_CPSZO_stc(alu_adc, 32, "adcl %%ecx, %%eax;")}
 		{internel_alu_test_CPSZO_stc(alu_adc, 16, "adcw %%cx, %%ax;")}
 		{internel_alu_test_CPSZO_stc(alu_adc, 8 , "adcb %%cl, %%al;")}
