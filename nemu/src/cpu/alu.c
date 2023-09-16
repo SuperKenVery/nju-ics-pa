@@ -106,7 +106,13 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_adc(src, dest, data_size);
 #else
 	u32 a=alu_add(src,cpu.eflags.CF,data_size);
+	// OF, CF should be OR'ed
+	u32 OF_backup=cpu.eflags.OF;
+	u32 CF_backup=cpu.eflags.CF;
 	u32 b=alu_add(a,dest,data_size);
+
+	cpu.eflags.OF|=OF_backup;
+	cpu.eflags.CF=CF_backup;
 	printf("ADC: src=%p, dest=%p, a=%p, b=%p, cf=%u\n",(void*)src,(void*)dest,(void*)a,(void*)b,cpu.eflags.CF);
 	return b;
 #endif
