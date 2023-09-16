@@ -46,6 +46,7 @@ void set_ZF(i32 result, usize size){
 
 void set_CF_add(u32 a, u32 b, usize size){
 	u32 r=cut(a+b,size);
+	printf("Calculating CF: a=%u, b=%u, result=%u, size=%u\n",a,b,r,size);
 	if(r<a){
 		cpu.eflags.CF=1;
 	}else{
