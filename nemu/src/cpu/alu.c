@@ -30,6 +30,21 @@ void set_OF_add(i32 a, i32 b, usize size){
 	}
 }
 
+void set_OF_sub(i32 a, i32 b, usize size){
+	a=cut(a,size);
+	b=cut(b,size);
+	i32 r=a-b;
+
+	if(
+		(positive(a,size)!=positive(b,size)) &&
+		(positive(a,size)!=positive(r,size))
+	){
+		cpu.eflags.OF=1;
+	}else{
+		cpu.eflags.OF=0;
+	}
+}
+
 void set_SF(i32 result, usize size){
 	if(positive(result, size)){
 		cpu.eflags.SF=0;
@@ -55,6 +70,14 @@ void set_CF_add(u32 a, u32 b, usize size){
 	b=cut(b,size);
 	u32 r=cut(a+b,size);
 	if(r<a){
+		cpu.eflags.CF=1;
+	}else{
+		cpu.eflags.CF=0;
+	}
+}
+
+void set_CF_sub(u32 a, u32 b, usize size){
+	if(a<b){
 		cpu.eflags.CF=1;
 	}else{
 		cpu.eflags.CF=0;
@@ -125,15 +148,24 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 #endif
 }
 
+// DEST <- DEST - SRC
+// OF, SF, ZF, AF, PF, CF
 uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 {
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sub(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	src=cut(src,data_size);
+	dest=cut(dest,data_size);
+	u32 result=dest-src;
+
+	set_OF_sub(dest, src, data_size);
+	set_SF(result, data_size);
+	set_ZF(result, data_size);
+	set_PF(result);
+	set_CF_sub(dest, src, data_size);
+	
+	return result;
 #endif
 }
 
