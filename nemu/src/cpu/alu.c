@@ -105,8 +105,8 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_adc(src, dest, data_size);
 #else
-	u32 a=alu_add(src,dest,data_size);
-	u32 b=alu_add(a,cpu.eflags.CF,data_size);
+	u32 a=alu_add(src,cpu.eflags.CF,data_size);
+	u32 b=alu_add(a,dest,data_size);
 	printf("ADC: src=%p, dest=%p, a=%p, b=%p, cf=%u\n",(void*)src,(void*)dest,(void*)a,(void*)b,cpu.eflags.CF);
 	return b;
 #endif
