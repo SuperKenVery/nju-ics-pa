@@ -30,14 +30,13 @@ void set_OF_add(i32 a, i32 b, usize size){
 	}
 }
 
-void set_OF_sub(i32 a, i32 b, usize size){
+void set_OF_sub(i32 a, i32 b, i32 result, usize size){
 	a=cut(a,size);
 	b=cut(b,size);
-	i32 r=a-b;
 
 	if(
 		(positive(a,size)!=positive(b,size)) &&
-		(positive(a,size)!=positive(r,size))
+		(positive(a,size)!=positive(result,size))
 	){
 		cpu.eflags.OF=1;
 	}else{
@@ -157,9 +156,9 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 #else
 	src=cut(src,data_size);
 	dest=cut(dest,data_size);
-	u32 result=alu_add(dest,(~src)+1,data_size);
+	u32 result=alu_add(dest,-src,data_size);
 
-	set_OF_sub(dest, src, data_size);
+	set_OF_sub(dest, src, result, data_size);
 	set_SF(result, data_size);
 	set_ZF(result, data_size);
 	set_PF(result);
