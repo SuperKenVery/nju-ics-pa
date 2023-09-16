@@ -107,7 +107,8 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 #else
 	u32 a=alu_add(src,dest,data_size);
 	u32 b=alu_add(a,1,data_size);
-	return b;
+	// return b;
+	return cut(a+b+1,data_size);
 #endif
 }
 
