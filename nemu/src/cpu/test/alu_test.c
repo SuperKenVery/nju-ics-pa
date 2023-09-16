@@ -43,7 +43,7 @@ typedef union {
 	test_eflags.val = res_eflags; \
 	res_asm = res_asm & (0xFFFFFFFF >> (32 - dataSize)); \
 	fflush(stdout); \
-  if(res!=res_asm) printf("res=%u, res_asm=%u\n",res,res_asm); \
+  if(res!=res_asm || cpu.eflags.OF!=test_eflags.OF) printf("res=%u, res_asm=%u\n",res,res_asm); \
 	assert(res == res_asm); \
 	assert(cpu.eflags.CF == test_eflags.CF); \
 	assert(cpu.eflags.PF == test_eflags.PF); \
