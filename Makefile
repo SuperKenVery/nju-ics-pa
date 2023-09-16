@@ -37,26 +37,26 @@ clean:
 
 test_pa-1: nemu 
 	$(call git_commit, "test_pa-1", $(TIME_MAKE))
-	pwndbg ./nemu/nemu --test-reg
-	pwndbg ./nemu/nemu --test-alu add
-	pwndbg ./nemu/nemu --test-alu adc
-	pwndbg ./nemu/nemu --test-alu sub
-	pwndbg ./nemu/nemu --test-alu sbb
-	pwndbg ./nemu/nemu --test-alu and
-	pwndbg ./nemu/nemu --test-alu or
-	pwndbg ./nemu/nemu --test-alu xor
-	pwndbg ./nemu/nemu --test-alu shl
-	pwndbg ./nemu/nemu --test-alu shr
-	pwndbg ./nemu/nemu --test-alu sal
-	pwndbg ./nemu/nemu --test-alu sar
-	pwndbg ./nemu/nemu --test-alu mul
-	pwndbg ./nemu/nemu --test-alu div
-	pwndbg ./nemu/nemu --test-alu imul
-	pwndbg ./nemu/nemu --test-alu idiv
-	pwndbg ./nemu/nemu --test-fpu add
-	pwndbg ./nemu/nemu --test-fpu sub
-	pwndbg ./nemu/nemu --test-fpu mul
-	pwndbg ./nemu/nemu --test-fpu div
+	pwndbg --args ./nemu/nemu --test-reg
+	pwndbg --args ./nemu/nemu --test-alu add
+	pwndbg --args ./nemu/nemu --test-alu adc
+	pwndbg --args ./nemu/nemu --test-alu sub
+	pwndbg --args ./nemu/nemu --test-alu sbb
+	pwndbg --args ./nemu/nemu --test-alu and
+	pwndbg --args ./nemu/nemu --test-alu or
+	pwndbg --args ./nemu/nemu --test-alu xor
+	pwndbg --args ./nemu/nemu --test-alu shl
+	pwndbg --args ./nemu/nemu --test-alu shr
+	pwndbg --args ./nemu/nemu --test-alu sal
+	pwndbg --args ./nemu/nemu --test-alu sar
+	pwndbg --args ./nemu/nemu --test-alu mul
+	pwndbg --args ./nemu/nemu --test-alu div
+	pwndbg --args ./nemu/nemu --test-alu imul
+	pwndbg --args ./nemu/nemu --test-alu idiv
+	pwndbg --args ./nemu/nemu --test-fpu add
+	pwndbg --args ./nemu/nemu --test-fpu sub
+	pwndbg --args ./nemu/nemu --test-fpu mul
+	pwndbg --args ./nemu/nemu --test-fpu div
 	
 test_pa-2-1: nemu 
 	$(call git_commit, "test_pa-2-1", $(TIME_MAKE))
