@@ -6,7 +6,6 @@ let
       system="i686-linux";
     };
     newpkgs = import <nixpkgs> {
-      system="i686-linux";
     };
 
     myPkg = pkgs.gcc-unwrapped;
@@ -18,6 +17,6 @@ in
       readline
       SDL
       bear
-      # newpkgs.clang-tools
+      newpkgs.pwndbg
     ];
   }
