@@ -132,7 +132,7 @@ void alu_test_adc() {
 	{
 		a=0x93;
 		b=0x7f;
-		{internel_alu_test_CPSZO_stc(alu_adc,8,"adcb %%cl, %%al")}
+		{internel_alu_test_CPSZO_stc(alu_adc,8,"adcb %%cl, %%al;")}
 	}
 	for(i = 0 ; i < n ; i++) {
 		for(j = 0 ; j < n ; j++) {
