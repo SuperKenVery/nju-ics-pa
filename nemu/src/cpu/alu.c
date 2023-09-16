@@ -7,8 +7,11 @@ bool positive(i32 x, usize size){
 }
 
 i32 cut(i32 x, usize size){
-	u32 mask=(((u32)1)<<size)-1;
-	printf("Mask for %u bit is %p, before -1 is %p\n",size,(void*)mask,(void*)(1<<size));
+	// Shift bits is mod by 31
+	// So take 32bit as special case
+	if(size==32) return x;
+	
+	u32 mask=(1<<size)-1;
 	return x&mask;	
 }
 
