@@ -1,14 +1,89 @@
 #include "cpu/cpu.h"
+#include <readline/rltypedefs.h>
+
+// Add: DEST <- DEST + SRC
+// Flags: OF, SF, ZF, AF, CF, PF
+
+bool positive(i32 x, usize size){
+	u8 sign_bit=x>>(size-1);
+	return !sign_bit;
+}
+
+i32 cut(i32 x, usize size){
+	u32 mask=(1<<size)-1;
+	return x&mask;	
+}
+
+void set_OF_add(i32 a, i32 b, usize size){
+	i32 r=a+b;
+	
+	if(
+		(positive(a,size)==positive(b, size)) &&
+		(positive(r, size)!=positive(a,size))
+	){
+		cpu.eflags.OF=1;
+	}else{
+		cpu.eflags.OF=0;
+	}
+}
+
+void set_SF(i32 result, usize size){
+	if(positive(result, size)){
+		cpu.eflags.SF=0;
+	}else{
+		cpu.eflags.SF=1;
+	}
+}
+
+void set_ZF(i32 result, usize size){
+	result=cut(result,size);
+	if(result==0){
+		cpu.eflags.ZF=1;
+	}else{
+		cpu.eflags.ZF=0;
+	}
+}
+
+// AF is not required for the pa
+// void set_AF()
+
+void set_CF_add(u32 a, u32 b, usize size){
+	u32 r=cut(a+b,size);
+	if(r<a){
+		cpu.eflags.CF=1;
+	}else{
+		cpu.eflags.CF=0;
+	}
+}
+
+void set_PF(u32 x){
+	u8 count=0;
+	for(int i=0;i<8;i++){
+		u8 bit=x&1;
+		if(bit) count++;
+		x=x>>1;
+	}
+
+	if(count%2==1){
+		cpu.eflags.PF=1;
+	}else{
+		cpu.eflags.PF=0;
+	}
+}
 
 uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 {
 #ifdef NEMU_REF_ALU
 	return __ref_alu_add(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	u32 result=src+dest;
+	set_OF_add(src,dest,data_size);
+	set_SF(result,data_size);
+	set_ZF(result,data_size);
+	set_CF_add(src,dest,data_size);
+	set_PF(result);
+	
+	return result;
 #endif
 }
 
