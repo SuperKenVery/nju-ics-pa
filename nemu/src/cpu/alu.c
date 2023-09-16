@@ -157,7 +157,7 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 #else
 	src=cut(src,data_size);
 	dest=cut(dest,data_size);
-	u32 result=alu_add(dest,-src,data_size);
+	u32 result=alu_add(dest,(~src)+1,data_size);
 
 	set_OF_sub(dest, src, data_size);
 	set_SF(result, data_size);
