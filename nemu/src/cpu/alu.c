@@ -52,6 +52,7 @@ void set_CF_add(u32 a, u32 b, usize size){
 	}else{
 		cpu.eflags.CF=0;
 	}
+	printf("CF is %u\n",cpu.eflags.CF);
 }
 
 void set_PF(u32 x){
