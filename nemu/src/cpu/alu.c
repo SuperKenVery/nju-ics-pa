@@ -105,8 +105,7 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_adc(src, dest, data_size);
 #else
-	u32 cf=cpu.eflags.CF & 1;
-	u32 a=alu_add(src,cf,data_size);
+	u32 a=alu_add(src,cpu.eflags.CF,data_size);
 	// OF, CF should be OR'ed
 	u32 OF_backup=cpu.eflags.OF;
 	u32 CF_backup=cpu.eflags.CF;
