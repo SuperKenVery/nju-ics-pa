@@ -66,8 +66,10 @@ void set_PF(u32 x){
 	}
 
 	if(count%2==1){
+		// Odd
 		cpu.eflags.PF=0;
 	}else{
+		// Even
 		cpu.eflags.PF=1;
 	}
 }
