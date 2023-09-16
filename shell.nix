@@ -10,7 +10,9 @@ let
 in
   pkgs.stdenv.mkDerivation {
     name="gcc8";
-    buildInputs=[
-      pkgs.gcc
+    buildInputs=with pkgs; [
+      gcc
+      readline
+      SDL
     ];
   }
