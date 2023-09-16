@@ -1,7 +1,5 @@
 #include "cpu/cpu.h"
 
-// Add: DEST <- DEST + SRC
-// Flags: OF, SF, ZF, AF, CF, PF
 
 bool positive(i32 x, usize size){
 	u8 sign_bit=x>>(size-1);
@@ -70,6 +68,11 @@ void set_PF(u32 x){
 	}
 }
 
+
+// ====== ALU Functions ======
+
+// Add: DEST <- DEST + SRC
+// Flags: OF, SF, ZF, AF, CF, PF
 uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 {
 #ifdef NEMU_REF_ALU
@@ -91,10 +94,9 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_adc(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	u32 a=alu_add(src,dest,data_size);
+	u32 b=alu_add(a,1,data_size);
+	return b;
 #endif
 }
 
