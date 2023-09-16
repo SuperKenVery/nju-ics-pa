@@ -49,6 +49,8 @@ void set_ZF(i32 result, usize size){
 // void set_AF()
 
 void set_CF_add(u32 a, u32 b, usize size){
+	a=cut(a,size);
+	b=cut(b,size);
 	u32 r=cut(a+b,size);
 	if(r<a){
 		cpu.eflags.CF=1;
