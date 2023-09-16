@@ -16,7 +16,9 @@ i32 cut(i32 x, usize size){
 }
 
 void set_OF_add(i32 a, i32 b, usize size){
-	i32 r=a+b;
+	a=cut(a,size);
+	b=cut(b,size);
+	i32 r=cut(a+b,size);
 	
 	if(
 		(positive(a,size)==positive(b, size)) &&
