@@ -50,13 +50,11 @@ void set_ZF(i32 result, usize size){
 
 void set_CF_add(u32 a, u32 b, usize size){
 	u32 r=cut(a+b,size);
-	printf("Calculating CF: a=%p, b=%p, result=%p, size=%u\n",(void*)a,(void*)b,(void*)r,size);
 	if(r<a){
 		cpu.eflags.CF=1;
 	}else{
 		cpu.eflags.CF=0;
 	}
-	printf("CF is %u\n",cpu.eflags.CF);
 }
 
 void set_PF(u32 x){
@@ -68,9 +66,9 @@ void set_PF(u32 x){
 	}
 
 	if(count%2==1){
-		cpu.eflags.PF=1;
-	}else{
 		cpu.eflags.PF=0;
+	}else{
+		cpu.eflags.PF=1;
 	}
 }
 
