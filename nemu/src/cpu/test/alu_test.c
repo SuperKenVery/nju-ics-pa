@@ -129,6 +129,11 @@ void alu_test_adc() {
 	int input[] = {0x10000000,-3, -2, -1, 0, 1, 2};
 	int n = sizeof(input) / sizeof(int);
 	int i, j;
+	{
+		a=0x93;
+		b=0x7f;
+		{internel_alu_test_CPSZO_stc(alu_adc,8,"adcb %%cl, %%al")}
+	}
 	for(i = 0 ; i < n ; i++) {
 		for(j = 0 ; j < n ; j++) {
 			a = input[i];
