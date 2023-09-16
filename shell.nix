@@ -15,6 +15,6 @@ in
       gcc
       readline
       SDL
-      newpkgs.bear
+      bear
     ];
   }
