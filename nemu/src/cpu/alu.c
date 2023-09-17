@@ -390,10 +390,10 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 	while(count!=0){
 		cpu.eflags.CF=result&1;
 		result=result>>1;
-		result=cut(result,data_size);
 		printf("result became %d\n",result);
 		count=count-1;
 	}
+	result=cut(result,data_size);
 
 	if(src==1){
 		cpu.eflags.OF=0;
