@@ -1,3 +1,4 @@
+#include "cpu/alu.h"
 #include "cpu/cpu.h"
 
 
@@ -384,7 +385,7 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 	dest=cut(dest,data_size);
 	printf("====Entering alu_sar, dest=%p, src=%p\n",(void*)dest,(void*)src);
 	u32 count=src;
-	i32 result=dest;
+	i32 result=sign_ext(dest, data_size);
 	while(count!=0){
 		cpu.eflags.CF=result&1;
 		result=result/2;
