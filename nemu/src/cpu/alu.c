@@ -157,7 +157,6 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 	src=cut(src,data_size);
 	dest=cut(dest,data_size);
 	u32 result=alu_add(dest,-src,data_size);
-	// u32 result=dest-src;
 
 
 	set_OF_sub(dest, src, result, data_size);
@@ -177,8 +176,28 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
 #else
 	src=cut(src,data_size);
 	dest=cut(dest,data_size);
-	// u32 result=
-	return 0;
+	u8 CF_backup=cpu.eflags.CF;
+	u32 a=alu_sub(src,dest,data_size);
+	u32 result=alu_sub(CF_backup,a,data_size);
+
+	set_OF_sub(dest, src, result, data_size);
+	set_SF(result, data_size);
+	set_ZF(result, data_size);
+	set_PF(result);
+
+	// CF
+	if(CF_backup==0){
+		cpu.eflags.CF=(dest<src)?1:0;
+	}else{
+		// src+CF_backup may overflow
+		if(src>dest || (src+CF_backup)>dest){
+			cpu.eflags.CF=1;
+		}else{
+			cpu.eflags.CF=0;
+		}
+	}
+	
+	return result;
 #endif
 }
 
