@@ -386,11 +386,12 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 	printf("====Entering alu_sar, dest=%p, src=%p\n",(void*)dest,(void*)src);
 	u32 count=src;
 	i32 result=sign_ext(dest, data_size);
+	printf("Result is %d\n",result);
 	while(count!=0){
 		cpu.eflags.CF=result&1;
 		result=result/2;
 		result=cut(result,data_size);
-		printf("result became %p\n",(void*)result);
+		printf("result became %d\n",result);
 		count=count-1;
 	}
 
