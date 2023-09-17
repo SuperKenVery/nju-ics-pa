@@ -215,7 +215,7 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 	if(data_size!=32)
 		result=cut(src*dest,data_size*2);
 	else
-		result=src*dest;
+		result=((u64)src)*dest;
 	u8 ah; u16 dx; u32 edx;
 
 	switch(data_size){
