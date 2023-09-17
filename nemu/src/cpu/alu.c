@@ -156,7 +156,9 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 #else
 	src=cut(src,data_size);
 	dest=cut(dest,data_size);
-	u32 result=alu_add(dest,-src,data_size);
+	// u32 result=alu_add(dest,-src,data_size);
+	u32 result=dest-src;
+
 
 	set_OF_sub(dest, src, result, data_size);
 	set_SF(result, data_size);
@@ -173,9 +175,9 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sbb(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
+	src=cut(src,data_size);
+	dest=cut(dest,data_size);
+	// u32 result=
 	return 0;
 #endif
 }
