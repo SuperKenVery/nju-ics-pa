@@ -331,6 +331,7 @@ uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
 	while(count!=0){
 		cpu.eflags.CF=(dest>>(data_size-1))&1;
 		dest=dest*2;
+		dest=cut(dest,data_size);
 		count=count-1;
 	}
 
