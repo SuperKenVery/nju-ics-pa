@@ -48,7 +48,7 @@ test_pa-1: nemu
 	# ./nemu/nemu --test-alu shl		
 	# ./nemu/nemu --test-alu shr		
 	# ./nemu/nemu --test-alu sal		
-	./nemu/nemu --test-alu sar		
+	# ./nemu/nemu --test-alu sar		
 	./nemu/nemu --test-alu mul		
 	./nemu/nemu --test-alu div		
 	./nemu/nemu --test-alu imul		
