@@ -353,10 +353,25 @@ uint32_t alu_shr(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_shr(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	src=cut(src,data_size);
+	dest=cut(dest,data_size);
+	u32 count=src;
+	while(count!=0){
+		cpu.eflags.CF=dest&1;
+		dest=dest/2; // Unsigned divide
+		dest=cut(dest,data_size);
+		count=count-1;
+	}
+
+	if(src==1){
+		cpu.eflags.OF=(dest>>(data_size-1))&1;
+	} // else OF is undefined
+
+	set_ZF(dest, data_size);
+	set_PF(dest);
+	set_SF(dest, data_size);
+	
+	return dest;
 #endif
 }
 
@@ -365,9 +380,24 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sar(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
+	src=cut(src,data_size);
+	dest=cut(dest,data_size);
+	u32 count=src;
+	i32 result=dest;
+	while(count!=0){
+		cpu.eflags.CF=result&1;
+		result=result/2;
+		result=cut(result,data_size);
+		count=count-1;
+	}
+
+	if(src==1){
+		cpu.eflags.OF=0;
+	} // else OF is undefined
+	set_ZF(result, data_size);
+	set_PF(result);
+	set_SF(result, data_size);
+	
 	return 0;
 #endif
 }
@@ -377,9 +407,6 @@ uint32_t alu_sal(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sal(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	return alu_shl(src,dest,data_size);
 #endif
 }
