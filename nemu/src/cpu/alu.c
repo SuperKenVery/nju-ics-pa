@@ -389,7 +389,7 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 	printf("Result is %d\n",result);
 	while(count!=0){
 		cpu.eflags.CF=result&1;
-		result=result/2;
+		result=result>>1;
 		result=cut(result,data_size);
 		printf("result became %d\n",result);
 		count=count-1;
