@@ -1,4 +1,5 @@
 #include "cpu/alu.h"
+#include "cpu-ref/instr_ref.h"
 #include "cpu/cpu.h"
 
 
@@ -8,6 +9,7 @@ bool positive(i32 x, usize size){
 }
 
 i32 cut(i32 x, usize size){
+	assert(size<=32);
 	// Shift bits is mod by 31
 	// So take 32bit as special case
 	if(size==32) return x;
@@ -192,27 +194,94 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
 #endif
 }
 
+#define MUL_SET_FLAGS(reg) \
+	{ 									 \
+		if(reg==0){ 			 \
+			cpu.eflags.CF=0; \
+			cpu.eflags.OF=0; \
+		}else {						 \
+			cpu.eflags.CF=1; \
+			cpu.eflags.OF=1; \
+		}									 \
+	}
 uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 {
 #ifdef NEMU_REF_ALU
 	return __ref_alu_mul(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	src=cut(src,data_size);
+	dest=cut(dest,data_size);
+	u64 result=cut(src*dest,data_size*2);
+	u8 ah; u16 dx; u32 edx;
+
+	switch(data_size){
+		case 8:
+			ah=cut(result>>8,8);
+			MUL_SET_FLAGS(ah)
+			break;
+		case 16:
+			dx=cut(result>>16,16);
+			MUL_SET_FLAGS(dx)
+			break;
+		case 32:
+			edx=cut(result>>32,32);
+			MUL_SET_FLAGS(edx)
+			break;
+		default:
+			// Let the assert fail
+			// It will print file and line number
+			assert(data_size==8||data_size==16||data_size==32);
+	}
+
+	// SF, ZF, AF, PF, CF undefined
+	
+	return result;
 #endif
 }
 
+inline void set_CFOF(){
+	cpu.eflags.CF=1;
+	cpu.eflags.OF=1;
+}
+inline void clear_CFOF(){
+	cpu.eflags.CF=0;
+	cpu.eflags.OF=0;
+}
 int64_t alu_imul(int32_t src, int32_t dest, size_t data_size)
 {
 #ifdef NEMU_REF_ALU
 	return __ref_alu_imul(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	src=cut(src,data_size);
+	dest=cut(dest,data_size);
+	i64 result=src*dest;
+	i8 r8; i16 r16; i32 r32; i64 r64;
+	switch(data_size){
+		case 8:
+			r8=cut(result,8);
+			r16=cut(result,16);
+			if(r16==(i16)r8) clear_CFOF();
+			else set_CFOF();
+			break;
+		case 16:
+			r16=cut(result,16);
+			r32=cut(result,32);
+			if(r32==(i32)r16) clear_CFOF();
+			else set_CFOF();
+			break;
+		case 32:
+			r32=cut(result,32);
+			r64=result;
+			if(r64==(i64)r32) clear_CFOF();
+			else set_CFOF();
+			break;
+		default:
+			assert(data_size==8||data_size==16||data_size==32);
+	}
+
+	// SF, ZF, AF, PF undefined
+	
+	return result;
 #endif
 }
 
@@ -222,10 +291,13 @@ uint32_t alu_div(uint64_t src, uint64_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_div(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	src=cut(src,data_size);
+	dest=cut(dest,data_size);
+	assert(src!=0);
+	
+	u32 res=dest/src;
+	res=cut(res,data_size);
+	return res;
 #endif
 }
 
@@ -235,10 +307,13 @@ int32_t alu_idiv(int64_t src, int64_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_idiv(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	src=cut(src,data_size);
+	dest=cut(dest,data_size);
+	assert(src!=0);
+	
+	i32 res=dest/src;
+	res=cut(res,data_size);
+	return res;
 #endif
 }
 
@@ -247,10 +322,13 @@ uint32_t alu_mod(uint64_t src, uint64_t dest)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_mod(src, dest);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	src=cut(src,data_size);
+	dest=cut(dest,data_size);
+	assert(src!=0);
+
+	u32 res=dest%src;
+	res=cut(res,data_size);
+	return res;
 #endif
 }
 
@@ -259,10 +337,13 @@ int32_t alu_imod(int64_t src, int64_t dest)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_imod(src, dest);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	src=cut(src,data_size);
+	dest=cut(dest,data_size);
+	assert(src!=0);
+
+	i32 res=dest%src;
+	res=cut(res,data_size);
+	return res;
 #endif
 }
 
