@@ -37,26 +37,26 @@ clean:
 
 test_pa-1: nemu 
 	$(call git_commit, "test_pa-1", $(TIME_MAKE))
-	./nemu/nemu --test-reg
-	./nemu/nemu --test-alu add
-	./nemu/nemu --test-alu adc
-	./nemu/nemu --test-alu sub
-	./nemu/nemu --test-alu sbb
-	./nemu/nemu --test-alu and
-	./nemu/nemu --test-alu or
-	./nemu/nemu --test-alu xor
-	./nemu/nemu --test-alu shl
-	./nemu/nemu --test-alu shr
-	./nemu/nemu --test-alu sal
-	./nemu/nemu --test-alu sar
-	./nemu/nemu --test-alu mul
-	./nemu/nemu --test-alu div
-	./nemu/nemu --test-alu imul
-	./nemu/nemu --test-alu idiv
-	./nemu/nemu --test-fpu add
-	./nemu/nemu --test-fpu sub
-	./nemu/nemu --test-fpu mul
-	./nemu/nemu --test-fpu div
+	./nemu/nemu --test-reg			&
+	./nemu/nemu --test-alu add		&
+	./nemu/nemu --test-alu adc		&
+	./nemu/nemu --test-alu sub		&
+	./nemu/nemu --test-alu sbb		&
+	./nemu/nemu --test-alu and		&
+	./nemu/nemu --test-alu or		&
+	./nemu/nemu --test-alu xor		&
+	./nemu/nemu --test-alu shl		&
+	./nemu/nemu --test-alu shr		&
+	./nemu/nemu --test-alu sal		&
+	./nemu/nemu --test-alu sar		&
+	./nemu/nemu --test-alu mul		&
+	./nemu/nemu --test-alu div		&
+	./nemu/nemu --test-alu imul		&
+	./nemu/nemu --test-alu idiv		&
+	./nemu/nemu --test-fpu add		&
+	./nemu/nemu --test-fpu sub		&
+	./nemu/nemu --test-fpu mul		&
+	./nemu/nemu --test-fpu div		&
 	
 test_pa-2-1: nemu 
 	$(call git_commit, "test_pa-2-1", $(TIME_MAKE))
