@@ -398,7 +398,7 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 	set_PF(result);
 	set_SF(result, data_size);
 	
-	return 0;
+	return result;
 #endif
 }
 
