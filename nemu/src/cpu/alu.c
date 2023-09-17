@@ -340,6 +340,10 @@ uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
 			((dest>>(data_size-1)) &1 ) != cpu.eflags.CF
 		);
 	} // else OF is undefined
+
+	set_ZF(dest, data_size);
+	set_PF(dest);
+	set_SF(dest, data_size);
 	return dest;
 #endif
 }
