@@ -212,7 +212,7 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 	src=cut(src,data_size);
 	dest=cut(dest,data_size);
 	u64 result;
-	printf("Calculating %u(%p) x %u(%p)\n",src,(void*)src,dest,(void*)dest);
+	// printf("Calculating %u(%p) x %u(%p)\n",src,(void*)src,dest,(void*)dest);
 	if(data_size!=32)
 		result=cut(src*dest,data_size*2);
 	else
