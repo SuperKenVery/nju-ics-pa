@@ -2,6 +2,7 @@
 #define __ALU_H__
 
 #include <cpu-ref/alu_ref.h>
+#include <assert.h>
 
 // enable NEMU_REF_ALU to use reference implementation
 // #define NEMU_REF_ALU
