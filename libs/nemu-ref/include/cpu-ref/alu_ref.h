@@ -1,6 +1,8 @@
 #ifndef __ALU_REF_H__
 #define __ALU_REF_H__
 
+#include <bits/stdint-uintn.h>
+#include <bits/stdint-intn.h>
 #include <stddef.h>
 
 uint32_t __ref_alu_add(uint32_t src, uint32_t dest, size_t data_size);
