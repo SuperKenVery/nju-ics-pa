@@ -223,10 +223,6 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 		result=cut(src*dest,data_size*2);
 	else
 		result=((u64)src)*dest;
-	if(data_size==16){
-		printf("Calculating %u(%p) x %u(%p)\n",src,(void*)src,dest,(void*)dest);
-		printf("\t=%llu(%p %p)\n",result,(void*)((u32)(result>>32)),(void*)((u32)result));
-	}
 	u8 ah; u16 dx; u32 edx;
 
 	switch(data_size){
