@@ -123,6 +123,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			}
 		}
 		sig_grs=fraction;
+		hexdump(sig_grs);
 	}
 
 	FLOAT f;
