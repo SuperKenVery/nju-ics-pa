@@ -38,7 +38,6 @@ int32_t alu_idiv(int64_t src, int64_t dest, size_t data_size);
 uint32_t alu_mod(uint64_t src, uint64_t dest);
 int32_t alu_imod(int64_t src, int64_t dest);
 
-// sign extend
 #define sign(x) ((uint32_t)(x) >> 31)
 //#define sign_ext(x) ((int32_t)((int8_t)(x)))
 

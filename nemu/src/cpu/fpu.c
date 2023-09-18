@@ -12,42 +12,50 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	// normalization
 	bool overflow = false; // true if the result is INFINITY or 0 during normalize
 
-	if ((sig_grs >> (23 + 3)) > 1 || exp < 0)
+	// exp is from u8, how can it <0?
+	assert(exp>=0);
+	// 64bit shouldn't be overflowed, operands <32bit...
+	assert(sig_grs>=0);
+
+	if ((sig_grs >> (23 + 3)) > 1 || exp < 0/*WTF is this?*/)
 	{
 		// normalize toward right
-		while ((((sig_grs >> (23 + 3)) > 1) && exp < 0xff) // condition 1
-			   ||										   // or
-			   (sig_grs > 0x04 && exp < 0)				   // condition 2
-			   )
+		while (
+			(((sig_grs >> (23 + 3)) > 1) && exp < 0xff) // condition 1: fraction too large
+		  ||										   										// or
+		  (sig_grs > 0x04 && exp < 0)				   				// condition 2  ???
+    )
 		{
 
-			/* TODO: shift right, pay attention to sticky bit*/
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+			/* shift right, pay attention to sticky bit*/
+			u8 sticky=sig_grs&1;
+			sig_grs=sig_grs>>1; // sig_grs >=0 anyway
+			sig_grs|=sticky;
+
+			exp++;
 		}
 
 		if (exp >= 0xff)
 		{
-			/* TODO: assign the number to infinity */
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+			/* assign the number to infinity */
+			exp=((FLOAT)(u32)P_INF_F).exponent;
+			sig_grs=((FLOAT)(u32)P_INF_F).fraction;
 			overflow = true;
 		}
 		if (exp == 0)
 		{
 			// we have a denormal here, the exponent is 0, but means 2^-126,
 			// as a result, the significand should shift right once more
-			/* TODO: shift right, pay attention to sticky bit*/
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+			/* shift right, pay attention to sticky bit*/
+			u8 sticky=sig_grs&1;
+			sig_grs=sig_grs>>1;
+			sig_grs|=sticky;
 		}
 		if (exp < 0)
 		{
 			/* TODO: assign the number to zero */
 			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
+			printf("Why would exp<0?\n");
 			fflush(stdout);
 			assert(0);
 			overflow = true;
@@ -58,18 +66,17 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		// normalize toward left
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
-			/* TODO: shift left */
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+			/* shift left */
+			sig_grs=sig_grs<<1;
+			exp--;
 		}
 		if (exp == 0)
 		{
 			// denormal
-			/* TODO: shift right, pay attention to sticky bit*/
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			fflush(stdout);
-			assert(0);
+			/* shift right, pay attention to sticky bit*/
+			u8 sticky=sig_grs&1;
+			sig_grs=sig_grs>>1;
+			sig_grs|=sticky;
 		}
 	}
 	else if (exp == 0 && sig_grs >> (23 + 3) == 1)
@@ -81,9 +88,24 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	if (!overflow)
 	{
 		/* TODO: round up and remove the GRS bits */
-		printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-		fflush(stdout);
-		assert(0);
+		// See https://stackoverflow.com/questions/16433611/understanding-of-rounding-ieee-floating-pointnumber
+		u8 grs=sig_grs&((1<<3)-1);
+		u64 fraction=sig_grs>>3;
+		if(grs<4){
+			// Round down, do nothing
+		}else if(grs>4){
+			// Round up
+			fraction+=1;
+		}else{
+			// grs==4, round to nearest even (value or value+1)
+			if(fraction%2==0){
+				// Round to value itself -> do nothing
+			}else{
+				// Round to value+1
+				fraction+=1;
+			}
+		}
+		sig_grs=fraction;
 	}
 
 	FLOAT f;
@@ -146,6 +168,8 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 		fb.val = a;
 	}
 
+	// Now fb.exponent >= fa.exponent
+
 	uint32_t sig_a, sig_b, sig_res;
 	sig_a = fa.fraction;
 	if (fa.exponent != 0)
@@ -155,12 +179,15 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 		sig_b |= 0x800000; // the hidden 1
 
 	// alignment shift for fa
-	uint32_t shift = 0;
+	i32 ae=fa.exponent==0?
+		-126:
+		((i32)fa.exponent)-127;
+	i32 be=fb.exponent==0?
+		-126:
+		((i32)fb.exponent)-127;
+	assert(be-ae>=0);
+	uint32_t shift = be-ae;
 
-	/* TODO: shift = ? */
-	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
 	assert(shift >= 0);
 
 	sig_a = (sig_a << 3); // guard, round, sticky
