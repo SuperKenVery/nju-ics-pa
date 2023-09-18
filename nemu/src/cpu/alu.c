@@ -34,7 +34,7 @@ u64 cutdbg(u64 x, usize size){
 	hexdump("size",size);
 	if(size==64) return x;
 
-	u64 mask=(1<<size)-1;
+	u64 mask=(((u64)1)<<size)-1;
 	hexdump("mask", mask);
 	printf("===cutdbg done\n");
 	return x&mask;
