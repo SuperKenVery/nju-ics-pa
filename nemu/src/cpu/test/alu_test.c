@@ -723,6 +723,10 @@ void alu_test_idiv() {
 			asm ("idivl %%ecx" : "=a" (quo_asm), "=d" (rem_asm) : "a" (aa.low), "d" (aa.high), "c" ((uint32_t)b));
 			fflush(stdout);
 			assert(quo == quo_asm);
+			if(rem!=rem_asm){
+				printf("a=%ld b=%ld quo=%d rem=%d quo_asm=%d rem_asm=%d\n",
+					a,b,quo,rem,quo_asm,rem_asm);
+			}
 			assert(rem == rem_asm);
 		}
 	}
