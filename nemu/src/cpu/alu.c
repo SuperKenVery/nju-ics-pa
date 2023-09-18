@@ -340,6 +340,7 @@ int32_t alu_idiv(int64_t src, int64_t dest, size_t data_size)
 	assert(dest!=0);
 	
 	i32 res=dest/src;
+	printf("idiv: src=%lld dest=%lld res=%d\n",src,dest,res);
 	return res;
 #endif
 }

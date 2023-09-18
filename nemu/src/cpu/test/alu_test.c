@@ -722,11 +722,11 @@ void alu_test_idiv() {
 			rem = alu_imod(b, a);
 			asm ("idivl %%ecx" : "=a" (quo_asm), "=d" (rem_asm) : "a" (aa.low), "d" (aa.high), "c" ((uint32_t)b));
 			fflush(stdout);
-			assert(quo == quo_asm);
 			if(rem!=rem_asm){
-				printf("a=%lld b=%lld quo=%d rem=%d quo_asm=%d rem_asm=%d\n",
+				printf("(b/a) a=%lld b=%lld quo=%d rem=%d quo_asm=%d rem_asm=%d\n",
 					a,b,quo,rem,quo_asm,rem_asm);
 			}
+			assert(quo == quo_asm);
 			assert(rem == rem_asm);
 		}
 	}
