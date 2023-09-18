@@ -89,6 +89,8 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		// two denormals result in a normal
 		printf("normalize: two denormals result in a normal\n");
 		exp++;
+	}else{
+		printf("Not normalizing\n");
 	}
 
 	if (!overflow)
