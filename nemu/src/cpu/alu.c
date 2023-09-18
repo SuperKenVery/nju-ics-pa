@@ -367,7 +367,6 @@ int32_t alu_imod(int64_t src, int64_t dest)
 	assert(src!=0);
 
 	i32 res=src%dest;
-	res=cut(res,data_size);
 	return res;
 #endif
 }
