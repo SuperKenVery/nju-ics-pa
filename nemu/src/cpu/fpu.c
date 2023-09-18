@@ -74,7 +74,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			sig_grs=sig_grs<<1;
 			exp--;
 			i32 e=(i32)exp-126;
-			printf("fpu.normalize: %f\tsig_grs=%x exp=%d(0x%x)\n",
+			printf("fpu.normalize: %f\tsig_grs=%llx exp=%d(0x%x)\n",
 				((double)sig_grs) / (1 << (26-e)),
 				sig_grs,e,e
 			);
