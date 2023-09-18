@@ -31,10 +31,12 @@ u64 cut(u64 x, usize size){
 u64 cutdbg(u64 x, usize size){
 	printf("===cutdbg\n");
 	hexdump("x",x);
+	hexdump("size",size);
 	if(size==64) return x;
 
 	u64 mask=(1<<size)-1;
 	hexdump("mask", mask);
+	printf("===cutdbg done\n");
 	return x&mask;
 }
 
