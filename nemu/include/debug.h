@@ -43,9 +43,7 @@
  * You can insert this function anywhere, probably between `if`s, 
  * and just `break dbgbreak` in gdb. 
 */
-void dbgbreak(){
-  printf("dbgbreak: Don't optimize me out!\n");
-}
+void dbgbreak();
 
 
 
