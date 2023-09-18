@@ -20,7 +20,8 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 
 	if ((sig_grs >> (23 + 3)) > 1 || exp < 0/*WTF is this?*/)
 	{
-		// normalize toward right
+		// normalize towards right
+		printf("Normalize towards right\n");
 		while (
 			(((sig_grs >> (23 + 3)) > 1) && exp < 0xff) // condition 1: fraction too large
 		  ||										   										// or
@@ -65,7 +66,8 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	}
 	else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 	{
-		// normalize toward left
+		// normalize towards left
+		printf("Normalize towards left\n");
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
 			/* shift left */
