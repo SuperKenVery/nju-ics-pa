@@ -6,6 +6,13 @@ FPU fpu;
 // special values
 FLOAT p_zero, n_zero, p_inf, n_inf, p_nan, n_nan;
 
+void dump_exponent(u32 exp){
+	printf("exponent %x:",exp);
+	if(exp==0){
+		// Denormalize
+	}
+}
+
 // the last three bits of the significand are reserved for the GRS bits
 inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 {
@@ -240,9 +247,9 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	}
 
 	uint32_t exp_res = fb.exponent;
-	printf("fpu.add before normalize: %f (sig_res=%x exp=%d)\n",
+	printf("fpu.add before normalize: %f (sig_res=%x exp=%d(0x%x))\n",
 		((double)sig_res) / (1 << (26-be)),
-		sig_res,be
+		sig_res,be,exp_res
 	);
 	return internal_normalize(f.sign, exp_res, sig_res);
 }
