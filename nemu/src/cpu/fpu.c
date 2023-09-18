@@ -247,9 +247,10 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	}
 
 	uint32_t exp_res = fb.exponent;
-	printf("fpu.add before normalize: %f (sig_res=%x exp=%d(0x%x))\n",
+	u8 exp_ori=fb.exponent;
+	printf("fpu.add before normalize: %f (sig_res=%x exp=%d(0x%x) exp8=0x%x)\n",
 		((double)sig_res) / (1 << (26-be)),
-		sig_res,be,exp_res
+		sig_res,be,exp_res,exp_ori
 	);
 	return internal_normalize(f.sign, exp_res, sig_res);
 }
