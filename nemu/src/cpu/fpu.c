@@ -245,6 +245,9 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	printf("fpu.add before normalize: %f\n",
 		((double)sig_res) / (1 << (26-be))
 	);
+	u8 _ae=fa.exponent, _be=fb.exponent;
+	hexdump(_ae);
+	hexdump(_be);
 	hexdump(sig_a);
 	hexdump(sig_b);
 	hexdump(sig_res);
