@@ -71,6 +71,8 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		// normalize towards left
 		printf("Normalize towards left, e=%u\n",exp);
 		hexdump(sig_grs);
+		u64 ss=sig_grs>>26;
+		hexdump(ss);
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
 			/* shift left */
