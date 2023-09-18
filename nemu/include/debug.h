@@ -43,10 +43,10 @@ void _do_hexdump(const void* data, size_t size) {
 /* A convenient function named breakpoint
  * 
  * You can insert this function anywhere, probably between `if`s, 
- * and just `break breakpoint` in gdb. 
+ * and just `break dbgbreak` in gdb. 
 */
-void breakpoint(){
-  printf("breakpoint: Don't optimize me out!\n");
+void dbgbreak(){
+  printf("dbgbreak: Don't optimize me out!\n");
 }
 
 
