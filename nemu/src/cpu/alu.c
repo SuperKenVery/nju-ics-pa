@@ -338,7 +338,6 @@ int32_t alu_idiv(int64_t src, int64_t dest, size_t data_size)
 	assert(src!=0);
 	
 	i32 res=dest/src;
-	res=cut(res,data_size);
 	return res;
 #endif
 }
