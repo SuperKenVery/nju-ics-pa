@@ -724,7 +724,7 @@ void alu_test_idiv() {
 			fflush(stdout);
 			assert(quo == quo_asm);
 			if(rem!=rem_asm){
-				printf("a=%ld b=%ld quo=%d rem=%d quo_asm=%d rem_asm=%d\n",
+				printf("a=%lld b=%lld quo=%d rem=%d quo_asm=%d rem_asm=%d\n",
 					a,b,quo,rem,quo_asm,rem_asm);
 			}
 			assert(rem == rem_asm);
