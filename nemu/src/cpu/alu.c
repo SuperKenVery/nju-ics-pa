@@ -362,9 +362,9 @@ int32_t alu_imod(int64_t src, int64_t dest)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_imod(src, dest);
 #else
-	i32 quo=alu_idiv(src,dest,data_size);
+	i32 quo=alu_idiv(dest,src,data_size);
 
-	i32 res=src-(dest*quo);
+	i32 res=dest-(src*quo);
 	printf("imod: src=%lld dest=%lld quo=%d res=%d\n",src,dest,quo,res);
 	return res;
 #endif
