@@ -720,10 +720,11 @@ void alu_test_idiv() {
 			aa.val = a;
 			quo = alu_idiv(b, a, 32);
 			rem = alu_imod(b, a);
+			// EDX:EAX / ECX   a/b
 			asm ("idivl %%ecx" : "=a" (quo_asm), "=d" (rem_asm) : "a" (aa.low), "d" (aa.high), "c" ((uint32_t)b));
 			fflush(stdout);
 			if(rem!=rem_asm || quo!=quo_asm){
-				printf("(b/a) a=%lld b=%lld quo=%d rem=%d quo_asm=%d rem_asm=%d\n",
+				printf("(a/b) a=%lld b=%lld quo=%d rem=%d quo_asm=%d rem_asm=%d\n",
 					a,b,quo,rem,quo_asm,rem_asm);
 			}
 			assert(quo == quo_asm);
