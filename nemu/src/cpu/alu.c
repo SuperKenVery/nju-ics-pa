@@ -365,6 +365,7 @@ int32_t alu_imod(int64_t src, int64_t dest)
 	i32 quo=alu_idiv(src,dest,data_size);
 
 	i32 res=src-(dest*quo);
+	printf("imod: src=%lld dest=%lld quo=%d res=%d\n",src,dest,quo,res);
 	return res;
 #endif
 }
