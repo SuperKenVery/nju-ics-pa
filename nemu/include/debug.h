@@ -36,13 +36,6 @@
 	}                                                                              \
 }                                                                                \
 
-// https://stackoverflow.com/questions/7766115/print-variable-name-in-a-define
-// #define hexdump(var)               \
-//   {                                \
-//     printf("%s:\n",#var);          \
-//     _do_hexdump(&var,sizeof(var)); \
-//   }
-
 /* A convenient function named breakpoint
  * 
  * You can insert this function anywhere, probably between `if`s, 
