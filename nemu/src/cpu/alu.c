@@ -3,7 +3,7 @@
 #include "cpu/cpu.h"
 
 void hexdump(char* name, u64 x){
-	printf("%s: %llu (%p %p)\n",name, x,(void*)((u32)(x>>32)),(void*)x);
+	printf("%s: %llu (%p %p)\n",name, x,(void*)((u32)(x>>32)),(void*)((u32)x));
 }
 
 bool positive(i32 x, usize size){
