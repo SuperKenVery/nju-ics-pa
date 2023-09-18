@@ -136,9 +136,7 @@ uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_add(src, dest, data_size);
 #else
 	u32 result=src+dest;
-	printf("Before cut: %u(%p)\tdatasize: %u\n",result,(void*)result,data_size);
 	result=cut(result,data_size);
-	printf("After cut: %u(%p)\n",result,(void*)result);
 	set_OF_add(src,dest,data_size);
 	set_SF(result,data_size);
 	set_ZF(result,data_size);
