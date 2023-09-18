@@ -116,7 +116,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			// Round up
 			printf("Round up\n");
 			// fraction+=1;
-			fraction=fraction+1;
 			hexdump(fraction);
 		}else{
 			// grs==4, round to nearest even (value or value+1)
