@@ -10,6 +10,8 @@ FLOAT p_zero, n_zero, p_inf, n_inf, p_nan, n_nan;
 inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 {
 
+		i32 e=(i32)exp-126;
+		printf("Normalize towards left, e=%d\n",e);
 	// normalization
 	bool overflow = false; // true if the result is INFINITY or 0 during normalize
 
