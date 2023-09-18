@@ -24,7 +24,7 @@ bool positive(i32 x, usize size){
 u64 cut(u64 x, usize size){
 	if(size==64) return x;
 
-	u64 mask=(1<<size)-1;
+	u64 mask=(((u64)1)<<size)-1;
 	return x&mask;
 }
 
