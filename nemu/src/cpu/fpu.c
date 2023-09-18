@@ -192,8 +192,12 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	if (fa.exponent != 0)
 		sig_a |= 0x800000; // the hidden 1
 	sig_b = fb.fraction;
+	printf("before adding hidden 1 ");
+	hexdump(sig_b);
 	if (fb.exponent != 0)
 		sig_b |= 0x800000; // the hidden 1
+	printf("after adding hidden 1 ");
+	hexdump(sig_b);
 
 	// alignment shift for fa
 	i32 ae=fa.exponent==0?
