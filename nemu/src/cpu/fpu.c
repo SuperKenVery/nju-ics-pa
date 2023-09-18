@@ -67,7 +67,8 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 	{
 		// normalize towards left
-		printf("Normalize towards left\n");
+		i32 e=(i32)exp-126;
+		printf("Normalize towards left, e=%d\n",e);
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
 			/* shift left */
