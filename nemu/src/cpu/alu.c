@@ -78,17 +78,12 @@ void set_SF(i32 result, usize size){
 }
 
 void set_ZF(i32 result, usize size){
-	printf(">>>dbg set ZF\n");
-	hexdump("result before cut",result);
-	hexdump("size",size);
 	result=cut(result,size);
-	hexdump("result after cut",result);
 	if(result==0){
 		cpu.eflags.ZF=1;
 	}else{
 		cpu.eflags.ZF=0;
 	}
-	printf("<<<\n");
 }
 
 // AF is not required for the pa
@@ -142,7 +137,7 @@ uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 #else
 	u32 result=src+dest;
 	printf("Before cut: %u(%p)\tdatasize: %u\n",result,(void*)result,data_size);
-	result=cutdbg(result,data_size);
+	result=cut(result,data_size);
 	printf("After cut: %u(%p)\n",result,(void*)result);
 	set_OF_add(src,dest,data_size);
 	set_SF(result,data_size);
