@@ -335,7 +335,7 @@ int32_t alu_idiv(int64_t src, int64_t dest, size_t data_size)
 #else
 	src=sign_ext(cut(src,data_size),data_size);
 	dest=sign_ext(cut(dest,data_size),data_size);
-	assert(src!=0);
+	assert(dest!=0);
 	
 	i32 res=src/dest;
 	return res;
@@ -364,9 +364,9 @@ int32_t alu_imod(int64_t src, int64_t dest)
 #else
 	src=sign_ext(cut(src,data_size),data_size);
 	dest=sign_ext(cut(dest,data_size),data_size);
-	assert(src!=0);
+	assert(dest!=0);
 
-	i32 res=src%dest;
+	i64 res=src%dest;
 	return res;
 #endif
 }
