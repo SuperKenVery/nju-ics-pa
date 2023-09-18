@@ -110,11 +110,14 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		u64 fraction=sig_grs>>3;
 		if(grs<4){
 			// Round down, do nothing
+			printf("Round down ,do nothing\n");
 		}else if(grs>4){
 			// Round up
+			printf("Round up\n");
 			fraction+=1;
 		}else{
 			// grs==4, round to nearest even (value or value+1)
+			printf("grs is 4\n");
 			if(fraction%2==0){
 				// Round to value itself -> do nothing
 			}else{
