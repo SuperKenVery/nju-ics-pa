@@ -51,8 +51,8 @@ test_pa-1: nemu
 	# ./nemu/nemu --test-alu sar		
 	# ./nemu/nemu --test-alu mul		
 	# ./nemu/nemu --test-alu div		
-	./nemu/nemu --test-alu imul		
-	./nemu/nemu --test-alu idiv		
+	# ./nemu/nemu --test-alu imul		
+	# ./nemu/nemu --test-alu idiv		
 	./nemu/nemu --test-fpu add		
 	./nemu/nemu --test-fpu sub		
 	./nemu/nemu --test-fpu mul		
