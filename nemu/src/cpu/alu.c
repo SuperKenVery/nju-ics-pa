@@ -78,12 +78,17 @@ void set_SF(i32 result, usize size){
 }
 
 void set_ZF(i32 result, usize size){
+	printf(">>>dbg set ZF\n");
+	hexdump("result before cut",result);
+	hexdump("size",size);
 	result=cut(result,size);
+	hexdump("result after cut",result);
 	if(result==0){
 		cpu.eflags.ZF=1;
 	}else{
 		cpu.eflags.ZF=0;
 	}
+	printf("<<<\n");
 }
 
 // AF is not required for the pa
