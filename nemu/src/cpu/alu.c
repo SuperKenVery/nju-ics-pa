@@ -280,7 +280,7 @@ int64_t alu_imul(int32_t src, int32_t dest, size_t data_size)
 #else
 	src=cut(src,data_size);
 	dest=cut(dest,data_size);
-	i64 result=src*dest;
+	i64 result=cut(((i64)src)*dest,data_size*2);
 	i8 r8; i16 r16; i32 r32; i64 r64;
 	switch(data_size){
 		case 8:
