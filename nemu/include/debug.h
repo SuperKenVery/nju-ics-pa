@@ -8,7 +8,7 @@
 #define hexdump(var)                                                                     \
 {                                                                                        \
   printf("%s:\n",#var);                                                                  \
-  const void* data=&var;                                                                 \
+  const void* data=&(var);                                                                 \
   size_t size=sizeof(var);                                                               \
 	char ascii[17];                                                                        \
 	size_t i, j;                                                                           \

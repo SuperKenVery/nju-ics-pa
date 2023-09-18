@@ -8,13 +8,6 @@ FPU fpu;
 // special values
 FLOAT p_zero, n_zero, p_inf, n_inf, p_nan, n_nan;
 
-void dump_exponent(u32 exp){
-	printf("exponent %x:",exp);
-	if(exp==0){
-		// Denormalize
-	}
-}
-
 // the last three bits of the significand are reserved for the GRS bits
 inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 {
@@ -253,7 +246,8 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 		((double)sig_res) / (1 << (26-be))
 	);
 	hexdump(sig_res);
-	hexdump(exp_res);
+	u8 e=fb.exponent;
+	hexdump(e);
 	return internal_normalize(f.sign, exp_res, sig_res);
 }
 
