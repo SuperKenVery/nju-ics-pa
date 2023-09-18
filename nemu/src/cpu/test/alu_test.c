@@ -638,7 +638,7 @@ void alu_test_mul() {
 	
 			fflush(stdout);
 			if(res!=(res_asm_a|(res_asm_d<<16))){
-				printf("\tAnswer is %u(%p %p)\n",(res_asm_a|(res_asm_d<<16)),(void*)res_asm_d,(void*)res_asm_a);
+				printf("\tAnswer is %u(%p)\n",(res_asm_a|(res_asm_d<<16)),(void*)(res_asm_a|(res_asm_d<<16)));
 			}
 			assert(res == (res_asm_a | (res_asm_d << 16)));
 			assert(cpu.eflags.CF == test_eflags.CF);
