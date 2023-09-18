@@ -8,7 +8,7 @@ bool positive(i32 x, usize size){
 	return !sign_bit;
 }
 
-i32 cut(i32 x, usize size){
+u32 cut(u32 x, usize size){
 	assert(size<=32);
 	// Shift bits is mod by 31
 	// So take 32bit as special case
@@ -17,6 +17,13 @@ i32 cut(i32 x, usize size){
 	u32 mask=(1<<size)-1;
 	return x&mask;	
 }
+
+// u64 cut64(u64 x, usize size){
+// 	if(size==64) return x;
+
+// 	u64 mask=(1<<size)-1;
+// 	return x&mask;
+// }
 
 void set_OF_add(i32 a, i32 b, usize size){
 	a=cut(a,size);
