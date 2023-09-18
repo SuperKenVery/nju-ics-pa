@@ -637,6 +637,9 @@ void alu_test_mul() {
 				test_eflags.val = res_eflags;
 	
 			fflush(stdout);
+			if(res!=(res_asm_a|(res_asm_d<<16))){
+				printf("\tAnswer is %llu(%p %p)\n",(res_asm_a|(res_asm_d<<16)),res_asm_d,res_asm_a);
+			}
 			assert(res == (res_asm_a | (res_asm_d << 16)));
 			assert(cpu.eflags.CF == test_eflags.CF);
 			assert(cpu.eflags.OF == test_eflags.OF);
