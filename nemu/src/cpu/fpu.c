@@ -69,18 +69,15 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 	{
 		// normalize towards left
-		i32 e=(i32)exp-126;
-		printf("Normalize towards left, e=%d\n",e);
+		printf("Normalize towards left, e=%u\n",exp);
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
 			/* shift left */
 			sig_grs=sig_grs<<1;
 			exp--;
-			i32 e=(i32)exp-126;
-			printf("fpu.normalize: %f\tsig_grs=%llx exp=%d(0x%x)\n",
-				((double)sig_grs) / (1 << (26-e)),
-				sig_grs,e,e
-			);
+			printf("normalize...\n");
+			hexdump(sig_grs);
+			hexdump(exp);
 		}
 		if (exp == 0)
 		{
