@@ -132,6 +132,10 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 				fraction+=1;
 			}
 		}
+
+		printf("after rounding %f\n",
+			((double)sig_grs) / (1<<(26-(exp==0?-126:exp-127)))
+		);
 		sig_grs=fraction;
 		hexdump(sig_grs);
 	}
