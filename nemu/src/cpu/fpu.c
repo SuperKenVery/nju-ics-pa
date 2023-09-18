@@ -48,6 +48,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			// we have a denormal here, the exponent is 0, but means 2^-126,
 			// as a result, the significand should shift right once more
 			/* shift right, pay attention to sticky bit*/
+			printf("normalize: exp==0 after shift right\n");
 			u8 sticky=sig_grs&1;
 			sig_grs=sig_grs>>1;
 			sig_grs|=sticky;
@@ -75,6 +76,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		{
 			// denormal
 			/* shift right, pay attention to sticky bit*/
+			printf("normalize: exp==0 after shift left\n");
 			u8 sticky=sig_grs&1;
 			sig_grs=sig_grs>>1;
 			sig_grs|=sticky;
@@ -83,13 +85,15 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	else if (exp == 0 && sig_grs >> (23 + 3) == 1)
 	{
 		// two denormals result in a normal
+		printf("normalize: two denormals result in a normal\n");
 		exp++;
 	}
 
 	if (!overflow)
 	{
-		/* TODO: round up and remove the GRS bits */
+		/* round up and remove the GRS bits */
 		// See https://stackoverflow.com/questions/16433611/understanding-of-rounding-ieee-floating-pointnumber
+		printf("Rounding...\n");
 		u8 grs=sig_grs&((1<<3)-1);
 		u64 fraction=sig_grs>>3;
 		if(grs<4){
