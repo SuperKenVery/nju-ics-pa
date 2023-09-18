@@ -715,6 +715,7 @@ void alu_test_idiv() {
 	int i, j;
 	for(i = 0 ; i < n ; i++) {
 		for(j = 0 ; j < n ; j++) {
+			printf(">>>>idiv test\n");
 			a = sign_ext_64(input[i], 32);
 			b = sign_ext_64(input[j], 32);
 			aa.val = a;
@@ -727,6 +728,7 @@ void alu_test_idiv() {
 				printf("(a/b) a=%lld b=%lld quo=%d rem=%d quo_asm=%d rem_asm=%d\n",
 					a,b,quo,rem,quo_asm,rem_asm);
 			}
+			printf("<<<<\n");
 			assert(quo == quo_asm);
 			assert(rem == rem_asm);
 		}
