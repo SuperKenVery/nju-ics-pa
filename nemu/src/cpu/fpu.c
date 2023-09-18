@@ -70,6 +70,9 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	{
 		// normalize towards left
 		printf("Normalize towards left, e=%u\n",exp);
+		printf("now %f\n",
+			sig_grs / (1<<(26-(exp==0?-126:exp-127)))
+		);
 		hexdump(sig_grs);
 		u64 ss=sig_grs>>26;
 		hexdump(ss);
@@ -78,7 +81,9 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			/* shift left */
 			sig_grs=sig_grs<<1;
 			exp--;
-			printf("normalize...\n");
+			printf("normalize... %f\n",
+				sig_grs / (1<<(26-(exp==0?-126:exp-127)))
+			);
 			hexdump(sig_grs);
 			hexdump(exp);
 		}
