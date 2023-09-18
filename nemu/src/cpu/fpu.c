@@ -252,10 +252,8 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	printf("fpu.add before normalize: %f\n",
 		((double)sig_res) / (1 << (26-be))
 	);
-	printf("sig_res:\n");
-	hexdump(&sig_res, sizeof(sig_res));
-	printf("exp_res:\n");
-	hexdump(&exp_res,sizeof(exp_res));
+	hexdump(sig_res);
+	hexdump(exp_res);
 	return internal_normalize(f.sign, exp_res, sig_res);
 }
 

@@ -1,10 +1,7 @@
 #include "cpu/alu.h"
 #include "cpu-ref/instr_ref.h"
+#include "debug.h"
 #include "cpu/cpu.h"
-
-void hexdump(char* name, u64 x){
-	printf("%s: %llu (%p %p)\n",name, x,(void*)((u32)(x>>32)),(void*)((u32)x));
-}
 
 bool positive(i32 x, usize size){
 	u8 sign_bit=x>>(size-1);
@@ -30,12 +27,12 @@ u64 cut(u64 x, usize size){
 
 u64 cutdbg(u64 x, usize size){
 	printf("===cutdbg\n");
-	hexdump("x",x);
-	hexdump("size",size);
+	hexdump(x);
+	hexdump(size);
 	if(size==64) return x;
 
 	u64 mask=(((u64)1)<<size)-1;
-	hexdump("mask", mask);
+	hexdump( mask);
 	printf("===cutdbg done\n");
 	return x&mask;
 }

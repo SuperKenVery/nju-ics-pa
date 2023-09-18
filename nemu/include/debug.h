@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 // Copied from https://gist.github.com/ccbrown/9722406
-void hexdump(const void* data, size_t size) {
+void _do_hexdump(const void* data, size_t size) {
 	char ascii[17];
 	size_t i, j;
 	ascii[16] = '\0';
@@ -32,6 +32,13 @@ void hexdump(const void* data, size_t size) {
 		}
 	}
 }
+
+// https://stackoverflow.com/questions/7766115/print-variable-name-in-a-define
+#define hexdump(var) \
+  { \
+    printf("%s:\n",#var); \
+    _do_hexdump(&var,sizeof(var)); \
+  }
 
 /* A convenient function named breakpoint
  * 
