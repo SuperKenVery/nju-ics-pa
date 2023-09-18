@@ -278,8 +278,8 @@ int64_t alu_imul(int32_t src, int32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_imul(src, dest, data_size);
 #else
-	src=cut(src,data_size);
-	dest=cut(dest,data_size);
+	src=sign_ext(cut(src,data_size),data_size);
+	dest=sign_ext(cut(dest,data_size),data_size);
 	i64 result=cut(((i64)src)*dest,data_size*2);
 	i8 r8; i16 r16; i32 r32; i64 r64;
 	switch(data_size){
@@ -333,8 +333,8 @@ int32_t alu_idiv(int64_t src, int64_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_idiv(src, dest, data_size);
 #else
-	src=cut(src,data_size);
-	dest=cut(dest,data_size);
+	src=sign_ext(cut(src,data_size),data_size);
+	dest=sign_ext(cut(dest,data_size),data_size);
 	assert(src!=0);
 	
 	i32 res=dest/src;
@@ -363,8 +363,8 @@ int32_t alu_imod(int64_t src, int64_t dest)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_imod(src, dest);
 #else
-	src=cut(src,data_size);
-	dest=cut(dest,data_size);
+	src=sign_ext(cut(src,data_size),data_size);
+	dest=sign_ext(cut(dest,data_size),data_size);
 	assert(src!=0);
 
 	i32 res=dest%src;
