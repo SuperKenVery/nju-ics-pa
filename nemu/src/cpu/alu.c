@@ -342,7 +342,6 @@ int32_t alu_idiv(int64_t src, int64_t dest, size_t data_size)
 	assert(dest!=0);
 	
 	i32 res=dest/src;
-	printf("idiv: src=%lld dest=%lld res=%d\n",src,dest,res);
 	return res;
 #endif
 }
@@ -370,7 +369,6 @@ int32_t alu_imod(int64_t src, int64_t dest)
 	i32 quo=alu_idiv(src,dest,64);
 
 	i32 res=dest-(src*quo);
-	printf("imod: src=%lld dest=%lld quo=%d res=%d\n",src,dest,quo,res);
 	return res;
 #endif
 }

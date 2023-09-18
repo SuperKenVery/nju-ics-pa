@@ -715,7 +715,6 @@ void alu_test_idiv() {
 	int i, j;
 	for(i = 0 ; i < n ; i++) {
 		for(j = 0 ; j < n ; j++) {
-			printf(">>>>idiv test\n");
 			a = sign_ext_64(input[i], 32);
 			b = sign_ext_64(input[j], 32);
 			aa.val = a;
