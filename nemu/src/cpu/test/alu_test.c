@@ -727,7 +727,6 @@ void alu_test_idiv() {
 				printf("(a/b) a=%lld b=%lld quo=%d rem=%d quo_asm=%d rem_asm=%d\n",
 					a,b,quo,rem,quo_asm,rem_asm);
 			}
-			printf("<<<<\n");
 			assert(quo == quo_asm);
 			assert(rem == rem_asm);
 		}
