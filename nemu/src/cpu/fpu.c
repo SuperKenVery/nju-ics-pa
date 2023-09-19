@@ -3,10 +3,36 @@
 #include "debug.h"
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 FPU fpu;
 // special values
 FLOAT p_zero, n_zero, p_inf, n_inf, p_nan, n_nan;
+
+void show_digits(u64 val, usize size){
+	u64 val_copy=val;
+	u64 val_digits=0;
+	while(val_copy!=0){
+		val_digits++;
+		val_copy=val_copy>>1;
+	}
+
+	char* str=malloc(size+1);
+	str[size]=0;
+	if(size<val_digits){
+		printf("[size not enough]");
+	}else{
+		for(int i=0;i<size-val_digits;i++){
+			printf("0");
+		}
+		for(int i=val_digits-1;i>=0;i--){
+			u8 bit=val&1;
+			str[i]=bit?'1':'0';
+			val=val>>1;
+		}
+		printf("%s",str);
+	}
+}
 
 void showstate(i32 exp, u64 sig_grs){
 	u64 upper=sig_grs>>26;
@@ -14,20 +40,11 @@ void showstate(i32 exp, u64 sig_grs){
 	u64 fraction=lower>>3;
 	u8 grs=lower&((1<<3)-1);
 
-	while(upper>0){
-		printf(upper&1?"1":"0");
-		upper=upper>>1;
-	}
+	show_digits(upper, 10);
 	printf(".");
-	for(int i=0;i<23;i++){
-		printf(fraction&1?"1":"0");
-		fraction=fraction>>1;
-	}
+	show_digits(fraction, 23);
 	printf("(");
-	for(int i=0;i<3;i++){
-		printf(grs&1?"1":"0");
-		grs=grs>>1;
-	}
+	show_digits(grs, 3);
 	printf(")");
 	printf("  * 2**%d  = ",exp==0?-126:exp-127);
 	if(exp==0xFF){
