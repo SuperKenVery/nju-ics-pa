@@ -56,7 +56,7 @@ void showstate(const i32 exp, u64 sig_grs){
 		i64 mul=-div;
 		for(i64 i=0;i<mul;i++) result=result*2;
 	}
-	printf("%llf",result);
+	printf("%f",result);
 	
 
 	printf("\n");
