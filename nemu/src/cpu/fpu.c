@@ -265,10 +265,13 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 		return a;
 	}
 
-	FLOAT f, fa, fb, fs;
+	FLOAT f, fa, fb;
 	fa.val = a;
 	fb.val = b;
+	#if FPU_DEBUG
+	FLOAT fs;
 	fs.fval=fa.fval+fb.fval;
+	#endif
 
 	#if FPU_DEBUG
 	greenprintf("fpu_add: %f + %f (=%f)\n",fa.fval,fb.fval,fs.fval);
