@@ -67,7 +67,9 @@ void showstate(const i32 exp, u64 sig_grs){
 // the last three bits of the significand are reserved for the GRS bits
 inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 {
+	#if FPU_DEBUG
 	showstate(exp,sig_grs);
+	#endif
 
 	// normalization
 	bool overflow = false; // true if the result is INFINITY or 0 during normalize
