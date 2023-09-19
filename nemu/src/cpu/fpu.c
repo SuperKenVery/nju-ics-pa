@@ -231,8 +231,11 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 
 	greenprintf("fpu_add: %f + %f (=%f)\n",fa.fval,fb.fval,fs.fval);
 	hexdump(fa);
+	showstate(fa.exponent,fa.fraction<<3);
 	hexdump(fb);
+	showstate(fb.exponent, fb.fraction<<3);
 	hexdump(fs);
+	showstate(fs.exponent, fs.fraction<<3);
 	// infity, NaN
 	if (fa.exponent == 0xff)
 	{
