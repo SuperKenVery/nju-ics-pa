@@ -61,9 +61,15 @@ void showstate(const i32 exp, u64 sig_grs){
 		}
 	}else{
 		printf(" (calc value) ");
-		printf("%f",
-			((double)sig_grs) / (1<<(26-(exp==0?-126:exp-127))) 
-		);
+		i64 divide=26-(exp==0?-126:exp-127);
+		if(divide<0){
+			i64 mul=-divide;
+			printf("%f",((double)sig_grs)*(1<<mul));
+		}else{
+			printf("%f",
+				((double)sig_grs) / (1<<divide) 
+			);
+		}
 	} 
 	printf("\n");
 }
