@@ -448,7 +448,7 @@ uint32_t internal_float_mul(uint32_t b, uint32_t a)
 		fb.exponent++;
 
 	sig_res = sig_a * sig_b; // 24b * 24b
-	u64 sig_grs=sig_res<<3;
+	u64 sig_grs=sig_res;
 
 	/* exp_res = ? leave space for GRS bits. */
 	i32 ae=fa.exponent-127, be=fb.exponent-127;
