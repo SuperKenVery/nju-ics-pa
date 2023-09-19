@@ -263,6 +263,8 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	hexdump(fa);
 	showstate(fa.exponent,fa.fraction<<3);
 	hexdump(fb);
+	u32 fbf=fb.fraction;
+	hexdump(fbf);
 	showstate(fb.exponent, fb.fraction<<3);
 	hexdump(fs);
 	showstate(fs.exponent, fs.fraction<<3);
