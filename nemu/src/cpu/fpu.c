@@ -75,11 +75,12 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	bool overflow = false; // true if the result is INFINITY or 0 during normalize
 
 	// exp is from u8, how can it <0?
-	assert(exp>=0);
+	// Okay, when multiplying
+	// assert(exp>=0);
 	// 64bit shouldn't be overflowed, operands <32bit...
 	assert(sig_grs>=0);
 
-	if ((sig_grs >> (23 + 3)) > 1 || exp < 0/*WTF is this?*/)
+	if ((sig_grs >> (23 + 3)) > 1 || exp < 0)
 	{
 		// normalize towards right
 		#if FPU_ADD_DEBUG
@@ -88,7 +89,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		while (
 			(((sig_grs >> (23 + 3)) > 1) && exp < 0xff) // condition 1: fraction too large
 		  ||										   										// or
-		  (sig_grs > 0x04 && exp < 0)				   				// condition 2  ???
+		  (sig_grs > 0x04 && exp < 0)				   				// condition 2: exp too small
     )
 		{
 
@@ -122,10 +123,8 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		if (exp < 0)
 		{
 			/* TODO: assign the number to zero */
-			printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-			printf("Why would exp<0?\n");
-			fflush(stdout);
-			assert(0);
+			exp=0;
+			sig_grs=0;
 			overflow = true;
 		}
 	}
@@ -449,12 +448,11 @@ uint32_t internal_float_mul(uint32_t b, uint32_t a)
 		fb.exponent++;
 
 	sig_res = sig_a * sig_b; // 24b * 24b
-	uint32_t exp_res = 0;
 
 	/* exp_res = ? leave space for GRS bits. */
 	i32 ae=fa.exponent-127, be=fb.exponent-127;
 	i32 re=ae+be;
-	exp_res=re+127;
+	i32 exp_res=re+127;
 
 	u64 sig_grs=sig_res<<3;
 	return internal_normalize(f.sign, exp_res, sig_grs);
