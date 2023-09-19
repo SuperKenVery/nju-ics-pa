@@ -260,14 +260,6 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	fs.fval=fa.fval+fb.fval;
 
 	greenprintf("fpu_add: %f + %f (=%f)\n",fa.fval,fb.fval,fs.fval);
-	hexdump(fa);
-	showstate(fa.exponent,fa.fraction<<3);
-	hexdump(fb);
-	u32 fbf=fb.fraction;
-	hexdump(fbf);
-	showstate(fb.exponent, fb.fraction<<3);
-	hexdump(fs);
-	showstate(fs.exponent, fs.fraction<<3);
 	// infity, NaN
 	if (fa.exponent == 0xff)
 	{
@@ -293,6 +285,13 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	sig_b = fb.fraction;
 	if (fb.exponent != 0)
 		sig_b |= 0x800000; // the hidden 1
+
+	hexdump(fa);
+	hexdump(fb);
+	hexdump(fs);
+
+	showstate(fa.exponent, fa.fraction<<3);
+	showstate(fb.exponent, fb.fraction<<3);
 
 	// alignment shift for fa
 	i32 ae=fa.exponent==0?
