@@ -128,10 +128,8 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			/* shift left */
 			sig_grs=sig_grs<<1;
 			exp--;
-			printf("normalize... %f, e=%u\n",
-				((double)sig_grs) / (1<<(26-(exp==0?-126:exp-127))),
-				exp
-			);
+			printf("normalize... ");
+			showstate(exp, sig_grs);
 		}
 		if (exp == 0)
 		{
