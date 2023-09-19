@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define FPU_DEBUG false
+#define FPU_ADD_DEBUG false
 
 FPU fpu;
 // special values
@@ -67,7 +67,7 @@ void showstate(const i32 exp, u64 sig_grs){
 // the last three bits of the significand are reserved for the GRS bits
 inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 {
-	#if FPU_DEBUG
+	#if FPU_ADD_DEBUG
 	showstate(exp,sig_grs);
 	#endif
 
@@ -82,7 +82,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	if ((sig_grs >> (23 + 3)) > 1 || exp < 0/*WTF is this?*/)
 	{
 		// normalize towards right
-		#if FPU_DEBUG
+		#if FPU_ADD_DEBUG
 		printf("Normalize towards right\n");
 		#endif
 		while (
@@ -112,7 +112,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			// we have a denormal here, the exponent is 0, but means 2^-126,
 			// as a result, the significand should shift right once more
 			/* shift right, pay attention to sticky bit*/
-			#if FPU_DEBUG
+			#if FPU_ADD_DEBUG
 			printf("normalize: exp==0 after shift right\n");
 			#endif
 			u8 sticky=sig_grs&1;
@@ -132,7 +132,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 	{
 		// normalize towards left
-		#if FPU_DEBUG
+		#if FPU_ADD_DEBUG
 		printf("Normalize towards left, e=%u, ",exp);
 		#endif
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
@@ -140,7 +140,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			/* shift left */
 			sig_grs=sig_grs<<1;
 			exp--;
-			#if FPU_DEBUG
+			#if FPU_ADD_DEBUG
 			printf("normalize... ");
 			showstate(exp, sig_grs);
 			#endif
@@ -149,7 +149,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		{
 			// denormal
 			/* shift right, pay attention to sticky bit*/
-			#if FPU_DEBUG
+			#if FPU_ADD_DEBUG
 			printf("normalize: exp==0 after shift left\n");
 			#endif
 			u8 sticky=sig_grs&1;
@@ -160,12 +160,12 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	else if (exp == 0 && sig_grs >> (23 + 3) == 1)
 	{
 		// two denormals result in a normal
-		#if FPU_DEBUG
+		#if FPU_ADD_DEBUG
 		printf("normalize: two denormals result in a normal\n");
 		#endif
 		exp++;
 	}else{
-		#if FPU_DEBUG
+		#if FPU_ADD_DEBUG
 		printf("Not normalizing\n");
 		#endif
 	}
@@ -174,7 +174,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	{
 		/* round up and remove the GRS bits */
 		// See https://stackoverflow.com/questions/16433611/understanding-of-rounding-ieee-floating-pointnumber
-		#if FPU_DEBUG
+		#if FPU_ADD_DEBUG
 		printf("Rounding...\t");
 		#endif
 		bool did_do_round=false;
@@ -182,19 +182,19 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		u64 fraction=sig_grs>>3;
 		if(grs<4){
 			// Round down, do nothing
-			#if FPU_DEBUG
+			#if FPU_ADD_DEBUG
 			printf("Round down ,do nothing\n");
 			#endif
 		}else if(grs>4){
 			// Round up
-			#if FPU_DEBUG
+			#if FPU_ADD_DEBUG
 			printf("Round up\n");
 			#endif
 			did_do_round=true;
 			fraction+=1;
 		}else{
 			// grs==4, round to nearest even (value or value+1)
-			#if FPU_DEBUG
+			#if FPU_ADD_DEBUG
 			printf("grs is 4\n");
 			#endif
 			if(fraction%2==0){
@@ -207,14 +207,14 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		}
 
 		sig_grs=fraction;
-		#if FPU_DEBUG
+		#if FPU_ADD_DEBUG
 		printf("after rounding: ");
 		showstate(exp==0?1:exp,fraction<<3);
 		#endif
 
 		// TODO: Is it still normalized? 
 		if(did_do_round){
-			#if FPU_DEBUG
+			#if FPU_ADD_DEBUG
 			printf("<<<recursive rounding\n");
 			#endif
 			return internal_normalize(sign, exp, sig_grs<<3);
@@ -270,12 +270,12 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	FLOAT f, fa, fb;
 	fa.val = a;
 	fb.val = b;
-	#if FPU_DEBUG
+	#if FPU_ADD_DEBUG
 	FLOAT fs;
 	fs.fval=fa.fval+fb.fval;
 	#endif
 
-	#if FPU_DEBUG
+	#if FPU_ADD_DEBUG
 	greenprintf("fpu_add: %f + %f (=%f)\n",fa.fval,fb.fval,fs.fval);
 	#endif
 	// infity, NaN
@@ -304,7 +304,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	if (fb.exponent != 0)
 		sig_b |= 0x800000; // the hidden 1
 
-	#if FPU_DEBUG
+	#if FPU_ADD_DEBUG
 	printf("a: ");
 	showstate(fa.exponent, sig_a<<3);
 	printf("b: ");
@@ -358,7 +358,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	}
 
 	uint32_t exp_res = fb.exponent;
-	#if FPU_DEBUG
+	#if FPU_ADD_DEBUG
 	printf("fpu.add before normalize: %f\n",
 		((double)sig_res) / (1 << (26-be))
 	);
