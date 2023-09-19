@@ -185,7 +185,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 
 		sig_grs=fraction;
 		printf("after rounding: ");
-		showstate(exp,sig_grs);
+		showstate(exp==0?1:exp,exp!=0?sig_grs|0x800000:sig_grs);
 
 		// TODO: Is it still normalized? 
 		if(did_do_round){
