@@ -184,9 +184,8 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		}
 
 		sig_grs=fraction;
-		printf("after rounding %f\n",
-			((double)sig_grs) / (1<<(26-(exp==0?-126:exp-127)))
-		);
+		printf("after rounding: ");
+		showstate(exp,sig_grs);
 
 		// TODO: Is it still normalized? 
 		if(did_do_round){
@@ -274,7 +273,6 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 
 	printf("a: ");
 	showstate(fa.exponent, sig_a<<3);
-	hexdump(b);
 	printf("b: ");
 	showstate(fb.exponent, sig_b<<3);
 
