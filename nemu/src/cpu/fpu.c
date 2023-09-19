@@ -135,7 +135,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 
 		sig_grs=fraction;
 		hexdump(sig_grs);
-		assert(exp!=0);
 		printf("after rounding %f\n",
 			((double)sig_grs) / (1<<(26-(exp==0?-126:exp-127)))
 		);
@@ -162,6 +161,11 @@ CORNER_CASE_RULE corner_add[] = {
 	{N_NAN_F, P_NAN_F, P_NAN_F},
 };
 
+double getval(u32 exp, u64 fraction){
+	double fr=fraction;
+	return fr/(1<<(26-(exp-127)));
+}
+
 // a + b
 uint32_t internal_float_add(uint32_t b, uint32_t a)
 {
@@ -187,7 +191,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	fb.val = b;
 	fs.fval=fa.fval+fb.fval;
 
-	printf("\e[0;32mfpu_add: %f + %f (= %f)\e[0m\n",fa.fval,fb.fval,fs.fval);
+	greenprintf("fpu_add: %f + %f (=%f)\n",fa.fval,fb.fval,fs.fval);
 	hexdump(fa);
 	hexdump(fb);
 	hexdump(fs);

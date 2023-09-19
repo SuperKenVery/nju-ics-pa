@@ -1,5 +1,5 @@
-#ifndef __DEBUG_H__
-#define __DEBUG_H__ 1
+#ifndef __NEMU_DEBUG_H__
+#define __NEMU_DEBUG_H__
 
 #include <stdio.h>
 
@@ -37,6 +37,13 @@
 		}                                                                                    \
 	}                                                                                      \
 }                                                                                        \
+
+#define greenprintf(...) \
+{                        \
+	printf("\e[0;32m");    \
+	printf(__VA_ARGS__);   \
+	printf("\e[0m");       \
+}
 
 /* A convenient function named breakpoint
  * 
