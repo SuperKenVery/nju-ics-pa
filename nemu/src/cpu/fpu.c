@@ -48,11 +48,16 @@ void showstate(const i32 exp, u64 sig_grs){
 	printf(")");
 	printf("  * 2**%d  = ",exp==0?-126:exp-127);
 
-	FLOAT f;
-	f.sign=0;
-	f.exponent=exp;
-	f.fraction=fraction;
-	printf("%f",f.fval);
+	i64 div=26-(exp-127);
+	double result=sig_grs;
+	if(div>=0){
+		for(i64 i=0;i<div;i++) result=result/2;
+	}else{
+		i64 mul=-div;
+		for(i64 i=0;i<mul;i++) result=result*2;
+	}
+	printf("%llf",result);
+	
 
 	printf("\n");
 }
