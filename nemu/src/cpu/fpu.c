@@ -51,6 +51,11 @@ void showstate(const i32 exp, u64 sig_grs){
 	if(exp==255){
 		if(lower>>3==0){
 			printf("inf");
+			if(exp==0){
+				printf(" (exp==0!!) ");
+			}else{
+				printf(" (exp is now %d) ",exp);
+			}
 		}else{
 			printf("NaN");
 		}
