@@ -60,6 +60,7 @@ void showstate(const i32 exp, u64 sig_grs){
 			printf("NaN");
 		}
 	}else{
+		printf(" (calc value) ");
 		printf("%f",
 			((double)sig_grs) / (1<<(26-(exp==0?-126:exp-127))) 
 		);
