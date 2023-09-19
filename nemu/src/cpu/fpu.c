@@ -451,11 +451,13 @@ uint32_t internal_float_mul(uint32_t b, uint32_t a)
 	sig_res = sig_a * sig_b; // 24b * 24b
 	uint32_t exp_res = 0;
 
-	/* TODO: exp_res = ? leave space for GRS bits. */
-	printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return internal_normalize(f.sign, exp_res, sig_res);
+	/* exp_res = ? leave space for GRS bits. */
+	i32 ae=fa.exponent-127, be=fb.exponent-127;
+	i32 re=ae+be;
+	exp_res=re+127;
+
+	u64 sig_grs=sig_res<<3;
+	return internal_normalize(f.sign, exp_res, sig_grs);
 }
 
 CORNER_CASE_RULE corner_div[] = {
