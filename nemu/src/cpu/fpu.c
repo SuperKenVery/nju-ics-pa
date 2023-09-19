@@ -29,10 +29,18 @@ void showstate(i32 exp, u64 sig_grs){
 		grs=grs>>1;
 	}
 	printf(")");
-	printf("  * 2**%d",exp==0?-126:exp-127);
-	printf("  = %f",
-		((double)sig_grs) / (1<<(26-(exp==0?-126:exp-127))) 
-	);
+	printf("  * 2**%d  = ",exp==0?-126:exp-127);
+	if(exp==0xFF){
+		if(lower>>3==0){
+			printf("inf");
+		}else{
+			printf("NaN");
+		}
+	}else{
+		printf("%f",
+			((double)sig_grs) / (1<<(26-(exp==0?-126:exp-127))) 
+		);
+	} 
 	printf("\n");
 }
 
