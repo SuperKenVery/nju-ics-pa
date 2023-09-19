@@ -273,10 +273,10 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 		sig_b |= 0x800000; // the hidden 1
 
 	printf("a: ");
-	showstate(fa.exponent, fa.fraction<<3);
+	showstate(fa.exponent, sig_a<<3);
 	hexdump(b);
 	printf("b: ");
-	showstate(fb.exponent, fb.fraction<<3);
+	showstate(fb.exponent, sig_b<<3);
 
 	// alignment shift for fa
 	i32 ae=fa.exponent==0?
