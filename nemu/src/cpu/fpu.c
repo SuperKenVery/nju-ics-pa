@@ -161,7 +161,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		bool did_do_round=false;
 		u8 grs=sig_grs&((1<<3)-1);
 		u64 fraction=sig_grs>>3;
-		hexdump(fraction);
 		if(grs<4){
 			// Round down, do nothing
 			printf("Round down ,do nothing\n");
@@ -170,7 +169,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			printf("Round up\n");
 			did_do_round=true;
 			fraction+=1;
-			hexdump(fraction);
 		}else{
 			// grs==4, round to nearest even (value or value+1)
 			printf("grs is 4\n");
@@ -184,7 +182,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		}
 
 		sig_grs=fraction;
-		hexdump(sig_grs);
 		printf("after rounding %f\n",
 			((double)sig_grs) / (1<<(26-(exp==0?-126:exp-127)))
 		);
