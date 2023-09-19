@@ -455,13 +455,6 @@ uint32_t internal_float_mul(uint32_t b, uint32_t a)
 	i32 re=ae+be-20;
 	i32 exp_res=re+127;
 
-	printf("a: ");
-	showstate(fa.exponent, sig_a<<3);
-	printf("b: ");
-	showstate(fb.exponent, sig_b<<3);
-	printf("res: ");
-	showstate(exp_res,sig_grs);
-
 	return internal_normalize(f.sign, exp_res, sig_grs);
 }
 
