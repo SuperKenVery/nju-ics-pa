@@ -23,7 +23,6 @@ void fpu_test_add()
 			b.fval = input[j];
 			res.fval = a.fval + b.fval;
 			res_fpu.val = internal_float_add(b.val, a.val);
-			printf("fpu_test_add a=%f(0x%x) b=%f(0x%x) res=%f(0x%x) answer=%f(0x%x)\n",
 				a.fval,a.val,b.fval,b.val,res_fpu.fval,res_fpu.val,res.fval,res.val
 			);
 			fflush(stdout);
