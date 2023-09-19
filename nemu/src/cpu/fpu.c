@@ -124,9 +124,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		printf("now %f\n",
 			((double)sig_grs) / (1<<(26-(exp==0?-126:exp-127)))
 		);
-		hexdump(sig_grs);
-		u64 ss=sig_grs>>26;
-		hexdump(ss);
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
 			/* shift left */
@@ -136,8 +133,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 				((double)sig_grs) / (1<<(26-(exp==0?-126:exp-127))),
 				exp
 			);
-			hexdump(sig_grs);
-			hexdump(exp);
 		}
 		if (exp == 0)
 		{
@@ -278,11 +273,9 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	if (fb.exponent != 0)
 		sig_b |= 0x800000; // the hidden 1
 
-	hexdump(fa);
-	hexdump(fb);
-	hexdump(fs);
-
+	printf("a: ");
 	showstate(fa.exponent, fa.fraction<<3);
+	printf("b: ");
 	showstate(fb.exponent, fb.fraction<<3);
 
 	// alignment shift for fa
