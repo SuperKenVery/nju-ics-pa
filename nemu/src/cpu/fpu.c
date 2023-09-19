@@ -47,7 +47,7 @@ void showstate(const i32 exp, u64 sig_grs){
 	printf("(");
 	show_digits(grs, 3);
 	printf(")");
-	printf("  * 2**%d  = ",exp==0?-126:exp-127);
+	printf("  * 2**%d (%d) = ",exp==0?-126:exp-127,exp);
 	if(exp==255){
 		if(lower>>3==0){
 			printf("inf");
