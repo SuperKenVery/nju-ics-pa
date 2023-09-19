@@ -274,6 +274,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 
 	printf("a: ");
 	showstate(fa.exponent, fa.fraction<<3);
+	hexdump(b);
 	printf("b: ");
 	showstate(fb.exponent, fb.fraction<<3);
 
