@@ -34,16 +34,12 @@ void show_digits(u64 val, usize size){
 	}
 }
 
-void showstate(i32 exp, u64 sig_grs){
-	hexdump(sig_grs);
+void showstate(const i32 exp, u64 sig_grs){
 	u64 upper=sig_grs>>26;
 	u64 lower=sig_grs&((1<<26)-1);
 	u64 fraction=lower>>3;
 	u8 grs=lower&((1<<3)-1);
-	hexdump(upper);
-	hexdump(lower);
-	hexdump(fraction);
-	hexdump(grs);
+	hexdump(exp);
 
 	show_digits(upper, 10);
 	printf(".");
