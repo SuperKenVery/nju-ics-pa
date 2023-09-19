@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define FPU_DEBUG false
+
 FPU fpu;
 // special values
 FLOAT p_zero, n_zero, p_inf, n_inf, p_nan, n_nan;
@@ -78,7 +80,9 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	if ((sig_grs >> (23 + 3)) > 1 || exp < 0/*WTF is this?*/)
 	{
 		// normalize towards right
+		#if FPU_DEBUG
 		printf("Normalize towards right\n");
+		#endif
 		while (
 			(((sig_grs >> (23 + 3)) > 1) && exp < 0xff) // condition 1: fraction too large
 		  ||										   										// or
@@ -106,7 +110,9 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			// we have a denormal here, the exponent is 0, but means 2^-126,
 			// as a result, the significand should shift right once more
 			/* shift right, pay attention to sticky bit*/
+			#if FPU_DEBUG
 			printf("normalize: exp==0 after shift right\n");
+			#endif
 			u8 sticky=sig_grs&1;
 			sig_grs=sig_grs>>1;
 			sig_grs|=sticky;
@@ -124,23 +130,26 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 	{
 		// normalize towards left
+		#if FPU_DEBUG
 		printf("Normalize towards left, e=%u, ",exp);
-		printf("now %f\n",
-			((double)sig_grs) / (1<<(26-(exp==0?-126:exp-127)))
-		);
+		#endif
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
 			/* shift left */
 			sig_grs=sig_grs<<1;
 			exp--;
+			#if FPU_DEBUG
 			printf("normalize... ");
 			showstate(exp, sig_grs);
+			#endif
 		}
 		if (exp == 0)
 		{
 			// denormal
 			/* shift right, pay attention to sticky bit*/
+			#if FPU_DEBUG
 			printf("normalize: exp==0 after shift left\n");
+			#endif
 			u8 sticky=sig_grs&1;
 			sig_grs=sig_grs>>1;
 			sig_grs|=sticky;
@@ -149,31 +158,43 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	else if (exp == 0 && sig_grs >> (23 + 3) == 1)
 	{
 		// two denormals result in a normal
+		#if FPU_DEBUG
 		printf("normalize: two denormals result in a normal\n");
+		#endif
 		exp++;
 	}else{
+		#if FPU_DEBUG
 		printf("Not normalizing\n");
+		#endif
 	}
 
 	if (!overflow)
 	{
 		/* round up and remove the GRS bits */
 		// See https://stackoverflow.com/questions/16433611/understanding-of-rounding-ieee-floating-pointnumber
+		#if FPU_DEBUG
 		printf("Rounding...\t");
+		#endif
 		bool did_do_round=false;
 		u8 grs=sig_grs&((1<<3)-1);
 		u64 fraction=sig_grs>>3;
 		if(grs<4){
 			// Round down, do nothing
+			#if FPU_DEBUG
 			printf("Round down ,do nothing\n");
+			#endif
 		}else if(grs>4){
 			// Round up
+			#if FPU_DEBUG
 			printf("Round up\n");
+			#endif
 			did_do_round=true;
 			fraction+=1;
 		}else{
 			// grs==4, round to nearest even (value or value+1)
+			#if FPU_DEBUG
 			printf("grs is 4\n");
+			#endif
 			if(fraction%2==0){
 				// Round to value itself -> do nothing
 			}else{
@@ -184,14 +205,17 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		}
 
 		sig_grs=fraction;
+		#if FPU_DEBUG
 		printf("after rounding: ");
 		showstate(exp==0?1:exp,fraction<<3);
+		#endif
 
 		// TODO: Is it still normalized? 
 		if(did_do_round){
+			#if FPU_DEBUG
 			printf("<<<recursive rounding\n");
+			#endif
 			return internal_normalize(sign, exp, sig_grs<<3);
-			printf(">>>done recursive rounding\n");
 		}
 	}
 
