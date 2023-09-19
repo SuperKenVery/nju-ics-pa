@@ -159,7 +159,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	{
 		/* round up and remove the GRS bits */
 		// See https://stackoverflow.com/questions/16433611/understanding-of-rounding-ieee-floating-pointnumber
-		printf("Rounding...\n");
+		printf("Rounding...\t");
 		bool did_do_round=false;
 		u8 grs=sig_grs&((1<<3)-1);
 		u64 fraction=sig_grs>>3;
@@ -189,7 +189,9 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 
 		// TODO: Is it still normalized? 
 		if(did_do_round){
-			// return internal_normalize(sign, exp, sig_grs);
+			printf("<<<recursive rounding\n");
+			return internal_normalize(sign, exp, sig_grs);
+			printf(">>>done recursive rounding\n");
 		}
 	}
 
