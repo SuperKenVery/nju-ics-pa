@@ -8,9 +8,38 @@ FPU fpu;
 // special values
 FLOAT p_zero, n_zero, p_inf, n_inf, p_nan, n_nan;
 
+void showstate(i32 exp, u64 sig_grs){
+	u64 upper=sig_grs>>26;
+	u64 lower=sig_grs&((1<<26)-1);
+	u64 fraction=lower>>3;
+	u8 grs=lower&((1<<3)-1);
+
+	while(upper>0){
+		printf(upper&1?"1":"0");
+		upper=upper>>1;
+	}
+	printf(".");
+	for(int i=0;i<23;i++){
+		printf(fraction&1?"1":"0");
+		fraction=fraction>>1;
+	}
+	printf("(");
+	for(int i=0;i<3;i++){
+		printf(grs&1?"1":"0");
+		grs=grs>>1;
+	}
+	printf(")");
+	printf("  * 2**%d",exp==0?-126:exp-127);
+	printf("  = %f",
+		((double)sig_grs) / (1<<(26-(exp==0?-126:exp-127))) 
+	);
+	printf("\n");
+}
+
 // the last three bits of the significand are reserved for the GRS bits
 inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 {
+	showstate(exp,sig_grs);
 
 	// normalization
 	bool overflow = false; // true if the result is INFINITY or 0 during normalize
