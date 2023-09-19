@@ -182,9 +182,15 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 		return a;
 	}
 
-	FLOAT f, fa, fb;
+	FLOAT f, fa, fb, fs;
 	fa.val = a;
 	fb.val = b;
+	fs.fval=fa.fval+fb.fval;
+
+	printf("\e[0;32mfpu_add: %f + %f (= %f)\e[0m\n",fa.fval,fb.fval,fs.fval);
+	hexdump(fa);
+	hexdump(fb);
+	hexdump(fs);
 	// infity, NaN
 	if (fa.exponent == 0xff)
 	{
