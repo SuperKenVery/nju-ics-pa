@@ -69,7 +69,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 	{
 		// normalize towards left
-		printf("Normalize towards left, e=%u\n",exp);
+		printf("Normalize towards left, e=%u, ",exp);
 		printf("now %f\n",
 			((double)sig_grs) / (1<<(26-(exp==0?-126:exp-127)))
 		);
@@ -81,8 +81,9 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			/* shift left */
 			sig_grs=sig_grs<<1;
 			exp--;
-			printf("normalize... %f\n",
-				((double)sig_grs) / (1<<(26-(exp==0?-126:exp-127)))
+			printf("normalize... %f, e=%u\n",
+				((double)sig_grs) / (1<<(26-(exp==0?-126:exp-127))),
+				exp
 			);
 			hexdump(sig_grs);
 			hexdump(exp);
