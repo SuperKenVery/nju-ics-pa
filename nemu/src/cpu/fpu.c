@@ -112,6 +112,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		/* round up and remove the GRS bits */
 		// See https://stackoverflow.com/questions/16433611/understanding-of-rounding-ieee-floating-pointnumber
 		printf("Rounding...\n");
+		bool did_do_round=false;
 		u8 grs=sig_grs&((1<<3)-1);
 		u64 fraction=sig_grs>>3;
 		hexdump(fraction);
@@ -121,6 +122,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		}else if(grs>4){
 			// Round up
 			printf("Round up\n");
+			did_do_round=true;
 			fraction+=1;
 			hexdump(fraction);
 		}else{
@@ -131,6 +133,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			}else{
 				// Round to value+1
 				fraction+=1;
+				did_do_round=true;
 			}
 		}
 
@@ -139,6 +142,11 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		printf("after rounding %f\n",
 			((double)sig_grs) / (1<<(26-(exp==0?-126:exp-127)))
 		);
+
+		// TODO: Is it still normalized? 
+		if(did_do_round){
+			return internal_normalize(sign, exp, sig_grs);
+		}
 	}
 
 	FLOAT f;
