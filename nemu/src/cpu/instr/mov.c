@@ -20,14 +20,6 @@ make_instr_impl_2op(mov, a, o, v)
 make_instr_impl_2op(mov, o, a, b)
 make_instr_impl_2op(mov, o, a, v)
 
-make_instr_func(mov_i2r_b) {
-  u8 imm=instr_fetch(eip+1,1);
-  u8 regIdx=opcode & 0x7;
-  cpu.gpr[regIdx]._8[0]=imm;
-
-  return 2;
-}
-
 make_instr_func(mov_zrm82r_v) {
 	int len = 1;
 	OPERAND r, rm;
