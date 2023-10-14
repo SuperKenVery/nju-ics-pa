@@ -1,4 +1,24 @@
+#include "cpu-ref/instr_ref.h"
+#include "cpu/alu.h"
 #include "cpu/instr.h"
+#include "cpu/modrm.h"
+#include "cpu/operand.h"
 /*
 Put the implementations of `cmp' instructions here.
 */
+
+make_instr_func(cmp) {
+  int len=1;
+  OPERAND rm,imm;
+  len+=modrm_rm(eip, &rm);
+
+  imm.type=OPR_IMM;
+  imm.data_size=rm.data_size;
+  imm.addr=eip+2;
+
+  operand_read(&imm);
+
+  alu_sub(rm.val, imm.val, data_size);
+
+  return len;
+}
