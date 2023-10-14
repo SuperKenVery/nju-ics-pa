@@ -7,8 +7,10 @@ let
     };
     newpkgs = import <nixpkgs> {
     };
+    newi686pkgs = import <nixpkgs> {
+      system="i686-linux";
+    };
 
-    myPkg = pkgs.gcc-unwrapped;
 in
   pkgs.stdenv.mkDerivation {
     name="gcc8";
@@ -17,6 +19,14 @@ in
       readline
       SDL
       bear
+      newi686pkgs.glibc
       newpkgs.pwndbg
+      newpkgs.glibc
     ];
+
+    # Nix-ld
+    NIX_LD_LIBRARY_PATH = newi686pkgs.lib.makeLibraryPath [
+      newi686pkgs.stdenv.cc.cc
+    ];
+    NIX_LD = newi686pkgs.lib.fileContents "${newi686pkgs.stdenv.cc}/nix-support/dynamic-linker";
   }
