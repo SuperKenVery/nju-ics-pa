@@ -13,7 +13,7 @@ make_instr_func(cmp) {
   len+=modrm_rm(eip, &rm);
 
   imm.type=OPR_IMM;
-  imm.data_size=rm.data_size;
+  imm.data_size=data_size;
   imm.addr=eip+2;
 
   operand_read(&imm);
