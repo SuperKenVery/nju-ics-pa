@@ -4,4 +4,7 @@
 Put the declarations of `xor' instructions here.
 */
 
+#include "cpu/instr_helper.h"
+make_instr_func(xor_31);
+
 #endif
