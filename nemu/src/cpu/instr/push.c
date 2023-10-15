@@ -14,9 +14,11 @@ make_instr_func(push_50) {
   r.addr=opcode%8;
   operand_read(&r);
 
-  sp.data_size=data_size;
+  // Address size in NEMU is always 32, we don't have addr size prefix
+  // Always use ESP rather than SP
+  sp.data_size=32;
   sp.type=OPR_REG;
-  sp.addr=REG_SP;
+  sp.addr=REG_ESP;
   operand_read(&sp);
   sp.val-=data_size/8;
   operand_write(&sp);
