@@ -20,6 +20,6 @@ make_instr_func(xor_31) {
 
   rm.val^=r.val;
 
-  operand_write(rm);
+  operand_write(&rm);
   return len;
 }
