@@ -7,7 +7,7 @@
 Put the implementations of `cmp' instructions here.
 */
 
-make_instr_func(cmp) {
+make_instr_func(cmp_83) {
   int len=1;
   OPERAND rm,imm;
   rm.data_size=data_size;

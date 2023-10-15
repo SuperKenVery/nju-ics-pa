@@ -5,6 +5,6 @@
 /*
 Put the declarations of `cmp' instructions here.
 */
-make_instr_func(cmp);
+make_instr_func(cmp_83);
 
 #endif
