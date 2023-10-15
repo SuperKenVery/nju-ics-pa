@@ -10,7 +10,10 @@ Put the implementations of `cmp' instructions here.
 make_instr_func(cmp) {
   int len=1;
   OPERAND rm,imm;
-  len+=modrm_rm(eip, &rm);
+  rm.data_size=data_size;
+  imm.data_size=data_size;
+
+  len+=modrm_rm(eip+1, &rm);
 
   imm.type=OPR_IMM;
   imm.data_size=data_size;
