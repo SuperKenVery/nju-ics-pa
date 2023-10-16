@@ -1,5 +1,5 @@
 #include "cpu-ref/instr_ref.h"
-#include "cpu/instr.h"3001f
+#include "cpu/instr.h"
 #include "cpu/instr_helper.h"
 #include "cpu/modrm.h"
 #include "cpu/operand.h"
