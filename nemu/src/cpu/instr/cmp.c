@@ -12,14 +12,13 @@ make_instr_func(cmp_83) {
   int len=1;
   OPERAND rm,imm;
   rm.data_size=data_size;
-  imm.data_size=data_size;
 
   len+=modrm_rm(eip+1, &rm);
 
   imm.type=OPR_IMM;
-  imm.data_size=data_size;
+  imm.data_size=8;
   imm.addr=eip+len;
-  len++;
+  len+=imm.data_size/8;
 
   operand_read(&imm);
 
