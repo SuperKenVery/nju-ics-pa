@@ -18,7 +18,7 @@ make_instr_func(add_01) {
   operand_read(&rm);
   operand_read(&r);
 
-  rm.val=r.val+rm.val;
+  rm.val=alu_add(r.val,rm.val,data_size);
 
   operand_write(&rm);
   

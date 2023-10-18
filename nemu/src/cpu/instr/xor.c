@@ -18,7 +18,7 @@ make_instr_func(xor_31) {
   operand_read(&r);
   operand_read(&rm);
 
-  rm.val^=r.val;
+  rm.val=alu_xor(rm.val,r.val,data_size);
 
   operand_write(&rm);
   return len;

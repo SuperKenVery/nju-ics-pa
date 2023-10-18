@@ -17,6 +17,8 @@ in
       SDL
       bear
       newpkgs.pwndbg
+      newpkgs.pwntools
+      newpkgs.nasm
     ];
 
   }

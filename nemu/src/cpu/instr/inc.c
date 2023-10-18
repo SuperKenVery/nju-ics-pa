@@ -15,7 +15,7 @@ make_instr_func(inc_fe) {
   len+=modrm_rm(eip+len,&rm);
 
   operand_read(&rm);
-  rm.val++;
+  rm.val=alu_add(rm.val,1,8);
   operand_write(&rm);
 
   return len;
@@ -29,7 +29,7 @@ make_instr_func(inc_ff) {
   len+=modrm_rm(eip+len, &rm);
 
   operand_read(&rm);
-  rm.val++;
+  rm.val=alu_add(rm.val,1,data_size);
   operand_write(&rm);
 
   return len;
@@ -44,7 +44,7 @@ make_instr_func(inc_40) {
   r.addr=opcode%8;
 
   operand_read(&r);
-  r.val++;
+  r.val=alu_add(r.val,1,data_size);
   operand_write(&r);
 
   return len;
