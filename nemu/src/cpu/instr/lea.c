@@ -18,5 +18,7 @@ make_instr_func(lea_8d) {
   r.val=m.addr;
   operand_write(&r);
 
+  print_asm_2("lea","",len,&r,&m);
+  
   return len;
 }

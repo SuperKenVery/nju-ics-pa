@@ -29,5 +29,7 @@ make_instr_func(push_50) {
   stack.val=r.val; 
   operand_write(&stack); 
 
+  print_asm_1("push", "", 1, &r);
+
   return 1;
 }

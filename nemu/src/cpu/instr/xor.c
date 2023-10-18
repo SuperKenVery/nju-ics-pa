@@ -21,5 +21,8 @@ make_instr_func(xor_31) {
   rm.val=alu_xor(rm.val,r.val,data_size);
 
   operand_write(&rm);
+
+  print_asm_2("xor","",len,&rm,&r);
+  
   return len;
 }

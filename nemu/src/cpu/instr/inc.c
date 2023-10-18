@@ -47,5 +47,7 @@ make_instr_func(inc_40) {
   r.val=alu_add(r.val,1,data_size);
   operand_write(&r);
 
+  print_asm_1("inc","",len,&r);
+
   return len;
 }
