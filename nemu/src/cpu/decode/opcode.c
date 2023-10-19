@@ -27,7 +27,7 @@ instr_func opcode_entry[256] = {
     /* 0x5c - 0x5f*/ inv, inv, inv, inv,
     /* 0x60 - 0x63*/ inv, inv, inv, inv,
     /* 0x64 - 0x67*/ inv, inv, data_size_16, inv,
-    /* 0x68 - 0x6b*/ inv, inv, inv, inv,
+    /* 0x68 - 0x6b*/ inv, imul_69, inv, imul_6b,
     /* 0x6c - 0x6f*/ inv, inv, inv, inv,
     /* 0x70 - 0x73*/ inv, jno_short_, jb_short_, jae_short_,
     /* 0x74 - 0x77*/ je_short_, jne_short_, jna_short_, ja_short_,
@@ -105,11 +105,11 @@ instr_func group_2_cv_entry[8] =
 
 /* 0xf6 */
 instr_func group_3_b_entry[8] =
-    {inv, inv, inv, inv, inv, inv, inv, inv};
+    {inv, inv, inv, inv, inv, imul_f6, inv, inv};
 
 /* 0xf7 */
 instr_func group_3_v_entry[8] =
-    {inv, inv, inv, inv, inv, inv, inv, inv};
+    {inv, inv, inv, inv, inv, imul_f7, inv, inv};
 
 /* 0xff */
 instr_func group_5_indirect_entry[8] =
@@ -194,7 +194,7 @@ instr_func opcode_2_byte_entry[256] = {
     /* 0xa0 - 0xa3*/ inv, inv, inv, bt_r2rm_v,
     /* 0xa4 - 0xa7*/ inv, inv, inv, inv,
     /* 0xa8 - 0xab*/ inv, inv, inv, inv,
-    /* 0xac - 0xaf*/ inv, inv, inv, inv,
+    /* 0xac - 0xaf*/ inv, inv, inv, imul_0faf,
     /* 0xb0 - 0xb3*/ inv, inv, inv, inv,
     /* 0xb4 - 0xb7*/ inv, inv, mov_zrm82r_v, mov_zrm162r_l,
     /* 0xb8 - 0xbb*/ inv, inv, inv, inv,

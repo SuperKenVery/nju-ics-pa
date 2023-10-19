@@ -1,6 +1,6 @@
 #include "cpu/instr.h"
 
-make_instr_func(imul_rm2r_v)
+make_instr_func(imul_0faf)
 {
 	int len = 1;
 	OPERAND r, rm;
@@ -16,7 +16,7 @@ make_instr_func(imul_rm2r_v)
 	return len;
 }
 
-make_instr_func(imul_rm2a_b)
+make_instr_func(imul_f6)
 {
 	int len = 1; // in group
 	OPERAND al, rm;
@@ -38,7 +38,7 @@ make_instr_func(imul_rm2a_b)
 	return len;
 }
 
-make_instr_func(imul_rm2a_v)
+make_instr_func(imul_f7)
 {
 	int len = 1; // in group
 	OPERAND a, rm;
@@ -74,7 +74,7 @@ make_instr_func(imul_rm2a_v)
 	return len;
 }
 
-make_instr_func(imul_irm2r_v)
+make_instr_func(imul_69)
 {
 	int len = 1;
 	OPERAND r, rm, imm;
@@ -92,8 +92,10 @@ make_instr_func(imul_irm2r_v)
 	return len + data_size / 8;
 }
 
-make_instr_func(imul_i8rm2r_v)
+make_instr_func(imul_6b)
 {
+	// TODO: When is this thing two-operand? When is it 3?
+	// pray it works...
 	int len = 1;
 	OPERAND r, rm, imm;
 	r.data_size = data_size;
