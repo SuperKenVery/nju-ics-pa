@@ -24,6 +24,8 @@ make_instr_func(cmp_83) {
 
   alu_sub(rm.val, imm.val, data_size);
 
+  print_asm_2("cmp", "", len, &rm, &imm);
+
   return len;
 }
 
