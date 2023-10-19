@@ -21,6 +21,8 @@ make_instr_func(add_01) {
   rm.val=alu_add(r.val,rm.val,data_size);
 
   operand_write(&rm);
+
+  print_asm_2("add", "", len, &rm, &r);
   
   return len;
 }
