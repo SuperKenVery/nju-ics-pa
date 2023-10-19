@@ -21,6 +21,7 @@ make_instr_func(cmp_83) {
   len+=imm.data_size/8;
 
   operand_read(&imm);
+  operand_read(&rm);
 
   alu_sub(rm.val, sign_ext(imm.val,8), data_size);
 

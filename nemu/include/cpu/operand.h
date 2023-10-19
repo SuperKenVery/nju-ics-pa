@@ -36,6 +36,7 @@ typedef struct
 	uint32_t val;
 	size_t data_size;
 	MEM_ADDR mem_addr;
+	int magic; 
 } OPERAND;
 
 extern OPERAND opr_src, opr_dest;
