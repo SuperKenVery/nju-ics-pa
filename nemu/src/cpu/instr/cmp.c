@@ -25,7 +25,7 @@ make_instr_func(cmp_83) {
   alu_sub(rm.val, sign_ext(imm.val,8), data_size);
 
   print_asm_2("cmp", "", len, &rm, &imm);
-  printf("cmp83: len=%d, rm=%d, imm=%d\n",len,rm.val,imm.val);
+  printf("cmp83: len=%d, rm=%d, rm.addr=%p, imm=%d\n",len,rm.val,rm.addr,imm.val);
 
   return len;
 }
