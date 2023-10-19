@@ -1,8 +1,8 @@
 #include "cpu/instr.h"
 
 instr_func opcode_entry[256] = {
-    /* 0x00 - 0x03*/ inv, add_01, inv, inv,
-    /* 0x04 - 0x07*/ inv, inv, inv, inv,
+    /* 0x00 - 0x03*/ add_00, add_01, add_02, add_03,
+    /* 0x04 - 0x07*/ add_04, add_05, inv, inv,
     /* 0x08 - 0x0b*/ inv, inv, inv, inv,
     /* 0x0c - 0x0f*/ inv, inv, inv, opcode_2_byte,
     /* 0x10 - 0x13*/ inv, inv, inv, inv,
@@ -69,15 +69,15 @@ instr_func opcode_entry[256] = {
 
 /* 0x80 */
 instr_func group_1_b_entry[8] =
-    {inv, inv, inv, inv, inv, sub_80, inv, inv};
+    {add_80, inv, inv, inv, inv, sub_80, inv, inv};
 
 /* 0x81 */
 instr_func group_1_v_entry[8] =
-    {inv, inv, inv, inv, inv, sub_81, inv, inv};
+    {add_81, inv, inv, inv, inv, sub_81, inv, inv};
 
 /* 0x83 */
 instr_func group_1_bv_entry[8] =
-    {inv, inv, inv, inv, inv, sub_83, inv, cmp_83};
+    {add_83, inv, inv, inv, inv, sub_83, inv, cmp_83};
 
 /* 0xc0 */
 instr_func group_2_b_entry[8] =
