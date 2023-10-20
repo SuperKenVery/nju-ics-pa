@@ -51,7 +51,7 @@ make_instr_func(cmp_3d) {
   alu_sub(imm.val,ax.val,data_size);
 
   print_asm_2("cmp", "", len, &imm, &ax);
-  printf("Comparing data_size=%d (E)AX=%d IMM=%d\n",data_size,ax.val,imm.val);
+  // printf("Comparing data_size=%d (E)AX=%d IMM=%d\n",data_size,ax.val,imm.val);
 
   return len;
 }
