@@ -4,6 +4,7 @@
 #include "device/mm_io.h"
 #include <memory.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 uint8_t hw_mem[MEM_SIZE_B];
 
