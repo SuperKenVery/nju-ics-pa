@@ -21,8 +21,8 @@ void print_reg()
 	printf("edi\t0x%08x\n", cpu.edi);
 	printf("eip\t0x%08x\n", cpu.eip);
 
-	printf("CF=%u\tPF=%u\tAF=%u\tZF=%u\tSF=%u\tTF=%u\tIF=%u\tIF=%u\tDF=%u\tOF=%u\tOLIP=%u\tNT=%u\tRF=%u\tVM=%u\n",
-		cpu.eflags.CF, cpu.eflags.PF,cpu.eflags.ZF,cpu.eflags.SF,cpu.eflags.TF,cpu.eflags.IF,cpu.eflags.DF,cpu.eflags.OF,cpu.eflags.OLIP,cpu.eflags.NT,cpu.eflags.RF,cpu.eflags.VM);
+	printf("CF=%u\tPF=%u\tAF=%u\tZF=%u\tSF=%u\tTF=%u\tIF=%u\tDF=%u\tOF=%u\tOLIP=%u\tNT=%u\tRF=%u\tVM=%u\n",
+		cpu.eflags.CF, cpu.eflags.PF,cpu.eflags.AF,cpu.eflags.ZF,cpu.eflags.SF,cpu.eflags.TF,cpu.eflags.IF,cpu.eflags.DF,cpu.eflags.OF,cpu.eflags.OLIP,cpu.eflags.NT,cpu.eflags.RF,cpu.eflags.VM);
 }
 
 int get_reg_val(const char *reg, bool *success)
