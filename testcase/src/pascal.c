@@ -15,7 +15,7 @@ int main()
 	{
 		a[i][0] = a[i][i] = 1;
 		nemu_assert(a[i][0] == 1);
-		// nemu_assert(a[i][i] == 1);
+		nemu_assert(a[i][i] == 1);
 	}
 
 	// for (i = 2; i < N; i++)
