@@ -2,7 +2,6 @@
 //#include "stdio.h"
 
 #define N 31
-// #define N 6
 // #define N 3
 
 int a[N][N];
@@ -25,7 +24,6 @@ int main()
 		for (j = 1; j < i; j++)
 		{
 			a[i][j] = a[i - 1][j - 1] + a[i - 1][j];
-			// a[i][j]=a[i-1][j];
 		}
 	}
 
