@@ -18,13 +18,15 @@ int main()
 		nemu_assert(a[i][i] == 1);
 	}
 
-	// for (i = 2; i < N; i++)
-	// {
-	// 	for (j = 1; j < i; j++)
-	// 	{
-	// 		a[i][j] = a[i - 1][j - 1] + a[i - 1][j];
-	// 	}
-	// }
+	for (i = 2; i < N; i++)
+	{
+		nemu_assert(i<N);
+		for (j = 1; j < i; j++)
+		{
+			a[i][j] = a[i - 1][j - 1] + a[i - 1][j];
+			nemu_assert(j<i);
+		}
+	}
 
 	// for (j = 0; j <= N-1; j++)
 	// {
