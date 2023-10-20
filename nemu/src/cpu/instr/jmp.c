@@ -1,3 +1,4 @@
+#include "cpu/alu.h"
 #include "cpu/instr.h"
 #include "cpu/instr_helper.h"
 #include "cpu/operand.h"
@@ -34,7 +35,7 @@ make_instr_func(jmp_eb) {
 
         print_asm_1("jmp","",len,&rel);
 
-        cpu.eip += rel.val;
+        cpu.eip += sign_ext(rel.val, 8);
 
         return len;
 }
