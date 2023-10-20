@@ -2,6 +2,7 @@
 #define __INSTR_GROUP_H__
 
 // entries for all instructions
+#include "cpu/instr_helper.h"
 extern instr_func opcode_entry[];
 extern instr_func opcode_2_byte_entry[];
 extern instr_func group_1_b_entry[];
@@ -15,6 +16,7 @@ extern instr_func group_2_cb_entry[];
 extern instr_func group_2_cv_entry[];
 extern instr_func group_3_b_entry[];
 extern instr_func group_3_v_entry[];
+extern instr_func group_4_entry[];
 extern instr_func group_5_indirect_entry[];
 extern instr_func group_7_entry[];
 extern instr_func group_x87_d8_entry[];
@@ -39,6 +41,8 @@ make_instr_func(group_2_cv);
 
 make_instr_func(group_3_b);
 make_instr_func(group_3_v);
+
+make_instr_func(group_4);
 
 make_instr_func(group_5_indirect);
 
