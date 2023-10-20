@@ -1,4 +1,4 @@
-// #include "trap.h"
+#include "trap.h"
 //#include "stdio.h"
 
 // #define N 31
@@ -38,7 +38,7 @@ int main()
 	// 	nemu_assert(a[N-1][j] == ans[j]);
 	// }
 
-	// HIT_GOOD_TRAP;
+	HIT_GOOD_TRAP;
 
 	return 0;
 }
