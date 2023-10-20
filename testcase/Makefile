@@ -1,7 +1,7 @@
 .PHONY: testcase clean
 
 CC := gcc
-LD := ld -O0
+LD := ld
 CFLAGS := -O0 -ggdb3 -MMD -MP -Wall -m32 -march=i386 -fno-pic -fno-builtin -fno-stack-protector -I../include -I../libs/newlib/include
 CPPFLAGS := -O0
 
