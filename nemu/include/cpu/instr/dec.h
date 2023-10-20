@@ -4,4 +4,8 @@
 Put the declarations of `dec' instructions here.
 */
 
+make_instr_func(dec_fe);
+make_instr_func(dec_ff);
+make_instr_func(dec_48);
+
 #endif
