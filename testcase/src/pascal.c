@@ -19,10 +19,10 @@ int main()
 		nemu_assert(a[i][i] == 1);
 	}
 
-	a[0][0]=0;
-	while(a[0][0]<N) a[0][0]++;
+	// a[0][0]=0;
+	// while(a[0][0]<N) a[0][0]++;
 
-	HIT_GOOD_TRAP;
+	// HIT_GOOD_TRAP;
 
 	for (i = 2; i < N; i++)
 	{
@@ -32,10 +32,10 @@ int main()
 		}
 	}
 
-	// for (j = 0; j <= N-1; j++)
-	// {
-	// 	nemu_assert(a[N-1][j] == ans[j]);
-	// }
+	for (j = 0; j <= N-1; j++)
+	{
+		nemu_assert(a[N-1][j] == ans[j]);
+	}
 
 	HIT_GOOD_TRAP;
 
