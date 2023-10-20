@@ -24,10 +24,7 @@ make_instr_func(test_a8) {
   operand_read(&al);
   operand_read(&imm);
 
-  // alu_add sets more flags than we want
-  al.val=al.val&imm.val;
-  cpu.eflags.CF=0;
-  cpu.eflags.OF=0;
+  alu_and(al.val,imm.val,8);
 
   operand_write(&al);
 
@@ -52,11 +49,8 @@ make_instr_func(test_a9) {
   operand_read(&ax);
   operand_read(&imm);
 
-  // alu_add sets more flags than we want
-  ax.val=ax.val&imm.val;
-  cpu.eflags.CF=0;
-  cpu.eflags.OF=0;
-
+  alu_and(ax.val,imm.val,data_size);
+  
   operand_write(&ax);
 
   print_asm_2("test", "", len, &imm, &ax);
@@ -79,10 +73,8 @@ make_instr_func(test_f6) {
   operand_read(&imm);
   operand_read(&rm);
 
-  rm.val=rm.val&imm.val;
-  cpu.eflags.CF=0;
-  cpu.eflags.OF=0;
-
+  alu_and(rm.val, imm.val, 8);
+  
   operand_write(&rm);
 
   print_asm_2("test", "", len, &imm, &rm);
@@ -105,10 +97,8 @@ make_instr_func(test_f7) {
   operand_read(&imm);
   operand_read(&rm);
 
-  rm.val=rm.val&imm.val;
-  cpu.eflags.CF=0;
-  cpu.eflags.OF=0;
-
+  alu_and(rm.val, imm.val, data_size);
+  
   operand_write(&rm);
 
   print_asm_2("test", "", len, &imm, &rm);
@@ -126,10 +116,8 @@ make_instr_func(test_84) {
   operand_read(&r);
   operand_read(&rm);
 
-  rm.val=rm.val&r.val;
-  cpu.eflags.CF=0;
-  cpu.eflags.OF=0;
-
+  alu_and(r.val, rm.val, 8);
+  
   operand_write(&rm);
 
   print_asm_2("test", "", len, &r, &rm);
@@ -147,9 +135,7 @@ make_instr_func(test_85) {
   operand_read(&r);
   operand_read(&rm);
 
-  rm.val=rm.val&r.val;
-  cpu.eflags.CF=0;
-  cpu.eflags.OF=0;
+  alu_and(r.val, rm.val, data_size);
 
   operand_write(&rm);
 
