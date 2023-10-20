@@ -80,8 +80,8 @@ make_instr_func(cmp_80) {
 make_instr_func(cmp_81) {
   int len=1;
   OPERAND rm,imm;
-  imm.data_size=32;
-  rm.data_size=32;
+  imm.data_size=data_size;
+  rm.data_size=data_size;
   
   len+=modrm_rm(eip+len,&rm);
 
@@ -92,7 +92,7 @@ make_instr_func(cmp_81) {
   operand_read(&rm);
   operand_read(&imm);
 
-  alu_sub(imm.val,rm.val,32);
+  alu_sub(imm.val,rm.val,data_size);
 
   print_asm_2("cmp", "", len, &imm, &rm);
 

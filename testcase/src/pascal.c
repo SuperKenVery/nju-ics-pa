@@ -19,8 +19,8 @@ int main()
 		nemu_assert(a[i][i] == 1);
 	}
 
-	i=0;
-	while(i<N) i++;
+	a[0][0]=0;
+	while(a[0][0]<N) a[0][0]++;
 
 	HIT_GOOD_TRAP;
 
