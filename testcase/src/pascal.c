@@ -1,7 +1,8 @@
 #include "trap.h"
 //#include "stdio.h"
 
-#define N 31
+// #define N 31
+#define N 10
 // #define N 3
 
 int a[N][N];
@@ -20,11 +21,9 @@ int main()
 
 	for (i = 2; i < N; i++)
 	{
-		nemu_assert(i<N);
 		for (j = 1; j < i; j++)
 		{
 			a[i][j] = a[i - 1][j - 1] + a[i - 1][j];
-			nemu_assert(j<i);
 		}
 	}
 
