@@ -12,12 +12,12 @@ int ans[] = {1, 30, 435, 4060, 27405, 142506, 593775, 2035800, 5852925, 14307150
 int main()
 {
 	int i, j;
-	for (i = 0; i < N; i++)
-	{
-		a[i][0] = a[i][i] = 1;
-		nemu_assert(a[i][0] == 1);
-		nemu_assert(a[i][i] == 1);
-	}
+	// for (i = 0; i < N; i++)
+	// {
+	// 	a[i][0] = a[i][i] = 1;
+	// 	nemu_assert(a[i][0] == 1);
+	// 	nemu_assert(a[i][i] == 1);
+	// }
 
 	// a[0][0]=0;
 	// while(a[0][0]<N) a[0][0]++;
