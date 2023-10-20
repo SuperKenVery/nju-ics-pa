@@ -56,6 +56,8 @@ make_instr_func(name) {                          \
   rm.val-=sign_ext(imm.val, rmsize);             \
   operand_write(&rm);                            \
                                                  \
+  print_asm_2("sub", "", len, &imm, &rm);        \
+                                                 \
   return len;                                    \
 }
 
@@ -78,9 +80,11 @@ operand_read(&rm);                                       \
 if(rm_on_left){                                          \
   rm.val=alu_sub(rm.val,r.val,rmsize);                   \
   operand_write(&rm);                                    \
+  print_asm_2("sub", "", len, &r, &rm);                  \
 }else{                                                   \
   r.val=alu_sub(r.val,rm.val,rsize);                     \
   operand_write(&r);                                     \
+  print_asm_2("sub", "", len, &rm, &r);                  \
 }                                                        \
                                                          \
 return len;                                              \
