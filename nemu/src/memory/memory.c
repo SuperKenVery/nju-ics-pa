@@ -17,7 +17,7 @@ uint32_t hw_mem_read(paddr_t paddr, size_t len)
 void hw_mem_write(paddr_t paddr, size_t len, uint32_t data)
 {
 	if(paddr<0 || paddr>=MEM_SIZE_B) {
-		printf("Invalid memory write operation: write at %d\n",paddr);
+		printf("Invalid memory write operation: write at %u\n",paddr);
 	}
 	memcpy(hw_mem + paddr, &data, len);
 }
