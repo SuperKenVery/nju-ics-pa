@@ -32,9 +32,9 @@ make_instr_func(jmp_eb) {
 
         operand_read(&rel);
 
-        cpu.eip += rel.val;
-
         print_asm_1("jmp","",len,&rel);
+
+        cpu.eip += rel.val;
 
         return len;
 }
