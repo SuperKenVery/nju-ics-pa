@@ -1,6 +1,6 @@
 #include "cpu/instr.h"
 
-make_instr_func(idiv_rm2a_b)
+make_instr_func(idiv_f6)
 {
 	int len = 1; // in group
 	OPERAND ax, rm;
@@ -27,7 +27,7 @@ make_instr_func(idiv_rm2a_b)
 	return len;
 }
 
-make_instr_func(idiv_rm2a_v)
+make_instr_func(idiv_f7)
 {
 	int len = 1; // in group
 	OPERAND a, d, rm;
