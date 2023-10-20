@@ -27,8 +27,6 @@ int main()
 		}
 	}
 
-	HIT_GOOD_TRAP;
-
 	for (j = 0; j <= N-1; j++)
 	{
 		nemu_assert(a[N-1][j] == ans[j]);
