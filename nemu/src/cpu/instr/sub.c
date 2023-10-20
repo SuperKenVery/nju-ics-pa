@@ -53,7 +53,7 @@ make_instr_func(name) {                          \
                                                  \
   operand_read(&rm);                             \
   operand_read(&imm);                            \
-  rm.val-=sign_ext(imm.val, rmsize);             \
+  rm.val-=sign_ext(imm.val, immsize);            \
   operand_write(&rm);                            \
                                                  \
   print_asm_2("sub", "", len, &imm, &rm);        \
