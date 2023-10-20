@@ -2,7 +2,7 @@
 //#include "stdio.h"
 
 // #define N 31
-#define N 7
+#define N 4
 // #define N 3
 
 int a[N][N];
