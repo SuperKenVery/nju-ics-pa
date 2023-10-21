@@ -7,6 +7,9 @@ let
     };
     newpkgs = import <nixpkgs> {
     };
+    new32pkgs = import <nixpkgs> {
+      system="i686-linux";
+    };
 
 in
   pkgs.stdenv.mkDerivation {
