@@ -64,7 +64,7 @@ make_instr_func(push_6a) {
   len+=imm.data_size/8;
   operand_read(&imm);
 
-  do_push(imm.val, imm.data_size);
+  do_push(imm.val, data_size);
 
   print_asm_1("push", "", len, &imm);
 
