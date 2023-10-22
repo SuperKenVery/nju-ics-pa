@@ -78,11 +78,11 @@ operand_read(&r);                                        \
 operand_read(&rm);                                       \
                                                          \
 if(rm_on_left){                                          \
-  rm.val=alu_sub(rm.val,r.val,rmsize);                   \
+  rm.val=alu_sub(r.val,rm.val,rmsize);                   \
   operand_write(&rm);                                    \
   print_asm_2("sub", "", len, &r, &rm);                  \
 }else{                                                   \
-  r.val=alu_sub(r.val,rm.val,rsize);                     \
+  r.val=alu_sub(rm.val,r.val,rsize);                     \
   operand_write(&r);                                     \
   print_asm_2("sub", "", len, &rm, &r);                  \
 }                                                        \
