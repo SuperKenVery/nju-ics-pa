@@ -61,6 +61,7 @@ make_instr_func(push_6a) {
   imm.data_size=8;
   imm.type=OPR_IMM;
   imm.addr=eip+len;
+  len+=imm.data_size/8;
   operand_read(&imm);
 
   do_push(imm.val, imm.data_size);
@@ -77,6 +78,7 @@ make_instr_func(push_68) {
   imm.data_size=data_size;
   imm.type=OPR_IMM;
   imm.addr=eip+len;
+  len+=imm.data_size/8;
   operand_read(&imm);
 
   do_push(imm.val, imm.data_size);
