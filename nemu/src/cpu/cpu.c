@@ -7,8 +7,6 @@
 #include <stdio.h>
 #include <assert.h>
 
-#define NEMU_REF_INSTR 1
-
 CPU_STATE cpu;
 FPU fpu;
 int nemu_state;
