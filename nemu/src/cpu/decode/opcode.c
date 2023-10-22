@@ -4,7 +4,7 @@ instr_func opcode_entry[256] = {
     /* 0x00 - 0x03*/ add_00, add_01, add_02, add_03,
     /* 0x04 - 0x07*/ add_04, add_05, inv, inv,
     /* 0x08 - 0x0b*/ inv, inv, inv, inv,
-    /* 0x0c - 0x0f*/ inv, inv, inv, opcode_2_byte,
+    /* 0x0c - 0x0f*/ inv, inv, push_0e, opcode_2_byte,
     /* 0x10 - 0x13*/ inv, inv, inv, inv,
     /* 0x14 - 0x17*/ inv, inv, inv, inv,
     /* 0x18 - 0x1b*/ inv, inv, inv, inv,
@@ -27,7 +27,7 @@ instr_func opcode_entry[256] = {
     /* 0x5c - 0x5f*/ pop_58, pop_58, pop_58, pop_58,
     /* 0x60 - 0x63*/ inv, inv, inv, inv,
     /* 0x64 - 0x67*/ inv, inv, data_size_16, inv,
-    /* 0x68 - 0x6b*/ inv, imul_69, inv, imul_6b,
+    /* 0x68 - 0x6b*/ push_68, imul_69, push_6a, imul_6b,
     /* 0x6c - 0x6f*/ inv, inv, inv, inv,
     /* 0x70 - 0x73*/ inv, jno_short_, jb_short_, jae_short_,
     /* 0x74 - 0x77*/ je_short_, jne_short_, jna_short_, ja_short_,
@@ -117,7 +117,7 @@ instr_func group_4_entry[8] =
 
 /* 0xff */
 instr_func group_5_indirect_entry[8] =
-    {inc_ff, inv, inv, inv, inv, inv, inc_ff, inv};
+    {inc_ff, inv, inv, inv, inv, inv, push_ff, inv};
 
 instr_func group_7_entry[8] =
     {inv, inv, inv, inv, inv, inv, inv, inv};
