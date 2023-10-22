@@ -12,25 +12,25 @@ Put the implementations of `sub' instructions here.
 
 
 #define make_sub_2x_impl(name,size,reg) \
-make_instr_func(name) {  \
-  int len=1;             \
-  OPERAND r,imm;         \
-                         \
-  r.data_size=size;      \
-  r.type=OPR_REG;        \
-  r.addr=reg;            \
-                         \
-  imm.data_size=size;    \
-  imm.type=OPR_IMM;      \
-  imm.addr=eip+len;      \
-  len+=imm.data_size/8;  \
-                         \
-  operand_read(&imm);    \
-  operand_read(&r);      \
-  r.val-=imm.val;        \
-  operand_write(&r);     \
-                         \
-  return len;            \
+make_instr_func(name) {                 \
+  int len=1;                            \
+  OPERAND r,imm;                        \
+                                        \
+  r.data_size=size;                     \
+  r.type=OPR_REG;                       \
+  r.addr=reg;                           \
+                                        \
+  imm.data_size=size;                   \
+  imm.type=OPR_IMM;                     \
+  imm.addr=eip+len;                     \
+  len+=imm.data_size/8;                 \
+                                        \
+  operand_read(&imm);                   \
+  operand_read(&r);                     \
+  r.val=alu_sub(imm.val,r.val,size);    \
+  operand_write(&r);                    \
+                                        \
+  return len;                           \
 }
 
 make_sub_2x_impl(sub_2c, 8, REG_AL)
@@ -38,27 +38,27 @@ make_sub_2x_impl(sub_2c, 8, REG_AL)
 // depends on the data size.
 make_sub_2x_impl(sub_2d, data_size, REG_AX)
 
-#define make_sub8x_impl(name,rmsize,immsize) \
-make_instr_func(name) {                          \
-  int len=1;                                     \
-  OPERAND rm,imm;                                \
-                                                 \
-  rm.data_size=rmsize;                           \
-  len+=modrm_rm(eip+len, &rm);                   \
-                                                 \
-  imm.data_size=immsize;                         \
-  imm.type=OPR_IMM;                              \
-  imm.addr=eip+len;                              \
-  len+=imm.data_size/8;                          \
-                                                 \
-  operand_read(&rm);                             \
-  operand_read(&imm);                            \
-  rm.val-=sign_ext(imm.val, immsize);            \
-  operand_write(&rm);                            \
-                                                 \
-  print_asm_2("sub", "", len, &imm, &rm);        \
-                                                 \
-  return len;                                    \
+#define make_sub8x_impl(name,rmsize,immsize)                     \
+make_instr_func(name) {                                          \
+  int len=1;                                                     \
+  OPERAND rm,imm;                                                \
+                                                                 \
+  rm.data_size=rmsize;                                           \
+  len+=modrm_rm(eip+len, &rm);                                   \
+                                                                 \
+  imm.data_size=immsize;                                         \
+  imm.type=OPR_IMM;                                              \
+  imm.addr=eip+len;                                              \
+  len+=imm.data_size/8;                                          \
+                                                                 \
+  operand_read(&rm);                                             \
+  operand_read(&imm);                                            \
+  rm.val=alu_sub(sign_ext(imm.val,immsize),rm.val,rm.data_size); \
+  operand_write(&rm);                                            \
+                                                                 \
+  print_asm_2("sub", "", len, &imm, &rm);                        \
+                                                                 \
+  return len;                                                    \
 }
 
 make_sub8x_impl(sub_80, 8, 8)
