@@ -4,7 +4,7 @@ instr_func opcode_entry[256] = {
     /* 0x00 - 0x03*/ add_00, add_01, add_02, add_03,
     /* 0x04 - 0x07*/ add_04, add_05, inv, inv,
     /* 0x08 - 0x0b*/ inv, inv, inv, inv,
-    /* 0x0c - 0x0f*/ inv, inv, push_0e, opcode_2_byte,
+    /* 0x0c - 0x0f*/ inv, inv, inv, opcode_2_byte,
     /* 0x10 - 0x13*/ inv, inv, inv, inv,
     /* 0x14 - 0x17*/ inv, inv, inv, inv,
     /* 0x18 - 0x1b*/ inv, inv, inv, inv,
