@@ -11,6 +11,10 @@ let
       system="i686-linux";
     };
 
+    my-py-pkgs = ps: with ps; [
+      pwntools
+    ];
+
 in
   pkgs.stdenv.mkDerivation {
     name="gcc8";
@@ -22,6 +26,8 @@ in
       newpkgs.pwndbg
       newpkgs.pwntools
       newpkgs.nasm
+
+      (newpkgs.python311.withPackages my-py-pkgs)
     ];
 
   }
