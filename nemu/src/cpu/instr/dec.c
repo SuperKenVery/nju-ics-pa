@@ -50,5 +50,7 @@ make_instr_func(dec_48) {
   r.val=alu_sub(1,r.val,data_size);
   operand_write(&r);
 
+  print_asm_1("dec", "", len, &r);
+
   return len;
 }
