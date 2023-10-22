@@ -18,6 +18,8 @@ make_instr_func(inc_fe) {
   rm.val=alu_add(rm.val,1,8);
   operand_write(&rm);
 
+  print_asm_1("inc", "", len, &rm);
+
   return len;
 }
 
@@ -31,6 +33,8 @@ make_instr_func(inc_ff) {
   operand_read(&rm);
   rm.val=alu_add(rm.val,1,data_size);
   operand_write(&rm);
+
+  print_asm_1("inc","",len,&rm);
 
   return len;
 }
