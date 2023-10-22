@@ -27,6 +27,7 @@ make_instr_func(call_e8) {
   stack.data_size=data_size;
   stack.addr=esp.val;
   stack.val=cpu.eip;
+  printf("Call: pushing %x into stack\n",cpu.eip);
   operand_write(&stack);
 
   if(data_size==16){
