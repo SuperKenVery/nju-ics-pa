@@ -25,11 +25,11 @@ make_instr_func(ret_c3) {
   operand_write(&esp);
 
   // Write IP
-  printf("Ret: popping %x from stack\n",stack.val);
   cpu.eip=stack.val;
   if(stack.data_size==16) cpu.eip=cpu.eip&0xFFFF;
 
   print_asm_0("ret", "", len);
 
-  return len;
+  // Don't add anything to IP anymore
+  return 0;
 }

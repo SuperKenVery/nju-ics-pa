@@ -26,9 +26,12 @@ make_instr_func(call_e8) {
   stack.type=OPR_MEM;
   stack.data_size=data_size;
   stack.addr=esp.val;
-  stack.val=cpu.eip;
-  printf("Call: pushing %x into stack\n",cpu.eip);
+  // https://stackoverflow.com/a/33685182/22556342
+  // `call` pushes the `return address`, so we add len
+  stack.val=cpu.eip+len;
   operand_write(&stack);
+
+  print_asm_1("call","",len,&cw);
 
   if(data_size==16){
     cpu.eip=(cpu.eip+cw.val)&0xFFFF;
@@ -36,7 +39,6 @@ make_instr_func(call_e8) {
     cpu.eip=cpu.eip+cw.val;
   }
 
-  print_asm_1("call","",len,&cw);
-
+  // Displacement is relative to next instruction
   return len;
 }
