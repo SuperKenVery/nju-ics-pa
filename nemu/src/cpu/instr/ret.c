@@ -42,7 +42,7 @@ make_instr_func(ret_c2) {
   esp.val=esp.val+imm.val;
   operand_read(&esp);
 
-  print_asm_1("ret", "", len, &imm);
+  print_asm_1("ret", "(eip is wrong)", len, &imm);
 
   return len;
 }

@@ -29,6 +29,7 @@ make_instr_func(call_e8) {
   // https://stackoverflow.com/a/33685182/22556342
   // `call` pushes the `return address`, so we add len
   stack.val=cpu.eip+len;
+  printf("Call: pushing %d onto stack\n",stack.val);
   operand_write(&stack);
 
   print_asm_1("call","",len,&cw);
