@@ -447,7 +447,7 @@ uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
 	} // else OF is undefined
 
 	set_ZF(dest, data_size);
-	printf("alu_shl: setting PF for 0x%x\n",dest);
+	printf("alu_shl: setting PF for 0x%x\n",dest&0xF);
 	set_PF(dest);
 	printf("alu_shl: set PF to %d\n",cpu.eflags.PF);
 	set_SF(dest, data_size);
