@@ -112,6 +112,7 @@ void set_PF(u32 x){
 		if(bit) count++;
 		x=x>>1;
 	}
+	printf("set_PF: count=%d, count%2=%d\n",count,count%2);
 
 	if(count%2==1){
 		// Odd
