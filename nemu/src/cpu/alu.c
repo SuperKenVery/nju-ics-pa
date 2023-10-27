@@ -107,9 +107,11 @@ void set_CF_sub(u32 a, u32 b, usize size){
 
 void set_PF(u32 x){
 	u8 count=0;
+	printf("set_PF: Got 0x%x, lower 8 bit is 0x%x\n",x,x&0xFF);
 	for(int i=0;i<8;i++){
 		u8 bit=x&1;
 		if(bit) count++;
+		if(bit) printf("set_PF: bit at index %d is 1\n",i);
 		x=x>>1;
 	}
 	printf("set_PF: count=%d, count%%2=%d\n",count,count%2);
@@ -448,7 +450,7 @@ uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
 	} // else OF is undefined
 
 	set_ZF(dest, data_size);
-	printf("alu_shl: setting PF for 0x%x\n",dest&0xF);
+	printf("alu_shl: setting PF for 0x%x\n",dest&0xFF);
 	set_PF(dest);
 	printf("alu_shl: set PF to %d\n",cpu.eflags.PF);
 	set_SF(dest, data_size);
