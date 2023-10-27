@@ -44,5 +44,6 @@ make_instr_func(ret_c2) {
 
   print_asm_1("ret", "(eip is wrong)", len, &imm);
 
-  return len;
+  // Don't add anything to IP anymore
+  return 0;
 }
