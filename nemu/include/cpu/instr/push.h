@@ -4,8 +4,10 @@
 Put the declarations of `push' instructions here.
 */
 
+#include <nemu.h>
 #include "cpu/instr_helper.h"
 
+void push(u32 data,int size);
 make_instr_func(push_ff);
 make_instr_func(push_50);
 make_instr_func(push_6a);

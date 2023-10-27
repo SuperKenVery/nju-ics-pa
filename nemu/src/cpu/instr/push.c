@@ -7,7 +7,7 @@
 Put the implementations of `push' instructions here.
 */
 
-void do_push(u32 data, int size) {
+void push(u32 data, int size) {
   OPERAND stack,esp;
 
   esp.type=OPR_REG;
@@ -33,7 +33,7 @@ make_instr_func(push_ff) {
   assert(m.type==OPR_MEM);
   operand_read(&m);
 
-  do_push(m.val, m.data_size);
+  push(m.val, m.data_size);
 
   print_asm_1("push", "", len, &m);
 
@@ -47,7 +47,7 @@ make_instr_func(push_50) {
   r.addr=opcode%8;
   operand_read(&r);
 
-  do_push(r.val, r.data_size);
+  push(r.val, r.data_size);
 
   print_asm_1("push", "", 1, &r);
 
@@ -64,7 +64,7 @@ make_instr_func(push_6a) {
   len+=imm.data_size/8;
   operand_read(&imm);
 
-  do_push(imm.val, data_size);
+  push(imm.val, data_size);
 
   print_asm_1("push", "", len, &imm);
 
@@ -81,7 +81,7 @@ make_instr_func(push_68) {
   len+=imm.data_size/8;
   operand_read(&imm);
 
-  do_push(imm.val, imm.data_size);
+  push(imm.val, imm.data_size);
 
   print_asm_1("push", "", len, &imm);
 

@@ -6,5 +6,6 @@ Put the declarations of `ret' instructions here.
 
 #include "cpu/instr_helper.h"
 make_instr_func(ret_c3);
+make_instr_func(ret_c2);
 
 #endif
