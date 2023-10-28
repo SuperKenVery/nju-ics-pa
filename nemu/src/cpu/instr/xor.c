@@ -1,4 +1,5 @@
 #include "cpu-ref/instr_ref.h"
+#include "cpu/alu.h"
 #include "cpu/instr.h"
 #include "cpu/instr_helper.h"
 #include "cpu/modrm.h"
@@ -7,22 +8,22 @@
 Put the implementations of `xor' instructions here.
 */
 
-make_instr_func(xor_31) {
-  int len=1;
-  OPERAND rm,r;
-  rm.data_size=data_size;
-  r.data_size=data_size;
 
-  len+=modrm_r_rm(eip+len, &r, &rm);
+static void instr_execute_2op(){
+  operand_read(&opr_src);
+  operand_read(&opr_dest);
 
-  operand_read(&r);
-  operand_read(&rm);
+  opr_dest.val=alu_xor(sign_ext(opr_src.val,opr_src.data_size), opr_dest.val, opr_dest.data_size);
 
-  rm.val=alu_xor(rm.val,r.val,data_size);
-
-  operand_write(&rm);
-
-  print_asm_2("xor","",len,&rm,&r);
-  
-  return len;
+  operand_write(&opr_dest);
 }
+
+make_instr_impl_2op(xor, i, a, b)
+make_instr_impl_2op(xor, i, a, v)
+make_instr_impl_2op(xor, i, rm, b)
+make_instr_impl_2op(xor, i, rm, v)
+make_instr_impl_2op(xor, i, rm, bv)
+make_instr_impl_2op(xor, r, rm, b)
+make_instr_impl_2op(xor, r, rm, v)
+make_instr_impl_2op(xor, rm, r, b)
+make_instr_impl_2op(xor, rm, r, v)

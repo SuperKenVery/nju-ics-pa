@@ -5,6 +5,15 @@ Put the declarations of `xor' instructions here.
 */
 
 #include "cpu/instr_helper.h"
-make_instr_func(xor_31);
+
+make_instr_func(xor_i2a_b);
+make_instr_func(xor_i2a_v);
+make_instr_func(xor_i2rm_b);
+make_instr_func(xor_i2rm_v);
+make_instr_func(xor_i2rm_bv);
+make_instr_func(xor_r2rm_b);
+make_instr_func(xor_r2rm_v);
+make_instr_func(xor_rm2r_b);
+make_instr_func(xor_rm2r_v);
 
 #endif
