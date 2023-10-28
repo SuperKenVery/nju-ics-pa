@@ -1,3 +1,4 @@
+#include "cpu-ref/instr_ref.h"
 #include "cpu/alu.h"
 #include "cpu/instr.h"
 #include "cpu/instr_helper.h"
@@ -37,5 +38,19 @@ make_instr_func(jmp_eb) {
 
         cpu.eip += sign_ext(rel.val, 8);
 
+        return len;
+}
+
+// FF
+make_instr_func(jump_near_indirect){
+        int len=1;
+        OPERAND rm;
+        rm.data_size=data_size;
+        len+=modrm_rm(eip+len,&rm);
+        operand_read(&rm);
+
+        print_asm_1("jmp", "", len, &rm);
+        cpu.eip=rm.val;
+        
         return len;
 }
