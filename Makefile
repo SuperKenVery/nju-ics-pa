@@ -60,28 +60,28 @@ test_pa-1: nemu
 	
 test_pa-2-1: nemu 
 	$(call git_commit, "test_pa-2-1", $(TIME_MAKE))
-	# ./nemu/nemu --autorun --testcase mov
-	# ./nemu/nemu --autorun --testcase mov-cmp
-	# ./nemu/nemu --autorun --testcase movsx
-	# ./nemu/nemu --autorun --testcase mov-c
-	# ./nemu/nemu --autorun --testcase mov-jcc
-	# ./nemu/nemu --autorun --testcase sum
-	# ./nemu/nemu --autorun --testcase add
-	# ./nemu/nemu --autorun --testcase matrix-mul-small
-	# ./nemu/nemu --autorun --testcase fib
-	# ./nemu/nemu --autorun --testcase wanshu
-	# ./nemu/nemu --autorun --testcase prime
-	# ./nemu/nemu --autorun --testcase pascal 
-	# ./nemu/nemu --autorun --testcase matrix-mul
-	# ./nemu/nemu --autorun --testcase if-else
-	# ./nemu/nemu --autorun --testcase max
-	# ./nemu/nemu --autorun --testcase min3
-	# ./nemu/nemu --autorun --testcase leap-year
-	# ./nemu/nemu --autorun --testcase select-sort
-	# ./nemu/nemu --autorun --testcase bubble-sort
-	# ./nemu/nemu --autorun --testcase quick-sort
-	# ./nemu/nemu --autorun --testcase gotbaha
-	# ./nemu/nemu --autorun --testcase shuixianhua
+	./nemu/nemu --autorun --testcase mov
+	./nemu/nemu --autorun --testcase mov-cmp
+	./nemu/nemu --autorun --testcase movsx
+	./nemu/nemu --autorun --testcase mov-c
+	./nemu/nemu --autorun --testcase mov-jcc
+	./nemu/nemu --autorun --testcase sum
+	./nemu/nemu --autorun --testcase add
+	./nemu/nemu --autorun --testcase matrix-mul-small
+	./nemu/nemu --autorun --testcase fib
+	./nemu/nemu --autorun --testcase wanshu
+	./nemu/nemu --autorun --testcase prime
+	./nemu/nemu --autorun --testcase pascal 
+	./nemu/nemu --autorun --testcase matrix-mul
+	./nemu/nemu --autorun --testcase if-else
+	./nemu/nemu --autorun --testcase max
+	./nemu/nemu --autorun --testcase min3
+	./nemu/nemu --autorun --testcase leap-year
+	./nemu/nemu --autorun --testcase select-sort
+	./nemu/nemu --autorun --testcase bubble-sort
+	./nemu/nemu --autorun --testcase quick-sort
+	./nemu/nemu --autorun --testcase gotbaha
+	./nemu/nemu --autorun --testcase shuixianhua
 	./nemu/nemu --autorun --testcase struct
 	./nemu/nemu --autorun --testcase fact
 	./nemu/nemu --autorun --testcase bit
