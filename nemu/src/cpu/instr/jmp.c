@@ -42,7 +42,7 @@ make_instr_func(jmp_eb) {
 }
 
 // FF
-make_instr_func(jump_near_indirect){
+make_instr_func(jmp_near_indirect){
         int len=1;
         OPERAND rm;
         rm.data_size=data_size;
