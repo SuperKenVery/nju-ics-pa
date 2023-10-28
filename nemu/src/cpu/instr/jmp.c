@@ -52,5 +52,6 @@ make_instr_func(jmp_near_indirect){
         print_asm_1("jmp", "", len, &rm);
         cpu.eip=rm.val;
         
-        return len;
+        // Don't add anything to ip anymore
+        return 0;
 }
