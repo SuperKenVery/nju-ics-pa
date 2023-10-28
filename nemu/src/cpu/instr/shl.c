@@ -8,12 +8,8 @@ static void instr_execute_2op()
 	operand_read(&opr_src);
 	operand_read(&opr_dest);
 	// printf("Shifting 0x%x left %d digits\n",opr_dest.val,opr_src.val);
-	// if(opr_src.type==OPR_REG && opr_src.type==REG_CL) printf("CL is src\n");
-	// else printf("CL is dest\n");
-	// opr_dest.val = alu_shl(opr_src.val, opr_dest.val, opr_dest.data_size);
-	opr_src.val = alu_shl(opr_dest.val,opr_src.val,opr_dest.data_size);
-	operand_write(&opr_src);
-	// operand_write(&opr_dest);
+	opr_dest.val = alu_shl(opr_src.val, opr_dest.val, opr_dest.data_size);
+	operand_write(&opr_dest);
 }
 
 make_instr_impl_2op(shl, i, rm, b)
