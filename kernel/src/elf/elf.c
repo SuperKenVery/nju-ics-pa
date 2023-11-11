@@ -30,8 +30,8 @@ uint32_t loader()
 	Log("ELF loading from ram disk.");
 #endif
 
-	Log("BB");
 	/* Load each program segment */
+	Log("About to load ELF, elf is %p",elf);
 	ph = (void *)elf + elf->e_phoff;
 	Log("AAA");
 	eph = ph + elf->e_phnum;
