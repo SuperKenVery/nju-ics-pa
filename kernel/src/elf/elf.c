@@ -1,7 +1,6 @@
 #include "common.h"
 #include "memory.h"
 #include "string.h"
-#include "memory.h"
 
 #include <elf.h>
 #include <string.h>
@@ -38,13 +37,14 @@ uint32_t loader()
 	{
 		if (ph->p_type == PT_LOAD)
 		{
+			Log("Found a load segment. Loading file...");
 
-			// panic("Before loading elf...");
-			memcpy((void*)ph->p_vaddr, ((char*) elf)+ph->p_offset, ph->p_filesz);
+			memcpy((char*)ph->p_vaddr, ((char*) elf)+ph->p_offset, ph->p_filesz);
 
 			int zero_out_size=ph->p_memsz-ph->p_filesz;
+			if(zero_out_size>0) Log("About to zero out...");
 			if(zero_out_size>0)
-				memset(((void*)ph->p_vaddr)+ph->p_filesz, 0, zero_out_size);
+				memset(((char*)ph->p_vaddr)+ph->p_filesz, 0, zero_out_size);
 
 #ifdef IA32_PAGE
 			/* Record the program break for future use */
