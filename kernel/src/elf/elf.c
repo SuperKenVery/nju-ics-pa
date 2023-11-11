@@ -30,6 +30,10 @@ uint32_t loader()
 #endif
 
 	/* Load each program segment */
+	for(int i=0;i<50;i++){
+		char *pos=(char*)i;
+		Log("Mem addr %d is %x",i,pos);
+	}
 	ph = (void *)elf + elf->e_phoff;
 	eph = ph + elf->e_phnum;
 	for (; ph < eph; ph++)
