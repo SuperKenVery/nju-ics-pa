@@ -41,12 +41,10 @@ uint32_t loader()
 	{
 		if (ph->p_type == PT_LOAD)
 		{
-			Log("Found a load segment. Loading file...");
 
 			memcpy((char*)ph->p_vaddr, ((char*) elf)+ph->p_offset, ph->p_filesz);
 
 			int zero_out_size=ph->p_memsz-ph->p_filesz;
-			if(zero_out_size>0) Log("About to zero out...");
 			if(zero_out_size>0)
 				memset(((char*)ph->p_vaddr)+ph->p_filesz, 0, zero_out_size);
 
