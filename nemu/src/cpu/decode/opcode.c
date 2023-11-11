@@ -77,7 +77,7 @@ instr_func group_1_v_entry[8] =
 
 /* 0x83 */
 instr_func group_1_bv_entry[8] =
-    {add_83, or_i2rm_v, adc_i2rm_bv, sbb_i2rm_bv, and_83, sub_83, xor_i2rm_bv, cmp_83};
+    {add_83, or_i2rm_bv, adc_i2rm_bv, sbb_i2rm_bv, and_83, sub_83, xor_i2rm_bv, cmp_83};
 
 /* 0xc0 */
 instr_func group_2_b_entry[8] =
