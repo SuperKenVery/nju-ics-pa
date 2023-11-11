@@ -1,4 +1,5 @@
 #include "common.h"
+#include "debug.h"
 #include "memory.h"
 #include "string.h"
 
@@ -34,6 +35,7 @@ uint32_t loader()
 	Log("About to load ELF, elf is %p, e_phoff at %p",elf,&elf->e_phoff);
 	Log("Why is bug instr generated?");
 	Log("???");
+	panic("HI");
 	Log("e_phoff is %p",elf->e_phoff);
 	ph = (void *)elf + elf->e_phoff;
 	Log("AAA");
