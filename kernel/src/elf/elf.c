@@ -37,7 +37,7 @@ uint32_t loader()
 	// Log("elf at %p, =%p, elf->e_phoff at %p",&elf,elf,&elf->e_phoff);
 	Log("elf at %p",&elf);
 	// Log("elf is %p",elf);
-	Log("phoff at %p",&elf->e_phoff);
+	// Log("phoff at %p",&elf->e_phoff);
 	ph = (Elf32_Phdr*) ((char*)elf + elf->e_phoff);
 	eph = ph + elf->e_phnum;
 	for (; ph < eph; ph++)
