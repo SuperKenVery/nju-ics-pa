@@ -32,6 +32,7 @@ uint32_t loader()
 
 	/* Load each program segment */
 	Log("About to load ELF, elf is %p, e_phoff at %p",elf,&elf->e_phoff);
+	Log("e_phoff is %p",elf->e_phoff);
 	ph = (void *)elf + elf->e_phoff;
 	Log("AAA");
 	eph = ph + elf->e_phnum;
