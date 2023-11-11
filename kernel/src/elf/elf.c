@@ -39,6 +39,7 @@ uint32_t loader()
 		if (ph->p_type == PT_LOAD)
 		{
 
+			panic("Before loading elf...");
 			char *load_addr=(char*)0x100000;
 			memcpy(load_addr, ((char*) elf)+ph->p_offset, ph->p_filesz);
 
