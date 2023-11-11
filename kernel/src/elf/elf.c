@@ -34,7 +34,8 @@ uint32_t loader()
 		char *pos=(char*)i;
 		Log("Mem addr %d is %x",i,pos);
 	}
-	ph = (void *)elf + elf->e_phoff;
+	Log("elf at %p, =%p, elf->e_phoff at %p",&elf,elf,&elf->e_phoff);
+	ph = (Elf32_Phdr*) ((char*)elf + elf->e_phoff);
 	eph = ph + elf->e_phnum;
 	for (; ph < eph; ph++)
 	{
