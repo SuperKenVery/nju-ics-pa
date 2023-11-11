@@ -1,8 +1,11 @@
 #include "common.h"
 #include "memory.h"
 #include "string.h"
+#include "memory.h"
+#include "../nemu/include/nemu.h"
 
 #include <elf.h>
+#include <string.h>
 
 #ifdef HAS_DEVICE_IDE
 #define ELF_OFFSET_IN_DISK 0
@@ -37,12 +40,12 @@ uint32_t loader()
 		if (ph->p_type == PT_LOAD)
 		{
 
-			// remove this panic!!!
-			panic("Please implement the loader");
+			char *load_addr=(char*)0x100000;
+			memcpy(load_addr, ((char*) elf)+ph->p_offset, ph->p_filesz);
 
-/* TODO: copy the segment from the ELF file to its proper memory area */
-
-/* TODO: zeror the memory area [vaddr + file_sz, vaddr + mem_sz) */
+			int zero_out_size=ph->p_memsz-ph->p_filesz;
+			if(zero_out_size>0)
+				memset(load_addr+ph->p_filesz, 0, zero_out_size);
 
 #ifdef IA32_PAGE
 			/* Record the program break for future use */
