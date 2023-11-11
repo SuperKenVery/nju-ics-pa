@@ -2,7 +2,6 @@
 #include "memory.h"
 #include "string.h"
 #include "memory.h"
-#include "../nemu/include/nemu.h"
 
 #include <elf.h>
 #include <string.h>
