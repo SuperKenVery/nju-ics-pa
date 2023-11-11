@@ -35,7 +35,7 @@ uint32_t loader()
 	// 	Log("Mem addr %d is %x",i,pos);
 	// }
 	// Log("elf at %p, =%p, elf->e_phoff at %p",&elf,elf,&elf->e_phoff);
-	Log("elf at %p",&elf);
+	// Log("elf at %p",&elf);
 	Elf32_Ehdr** a=&elf;
 	if(a && false) {}
 	// Log("elf is %p",elf);
