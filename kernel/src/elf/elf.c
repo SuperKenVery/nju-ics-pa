@@ -30,16 +30,7 @@ uint32_t loader()
 #endif
 
 	/* Load each program segment */
-	// for(int i=0;i<50;i++){
-	// 	char *pos=(char*)i;
-	// 	Log("Mem addr %d is %x",i,pos);
-	// }
-	// Log("elf at %p, =%p, elf->e_phoff at %p",&elf,elf,&elf->e_phoff);
-	// Log("elf at %p",&elf);
-	Elf32_Ehdr** a=&elf;
-	if(a && false) {}
-	// Log("elf is %p",elf);
-	// Log("phoff at %p",&elf->e_phoff);
+	Log("elf at %p",&elf);
 	ph = (Elf32_Phdr*) ((char*)elf + elf->e_phoff);
 	eph = ph + elf->e_phnum;
 	for (; ph < eph; ph++)
