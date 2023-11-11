@@ -1,7 +1,8 @@
 #include "common.h"
+#include "memory.h"
+#include "string.h"
 
 #include <elf.h>
-#include <string.h>
 
 #ifdef HAS_DEVICE_IDE
 #define ELF_OFFSET_IN_DISK 0
@@ -29,14 +30,8 @@ uint32_t loader()
 #endif
 
 	/* Load each program segment */
-	Log("About to load ELF, elf is %p, e_phoff at %p",elf,&elf->e_phoff);
-	Log("Why is bug instr generated?");
-	Log("???");
-	Log("e_phoff is %p",elf->e_phoff);
 	ph = (void *)elf + elf->e_phoff;
-	Log("AAA");
 	eph = ph + elf->e_phnum;
-	Log("C");
 	for (; ph < eph; ph++)
 	{
 		if (ph->p_type == PT_LOAD)
