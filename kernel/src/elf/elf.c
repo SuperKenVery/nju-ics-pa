@@ -39,13 +39,12 @@ uint32_t loader()
 		if (ph->p_type == PT_LOAD)
 		{
 
-			panic("Before loading elf...");
-			char *load_addr=(char*)0x100000;
-			memcpy(load_addr, ((char*) elf)+ph->p_offset, ph->p_filesz);
+			// panic("Before loading elf...");
+			memcpy((void*)ph->p_vaddr, ((char*) elf)+ph->p_offset, ph->p_filesz);
 
 			int zero_out_size=ph->p_memsz-ph->p_filesz;
 			if(zero_out_size>0)
-				memset(load_addr+ph->p_filesz, 0, zero_out_size);
+				memset(((void*)ph->p_vaddr)+ph->p_filesz, 0, zero_out_size);
 
 #ifdef IA32_PAGE
 			/* Record the program break for future use */
