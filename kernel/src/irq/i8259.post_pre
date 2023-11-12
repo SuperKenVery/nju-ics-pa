@@ -1,0 +1,677 @@
+# 1 "src/irq/i8259.c"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/nix/store/x9jnwjzn0rh4ywvaxb1d5wxx65pbs1rl-glibc-2.27-dev/include/stdc-predef.h" 1 3 4
+# 1 "<command-line>" 2
+# 1 "src/irq/i8259.c"
+# 1 "./include/x86.h" 1
+
+
+
+# 1 "./include/x86/cpu.h" 1
+
+
+
+# 1 "../libs/newlib/include/stdint.h" 1
+# 12 "../libs/newlib/include/stdint.h"
+# 1 "../libs/newlib/include/machine/_default_types.h" 1
+
+
+
+
+
+
+
+# 1 "../libs/newlib/include/sys/features.h" 1
+# 9 "../libs/newlib/include/machine/_default_types.h" 2
+# 27 "../libs/newlib/include/machine/_default_types.h"
+typedef signed char __int8_t;
+typedef unsigned char __uint8_t;
+# 37 "../libs/newlib/include/machine/_default_types.h"
+typedef short int __int16_t;
+typedef short unsigned int __uint16_t;
+# 55 "../libs/newlib/include/machine/_default_types.h"
+typedef int __int32_t;
+typedef unsigned int __uint32_t;
+# 77 "../libs/newlib/include/machine/_default_types.h"
+typedef long long int __int64_t;
+typedef long long unsigned int __uint64_t;
+# 104 "../libs/newlib/include/machine/_default_types.h"
+typedef signed char __int_least8_t;
+typedef unsigned char __uint_least8_t;
+# 126 "../libs/newlib/include/machine/_default_types.h"
+typedef short int __int_least16_t;
+typedef short unsigned int __uint_least16_t;
+# 144 "../libs/newlib/include/machine/_default_types.h"
+typedef int __int_least32_t;
+typedef unsigned int __uint_least32_t;
+# 158 "../libs/newlib/include/machine/_default_types.h"
+typedef long long int __int_least64_t;
+typedef long long unsigned int __uint_least64_t;
+# 168 "../libs/newlib/include/machine/_default_types.h"
+typedef int __intptr_t;
+typedef unsigned int __uintptr_t;
+# 13 "../libs/newlib/include/stdint.h" 2
+# 40 "../libs/newlib/include/stdint.h"
+typedef __int8_t int8_t;
+typedef __uint8_t uint8_t;
+
+
+
+
+typedef __int_least8_t int_least8_t;
+typedef __uint_least8_t uint_least8_t;
+
+
+
+
+typedef __int16_t int16_t;
+typedef __uint16_t uint16_t;
+
+
+
+
+typedef __int_least16_t int_least16_t;
+typedef __uint_least16_t uint_least16_t;
+
+
+
+
+typedef __int32_t int32_t;
+typedef __uint32_t uint32_t;
+
+
+
+
+typedef __int_least32_t int_least32_t;
+typedef __uint_least32_t uint_least32_t;
+
+
+
+
+typedef __int64_t int64_t;
+typedef __uint64_t uint64_t;
+
+
+
+
+typedef __int_least64_t int_least64_t;
+typedef __uint_least64_t uint_least64_t;
+# 94 "../libs/newlib/include/stdint.h"
+typedef signed char int_fast8_t;
+typedef unsigned char uint_fast8_t;
+# 104 "../libs/newlib/include/stdint.h"
+typedef int int_fast16_t;
+typedef unsigned int uint_fast16_t;
+# 114 "../libs/newlib/include/stdint.h"
+typedef int int_fast32_t;
+typedef unsigned int uint_fast32_t;
+# 124 "../libs/newlib/include/stdint.h"
+typedef long long int int_fast64_t;
+typedef long long unsigned int uint_fast64_t;
+# 173 "../libs/newlib/include/stdint.h"
+typedef long long int intmax_t;
+# 182 "../libs/newlib/include/stdint.h"
+typedef long long unsigned int uintmax_t;
+
+
+
+
+
+
+typedef __intptr_t intptr_t;
+typedef __uintptr_t uintptr_t;
+# 5 "./include/x86/cpu.h" 2
+
+
+typedef union CR0 {
+ struct
+ {
+  uint32_t protect_enable : 1;
+  uint32_t monitor_coprocessor : 1;
+  uint32_t emulation : 1;
+  uint32_t task_switched : 1;
+  uint32_t extension_type : 1;
+  uint32_t numeric_error : 1;
+  uint32_t pad0 : 10;
+  uint32_t write_protect : 1;
+  uint32_t pad1 : 1;
+  uint32_t alignment_mask : 1;
+  uint32_t pad2 : 10;
+  uint32_t no_write_through : 1;
+  uint32_t cache_disable : 1;
+  uint32_t paging : 1;
+ };
+ uint32_t val;
+} CR0;
+
+
+typedef union CR3 {
+ struct
+ {
+  uint32_t pad0 : 3;
+  uint32_t page_write_through : 1;
+  uint32_t page_cache_disable : 1;
+  uint32_t pad1 : 7;
+  uint32_t page_directory_base : 20;
+ };
+ uint32_t val;
+} CR3;
+
+
+static inline uint32_t
+read_cr0()
+{
+ uint32_t val;
+ asm volatile("movl %%cr0, %0"
+     : "=r"(val));
+ return val;
+}
+
+
+static inline void
+write_cr0(uint32_t cr0)
+{
+ asm volatile("movl %0, %%cr0"
+     :
+     : "r"(cr0));
+}
+
+
+static inline void
+write_cr3(uint32_t cr3)
+{
+ asm volatile("movl %0, %%cr3"
+     :
+     : "r"(cr3));
+}
+
+
+static inline void
+write_gdtr(void *addr, uint32_t size)
+{
+ static volatile uint16_t data[3];
+ data[0] = size - 1;
+ data[1] = (uint32_t)addr;
+ data[2] = ((uint32_t)addr) >> 16;
+ asm volatile("lgdt (%0)"
+     :
+     : "r"(data));
+}
+
+
+static inline void
+write_idtr(void *addr, uint32_t size)
+{
+ static volatile uint16_t data[3];
+ data[0] = size - 1;
+ data[1] = (uint32_t)addr;
+ data[2] = ((uint32_t)addr) >> 16;
+ asm volatile("lidt (%0)"
+     :
+     : "r"(data));
+}
+
+
+static inline void
+sti(void)
+{
+ asm volatile("sti");
+}
+
+
+static inline void
+cli(void)
+{
+ asm volatile("cli");
+}
+
+
+static inline void
+wait_intr()
+{
+ asm volatile("hlt");
+}
+# 5 "./include/x86.h" 2
+# 1 "./include/x86/io.h" 1
+
+
+
+
+
+static inline uint8_t
+in_byte(uint16_t port)
+{
+ uint8_t data;
+ asm volatile("in %1, %0"
+     : "=a"(data)
+     : "d"(port));
+ return data;
+}
+
+static inline uint32_t
+in_long(uint16_t port)
+{
+ uint32_t data;
+ asm volatile("in %1, %0"
+     : "=a"(data)
+     : "d"(port));
+ return data;
+}
+
+static inline void
+out_byte(uint16_t port, uint8_t data)
+{
+ asm volatile("out %%al, %%dx"
+     :
+     : "a"(data), "d"(port));
+}
+
+static inline void
+out_long(uint16_t port, uint32_t data)
+{
+ asm volatile("out %%eax, %%dx"
+     :
+     : "a"(data), "d"(port));
+}
+
+static inline uint16_t
+in_word(uint16_t port)
+{
+ uint16_t data;
+ asm volatile("in %1, %0"
+     : "=a"(data)
+     : "d"(port));
+ return data;
+}
+
+static inline void
+out_word(uint16_t port, uint16_t data)
+{
+ asm volatile("out %%al, %%dx"
+     :
+     : "a"(data), "d"(port));
+}
+# 6 "./include/x86.h" 2
+# 1 "./include/x86/memory.h" 1
+# 38 "./include/x86/memory.h"
+# 1 "./include/common.h" 1
+
+
+
+# 1 "../include/config.h" 1
+# 5 "./include/common.h" 2
+# 1 "../include/trap.h" 1
+# 6 "./include/common.h" 2
+
+
+
+
+
+# 1 "../libs/newlib/include/sys/types.h" 1
+# 20 "../libs/newlib/include/sys/types.h"
+# 1 "../libs/newlib/include/_ansi.h" 1
+# 15 "../libs/newlib/include/_ansi.h"
+# 1 "../libs/newlib/include/newlib.h" 1
+# 16 "../libs/newlib/include/_ansi.h" 2
+# 1 "../libs/newlib/include/sys/config.h" 1
+
+
+
+# 1 "../libs/newlib/include/machine/ieeefp.h" 1
+# 5 "../libs/newlib/include/sys/config.h" 2
+# 17 "../libs/newlib/include/_ansi.h" 2
+# 21 "../libs/newlib/include/sys/types.h" 2
+
+
+
+
+# 1 "../libs/newlib/include/machine/_types.h" 1
+# 26 "../libs/newlib/include/sys/types.h" 2
+# 61 "../libs/newlib/include/sys/types.h"
+# 1 "../libs/newlib/include/sys/_types.h" 1
+# 13 "../libs/newlib/include/sys/_types.h"
+# 1 "../libs/newlib/include/sys/lock.h" 1
+
+
+
+
+
+typedef int _LOCK_T;
+typedef int _LOCK_RECURSIVE_T;
+# 14 "../libs/newlib/include/sys/_types.h" 2
+
+
+typedef long _off_t;
+
+
+
+typedef short __dev_t;
+
+
+
+typedef unsigned short __uid_t;
+
+
+typedef unsigned short __gid_t;
+
+
+
+__extension__ typedef long long _off64_t;
+
+
+
+
+
+
+
+typedef long _fpos_t;
+
+
+
+
+
+typedef _off64_t _fpos64_t;
+# 55 "../libs/newlib/include/sys/_types.h"
+typedef signed int _ssize_t;
+# 67 "../libs/newlib/include/sys/_types.h"
+# 1 "/nix/store/rlnqr19wrki0rcpz3k1ayg0250zvmxaa-gcc-8.3.0/lib/gcc/i686-unknown-linux-gnu/8.3.0/include/stddef.h" 1 3 4
+# 357 "/nix/store/rlnqr19wrki0rcpz3k1ayg0250zvmxaa-gcc-8.3.0/lib/gcc/i686-unknown-linux-gnu/8.3.0/include/stddef.h" 3 4
+
+# 357 "/nix/store/rlnqr19wrki0rcpz3k1ayg0250zvmxaa-gcc-8.3.0/lib/gcc/i686-unknown-linux-gnu/8.3.0/include/stddef.h" 3 4
+typedef unsigned int wint_t;
+# 68 "../libs/newlib/include/sys/_types.h" 2
+
+
+
+
+# 71 "../libs/newlib/include/sys/_types.h"
+typedef struct
+{
+  int __count;
+  union {
+    wint_t __wch;
+    unsigned char __wchb[4];
+  } __value;
+} _mbstate_t;
+
+
+
+typedef _LOCK_RECURSIVE_T _flock_t;
+
+
+
+
+typedef void *_iconv_t;
+# 62 "../libs/newlib/include/sys/types.h" 2
+
+
+
+
+
+
+
+# 1 "/nix/store/rlnqr19wrki0rcpz3k1ayg0250zvmxaa-gcc-8.3.0/lib/gcc/i686-unknown-linux-gnu/8.3.0/include/stddef.h" 1 3 4
+# 149 "/nix/store/rlnqr19wrki0rcpz3k1ayg0250zvmxaa-gcc-8.3.0/lib/gcc/i686-unknown-linux-gnu/8.3.0/include/stddef.h" 3 4
+
+# 149 "/nix/store/rlnqr19wrki0rcpz3k1ayg0250zvmxaa-gcc-8.3.0/lib/gcc/i686-unknown-linux-gnu/8.3.0/include/stddef.h" 3 4
+typedef int ptrdiff_t;
+# 216 "/nix/store/rlnqr19wrki0rcpz3k1ayg0250zvmxaa-gcc-8.3.0/lib/gcc/i686-unknown-linux-gnu/8.3.0/include/stddef.h" 3 4
+typedef unsigned int size_t;
+# 328 "/nix/store/rlnqr19wrki0rcpz3k1ayg0250zvmxaa-gcc-8.3.0/lib/gcc/i686-unknown-linux-gnu/8.3.0/include/stddef.h" 3 4
+typedef long int wchar_t;
+# 426 "/nix/store/rlnqr19wrki0rcpz3k1ayg0250zvmxaa-gcc-8.3.0/lib/gcc/i686-unknown-linux-gnu/8.3.0/include/stddef.h" 3 4
+typedef struct {
+  long long __max_align_ll __attribute__((__aligned__(__alignof__(long long))));
+  long double __max_align_ld __attribute__((__aligned__(__alignof__(long double))));
+
+
+
+
+
+
+  __float128 __max_align_f128 __attribute__((__aligned__(__alignof(__float128))));
+
+} max_align_t;
+# 70 "../libs/newlib/include/sys/types.h" 2
+# 1 "../libs/newlib/include/machine/types.h" 1
+# 71 "../libs/newlib/include/sys/types.h" 2
+# 93 "../libs/newlib/include/sys/types.h"
+
+# 93 "../libs/newlib/include/sys/types.h"
+typedef unsigned char u_char;
+
+
+
+typedef unsigned short u_short;
+
+
+
+typedef unsigned int u_int;
+
+
+
+typedef unsigned long u_long;
+
+
+
+
+
+typedef unsigned short ushort;
+typedef unsigned int uint;
+typedef unsigned long ulong;
+
+
+
+typedef unsigned long clock_t;
+
+
+
+
+typedef long time_t;
+
+
+
+
+
+
+
+struct timespec
+{
+  time_t tv_sec;
+  long tv_nsec;
+};
+
+
+struct itimerspec
+{
+  struct timespec it_interval;
+  struct timespec it_value;
+};
+
+
+typedef long daddr_t;
+
+
+
+typedef char *caddr_t;
+# 157 "../libs/newlib/include/sys/types.h"
+typedef unsigned short ino_t;
+# 186 "../libs/newlib/include/sys/types.h"
+typedef _off_t off_t;
+typedef __dev_t dev_t;
+typedef __uid_t uid_t;
+typedef __gid_t gid_t;
+
+
+
+
+
+typedef int pid_t;
+
+
+
+
+
+
+
+typedef long key_t;
+
+typedef _ssize_t ssize_t;
+# 219 "../libs/newlib/include/sys/types.h"
+typedef unsigned int mode_t __attribute__((__mode__(__SI__)));
+
+
+
+
+typedef unsigned short nlink_t;
+# 246 "../libs/newlib/include/sys/types.h"
+typedef long fd_mask;
+
+
+
+
+
+
+
+typedef struct _types_fd_set
+{
+  fd_mask fds_bits[(((64) + (((sizeof(fd_mask) * 8))-1)) / ((sizeof(fd_mask) * 8)))];
+} _types_fd_set;
+# 277 "../libs/newlib/include/sys/types.h"
+typedef unsigned long clockid_t;
+
+
+
+
+typedef unsigned long timer_t;
+
+
+
+typedef unsigned long useconds_t;
+typedef long suseconds_t;
+# 12 "./include/common.h" 2
+
+typedef uint8_t bool;
+
+
+
+
+
+
+# 1 "./include/debug.h" 1
+
+
+
+# 1 "./include/common.h" 1
+# 5 "./include/debug.h" 2
+# 1 "./include/x86.h" 1
+# 6 "./include/debug.h" 2
+
+
+
+void printk(const char *, ...);
+# 21 "./include/common.h" 2
+# 39 "./include/x86/memory.h" 2
+
+
+typedef union PageDirectoryEntry {
+ struct
+ {
+  uint32_t present : 1;
+  uint32_t read_write : 1;
+  uint32_t user_supervisor : 1;
+  uint32_t page_write_through : 1;
+  uint32_t page_cache_disable : 1;
+  uint32_t accessed : 1;
+  uint32_t pad0 : 6;
+  uint32_t page_frame : 20;
+ };
+ uint32_t val;
+} PDE;
+
+
+typedef union PageTableEntry {
+ struct
+ {
+  uint32_t present : 1;
+  uint32_t read_write : 1;
+  uint32_t user_supervisor : 1;
+  uint32_t page_write_through : 1;
+  uint32_t page_cache_disable : 1;
+  uint32_t accessed : 1;
+  uint32_t dirty : 1;
+  uint32_t pad0 : 1;
+  uint32_t global : 1;
+  uint32_t pad1 : 3;
+  uint32_t page_frame : 20;
+ };
+ uint32_t val;
+} PTE;
+
+typedef PTE (*PT)[1024];
+
+
+typedef struct SegmentDescriptor
+{
+ uint32_t limit_15_0 : 16;
+ uint32_t base_15_0 : 16;
+ uint32_t base_23_16 : 8;
+ uint32_t type : 4;
+ uint32_t segment_type : 1;
+ uint32_t privilege_level : 2;
+ uint32_t present : 1;
+ uint32_t limit_19_16 : 4;
+ uint32_t soft_use : 1;
+ uint32_t operation_size : 1;
+ uint32_t pad0 : 1;
+ uint32_t granularity : 1;
+ uint32_t base_31_24 : 8;
+} SegDesc;
+
+typedef struct GateDescriptor
+{
+ uint32_t offset_15_0 : 16;
+ uint32_t segment : 16;
+ uint32_t pad0 : 8;
+ uint32_t type : 4;
+ uint32_t system : 1;
+ uint32_t privilege_level : 2;
+ uint32_t present : 1;
+ uint32_t offset_31_16 : 16;
+} GateDesc;
+
+typedef struct TrapFrame
+{
+ uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;
+ int32_t irq;
+ uint32_t error_code;
+ uint32_t eip, cs, eflags;
+} TrapFrame;
+# 7 "./include/x86.h" 2
+# 2 "src/irq/i8259.c" 2
+
+
+
+
+
+void init_i8259(void)
+{
+
+ out_byte(0x20 + 1, 0xFF);
+ out_byte(0xA0 + 1, 0xFF);
+
+
+ out_byte(0x20, 0x11);
+ out_byte(0x20 + 1, 32);
+ out_byte(0x20 + 1, 1 << 2);
+ out_byte(0x20 + 1, 0x3);
+ out_byte(0xA0, 0x11);
+ out_byte(0xA0 + 1, 32 + 8);
+ out_byte(0xA0 + 1, 2);
+ out_byte(0xA0 + 1, 0x3);
+ out_byte(0x20, 0x68);
+ out_byte(0x20, 0x0A);
+ out_byte(0xA0, 0x68);
+ out_byte(0xA0, 0x0A);
+}
