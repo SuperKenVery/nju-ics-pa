@@ -38,11 +38,17 @@ uint32_t loader()
 		if (ph->p_type == PT_LOAD)
 		{
 
-			memcpy((char*)ph->p_vaddr, ((char*) elf)+ph->p_offset, ph->p_filesz);
+			// memcpy((char*)ph->p_vaddr, ((char*) elf)+ph->p_offset, ph->p_filesz);
+			char *dst=(char*)ph->p_vaddr, *src=((char*)elf)+ph->p_offset;
+			for(int offset=0;offset<ph->p_filesz;offset++){
+				dst[offset]=src[offset];
+			}
 
 			int zero_out_size=ph->p_memsz-ph->p_filesz;
-			if(zero_out_size>0)
-				memset(((char*)ph->p_vaddr)+ph->p_filesz, 0, zero_out_size);
+			dst=((char*)ph->p_vaddr)+ph->p_filesz;
+			for(int offset=0;offset<zero_out_size;offset++){
+				dst[offset]=0;
+			}
 
 #ifdef IA32_PAGE
 			/* Record the program break for future use */
