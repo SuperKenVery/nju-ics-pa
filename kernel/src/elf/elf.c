@@ -26,7 +26,7 @@ uint32_t loader()
 	Log("ELF loading from hard disk.");
 #else
 	elf = (Elf32_Ehdr*) (char *)0x0;
-	Log("ELF loading from ram disk.");
+	// Log("ELF loading from ram disk.");
 #endif
 
 	/* Load each program segment */
