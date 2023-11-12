@@ -30,7 +30,7 @@ uint32_t loader()
 #endif
 
 	/* Load each program segment */
-	// Log("elf at %p",&elf);
+	Log("elf at %p",&elf);
 	ph = (Elf32_Phdr*) ((char*)elf + elf->e_phoff);
 	eph = ph + elf->e_phnum;
 	for (; ph < eph; ph++)
@@ -38,7 +38,6 @@ uint32_t loader()
 		if (ph->p_type == PT_LOAD)
 		{
 
-			// memcpy((char*)ph->p_vaddr, ((char*) elf)+ph->p_offset, ph->p_filesz);
 			char *dst=(char*)ph->p_vaddr, *src=((char*)elf)+ph->p_offset;
 			for(int offset=0;offset<ph->p_filesz;offset++){
 				dst[offset]=src[offset];
