@@ -2,9 +2,9 @@ LIB_COMMON_DIR = ../libs
 NEWLIBC_DIR = $(LIB_COMMON_DIR)/newlib
 
 CC = gcc
-CFLAGS = -O2 -m32 -MMD -Wall -Werror -Wno-cpp -march=i386 -fno-builtin -fno-omit-frame-pointer -fno-stack-protector -I./include -I../include -I$(NEWLIBC_DIR)/include
+CFLAGS = -m32 -MMD -Wall -Werror -Wno-cpp -march=i386 -fno-builtin -fno-omit-frame-pointer -fno-stack-protector -I./include -I../include -I$(NEWLIBC_DIR)/include
 ASFLAGS = -m32 -MMD -I./include -I../include
-LDFLAGS = -O2 -Ttext=0x30000 -m elf_i386 # before page
+LDFLAGS = -Ttext=0x30000 -m elf_i386 # before page
 #LDFLAGS = -Ttext=0xc0030000 -m elf_i386 
 
 CSRC = $(shell find ./src -name "*.c")
