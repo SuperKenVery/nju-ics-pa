@@ -16,8 +16,8 @@ uint32_t get_ucr3();
 
 uint32_t loader()
 {
-	Elf32_Ehdr *elf;
-	Elf32_Phdr *ph, *eph;
+	volatile Elf32_Ehdr *elf;
+	volatile Elf32_Phdr *ph, *eph;
 
 #ifdef HAS_DEVICE_IDE
 	uint8_t buf[4096];
@@ -30,7 +30,7 @@ uint32_t loader()
 #endif
 
 	/* Load each program segment */
-	Log("elf at %p",&elf);
+	// Log("elf at %p",&elf);
 	ph = (Elf32_Phdr*) ((char*)elf + elf->e_phoff);
 	eph = ph + elf->e_phnum;
 	for (; ph < eph; ph++)
