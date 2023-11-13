@@ -35,6 +35,7 @@ uint32_t loader()
 	eph = ph + elf->e_phnum;
 	for (; ph < eph; ph++)
 	{
+		Log("segment...");
 		if (ph->p_type == PT_LOAD)
 		{
 			Log("Load...");
