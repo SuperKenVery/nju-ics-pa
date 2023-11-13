@@ -16,22 +16,22 @@ uint32_t get_ucr3();
 
 uint32_t loader()
 {
-	volatile Elf32_Ehdr *elf;
-	volatile Elf32_Phdr *ph, *eph;
+	Elf32_Ehdr *elf;
+	Elf32_Phdr *ph, *eph;
 
 #ifdef HAS_DEVICE_IDE
 	uint8_t buf[4096];
 	ide_read(buf, ELF_OFFSET_IN_DISK, 4096);
-	elf = (Elf32_Ehdr*) (char *)buf;
+	elf = (void *)buf;
 	Log("ELF loading from hard disk.");
 #else
-	elf = (Elf32_Ehdr*) (char *)0x0;
+	elf = (void *)0x0;
 	Log("ELF loading from ram disk.");
 #endif
 
 	/* Load each program segment */
 	// Log("elf at %p",&elf);
-	ph = (Elf32_Phdr*) ((char*)elf + elf->e_phoff);
+	ph = (void *)elf + elf->e_phoff;
 	eph = ph + elf->e_phnum;
 	for (; ph < eph; ph++)
 	{
