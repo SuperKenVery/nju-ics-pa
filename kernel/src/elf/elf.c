@@ -35,10 +35,8 @@ uint32_t loader()
 	eph = ph + elf->e_phnum;
 	for (; ph < eph; ph++)
 	{
-		Log("segment...");
 		if (ph->p_type == PT_LOAD)
 		{
-			Log("Load...");
 
 			char *dst=(char*)ph->p_vaddr, *src=((char*)elf)+ph->p_offset;
 			for(int offset=0;offset<ph->p_filesz;offset++){
