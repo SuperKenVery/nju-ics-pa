@@ -13,6 +13,9 @@ scripts/score_testcases/
 !kernel/src/memory/mm_malloc.o
 #!scripts/score_testcases/30000/*.img
 
+# Preprocess results
+.post_pre
+
 # Linker output
 *.ilk
 *.map
