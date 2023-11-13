@@ -30,7 +30,7 @@ uint32_t loader()
 #endif
 
 	/* Load each program segment */
-	// Log("elf at %p",&elf);
+	Log("elf at %p",&elf);
 	ph = (void *)elf + elf->e_phoff;
 	eph = ph + elf->e_phnum;
 	for (; ph < eph; ph++)
