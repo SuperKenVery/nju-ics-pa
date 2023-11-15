@@ -217,7 +217,7 @@ uint32_t cached_read(paddr_t paddr, size_t len)
 	u32 ground_truth=hw_mem_read(paddr, len);
 
 	if(result!=ground_truth){
-		printf("Cache read error! Reading %d bytes at %p\n",len,paddr);
+		printf("Cache read error! Reading %d bytes at 0x%x\n",len,paddr);
 		assert(0);
 	}
 	
