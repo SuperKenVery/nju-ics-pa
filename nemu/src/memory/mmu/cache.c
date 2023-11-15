@@ -212,5 +212,14 @@ uint32_t cached_read(paddr_t paddr, size_t len)
 	if(cache_covers_addr(&nemu_cache, paddr)==0){
 		cache_load(&nemu_cache, paddr);
 	}
-	return cache_read(&nemu_cache, paddr, len);
+
+	u32 result=cache_read(&nemu_cache, paddr, len);
+	u32 ground_truth=hw_mem_read(paddr, len);
+
+	if(result!=ground_truth){
+		printf("Cache read error! Reading %d bytes at %p\n",len,paddr);
+		assert(0);
+	}
+	
+	return result;
 }
