@@ -90,7 +90,8 @@ void cache_group_load(cache_group *this, paddr_t mem_addr){
 	for(int i=0;i<GRP_SIZE;i++){
 		cache_block* target=&this->members[i];
 		if(target->valid==1 && target->mark==addr.mark){
-			cache_block_load(target, mem_addr);
+			u32 mask=~0b111111;
+			cache_block_load(target, mem_addr&mask);
 			return;
 		}
 	}
