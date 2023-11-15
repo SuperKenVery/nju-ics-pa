@@ -17,14 +17,21 @@
 // MemAddr:  16bit_mark   10bit_group_num   6bit_block_offset
 
 typedef struct{
-	// Little endian, high ones come in low address
-	u32 mark:16;
-	u32 group_idx:10;
+	// Little endian, low digit comes in low address
 	u32 offset:6;
+	u32 group_idx:10;
+	u32 mark:16;
 } memaddr;
 
+typedef union{
+	paddr_t paddr;
+	memaddr maddr;
+} uaddr;
+
 memaddr memaddr_load(paddr_t addr){
-	return *((memaddr*) (&addr));
+	uaddr u_address;
+	u_address.paddr=addr;
+	return u_address.maddr;
 }
 
 typedef struct{
