@@ -219,6 +219,8 @@ uint32_t cached_read(paddr_t paddr, size_t len)
 	if(result!=ground_truth){
 		printf("Cache read error! Reading %d bytes at 0x%x\n",len,paddr);
 		printf("Result from memory: 0x%x\tResult from cache: 0x%x\n",ground_truth,result);
+		memaddr mem=memaddr_load(paddr);
+		printf("0x%x: offset=%d\tgroup_idx=%d\tmark=%d\n",mem.offset,mem.group_idx,mem.mark);
 		assert(0);
 	}
 	
