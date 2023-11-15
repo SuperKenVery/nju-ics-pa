@@ -91,6 +91,7 @@ void cache_group_load(cache_group *this, paddr_t mem_addr){
 		cache_block* target=&this->members[i];
 		if(target->valid==1 && target->mark==addr.mark){
 			u32 mask=~0b111111;
+			printf("Mask is 0x%x\n",mask);
 			cache_block_load(target, mem_addr&mask);
 			return;
 		}
