@@ -24,7 +24,7 @@ typedef struct{
 } memaddr;
 
 memaddr memaddr_load(paddr_t addr){
-	return *((memaddr*)&addr);
+	return *((memaddr*) (&addr));
 }
 
 typedef struct{
