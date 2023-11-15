@@ -218,6 +218,7 @@ uint32_t cached_read(paddr_t paddr, size_t len)
 
 	if(result!=ground_truth){
 		printf("Cache read error! Reading %d bytes at 0x%x\n",len,paddr);
+		printf("Result from memory: 0x%x\tResult from cache: 0x%x\n",ground_truth,result);
 		assert(0);
 	}
 	
