@@ -220,7 +220,7 @@ uint32_t cached_read(paddr_t paddr, size_t len)
 		printf("Cache read error! Reading %d bytes at 0x%x\n",len,paddr);
 		printf("Result from memory: 0x%x\tResult from cache: 0x%x\n",ground_truth,result);
 		memaddr mem=memaddr_load(paddr);
-		printf("0x%x: offset=%x\tgroup_idx=%x\tmark=%x\n",mem.offset,mem.group_idx,mem.mark);
+		printf("0x%x: offset=%x\tgroup_idx=%x\tmark=%x\n",(u32)mem.offset,(u32)mem.group_idx,(u32)mem.mark);
 		assert(0);
 	}
 	
