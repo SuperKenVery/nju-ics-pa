@@ -61,7 +61,7 @@ void cache_block_load(cache_block *this, paddr_t mem_addr){
 u32 cache_block_read(cache_block *this, u32 offset, size_t len){
 	assert(offset>=0 && offset<CACHE_BLOCK_SIZE);
 
-	u32 ret;
+	u32 ret=0;
 	memcpy(&ret,&this->content[offset],len);
 	return ret;
 }
