@@ -47,6 +47,8 @@ void cache_block_init(cache_block *this){
 // Load a block of memory into cache
 void cache_block_load(cache_block *this, paddr_t mem_addr){
 	// Make sure we're operating on start of a block
+	u32 mask=~0b111111;
+	mem_addr=mem_addr&mask;
 	assert((mem_addr&0b111111)==0);
 
 	this->valid=1;
@@ -90,9 +92,7 @@ void cache_group_load(cache_group *this, paddr_t mem_addr){
 	for(int i=0;i<GRP_SIZE;i++){
 		cache_block* target=&this->members[i];
 		if(target->valid==1 && target->mark==addr.mark){
-			u32 mask=~0b111111;
-			printf("Mask is 0x%x\n",mask);
-			cache_block_load(target, mem_addr&mask);
+			cache_block_load(target, mem_addr);
 			return;
 		}
 	}
