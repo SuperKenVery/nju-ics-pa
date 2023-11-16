@@ -42,7 +42,7 @@ typedef struct{
 } cache_block;
 
 void cache_block_init(cache_block *this){
-	this->valid=0;
+	this->valid=false;
 }
 
 // Load a block of memory into cache
@@ -52,7 +52,7 @@ void cache_block_load(cache_block *this, paddr_t mem_addr){
 	mem_addr=mem_addr&mask;
 	assert((mem_addr&0b111111)==0);
 
-	this->valid=1;
+	this->valid=true;
 	memaddr addr=memaddr_load(mem_addr);
 	this->mark=addr.mark;
 	memcpy(this->content, &hw_mem[mem_addr], CACHE_BLOCK_SIZE);
@@ -60,7 +60,7 @@ void cache_block_load(cache_block *this, paddr_t mem_addr){
 
 // Read from cache
 u32 cache_block_read(cache_block *this, u32 offset, size_t len){
-	assert(offset>=0 && offset<CACHE_BLOCK_SIZE);
+	assert(offset>=0 && offset+len<CACHE_BLOCK_SIZE);
 
 	u32 ret=0;
 	memcpy(&ret,&this->content[offset],len);
@@ -92,7 +92,7 @@ void cache_group_load(cache_group *this, paddr_t mem_addr){
 	// Case 1 - addr already in cache
 	for(int i=0;i<GRP_SIZE;i++){
 		cache_block* target=&this->members[i];
-		if(target->valid==1 && target->mark==addr.mark){
+		if(target->valid==true && target->mark==addr.mark){
 			cache_block_load(target, mem_addr);
 			return;
 		}
@@ -101,7 +101,7 @@ void cache_group_load(cache_group *this, paddr_t mem_addr){
 	// Case 2 - still empty slots
 	for(int i=0;i<GRP_SIZE;i++){
 		cache_block *target=&this->members[i];
-		if(target->valid==0){
+		if(target->valid==false){
 			cache_block_load(target, mem_addr);
 			return;
 		}
@@ -118,7 +118,7 @@ u32 cache_group_read(cache_group *this, paddr_t mem_addr, size_t len){
 	memaddr addr=memaddr_load(mem_addr);
 	for(int i=0;i<GRP_SIZE;i++){
 		cache_block *target=&this->members[i];
-		if(target->valid==0) continue;
+		if(target->valid==false) continue;
 
 		if(target->mark==addr.mark)
 			return cache_block_read(target, addr.offset, len);
@@ -146,7 +146,7 @@ u8 cache_group_has_cache(cache_group *this, paddr_t mem_addr){
 
 	for(int i=0;i<GRP_SIZE;i++){
 		cache_block *target=&this->members[i];
-		if(target->valid==0) continue;
+		if(target->valid==false) continue;
 		if(target->mark==addr.mark) return 1;
 	}
 
@@ -185,11 +185,13 @@ void cache_write(cache *this, paddr_t mem_addr, u32 data, size_t len){
 	cache_group_write(group, mem_addr, data, len);
 }
 
-u8 cache_covers_addr(cache *this, paddr_t mem_addr){
+u8 cache_has_data(cache *this, paddr_t mem_addr, size_t len){
 	memaddr addr=memaddr_load(mem_addr);
 
 	cache_group *grp=&this->groups[addr.group_idx];
-	return cache_group_has_cache(grp, mem_addr);
+	if(cache_group_has_cache(grp, mem_addr)==false) return false;
+	if(mem_addr+len>CACHE_BLOCK_SIZE) return false;
+	return true;
 }
 
 cache nemu_cache;
@@ -210,7 +212,7 @@ void cached_write(paddr_t paddr, size_t len, uint32_t data)
 // read data from cache
 uint32_t cached_read(paddr_t paddr, size_t len)
 {
-	if(cache_covers_addr(&nemu_cache, paddr)==0){
+	if(cache_has_data(&nemu_cache, paddr, len)==false){
 		cache_load(&nemu_cache, paddr);
 	}
 
