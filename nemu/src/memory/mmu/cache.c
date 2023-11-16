@@ -9,25 +9,12 @@
 #include <stdio.h>
 #include <string.h>
 
-#define CACHE_BLOCK_SIZE 64
-#define CACHE_SIZE 64*1024
-#define GRP_SIZE 8
-#define GRP_NUM CACHE_SIZE/(GRP_SIZE*CACHE_BLOCK_SIZE)
 
 // 1024 groups, 10 bits
 // MemAddr:  16bit_mark   10bit_group_num   6bit_block_offset
 
-typedef struct{
-	// Little endian, low digit comes in low address
-	u32 offset:6;
-	u32 group_idx:10;
-	u32 mark:16;
-} memaddr;
+cache nemu_cache;
 
-typedef union{
-	paddr_t paddr;
-	memaddr maddr;
-} uaddr;
 
 memaddr memaddr_load(paddr_t addr){
 	uaddr u_address;
@@ -35,11 +22,6 @@ memaddr memaddr_load(paddr_t addr){
 	return u_address.maddr;
 }
 
-typedef struct{
-	u8 valid;
-	u16 mark;
-	char content[CACHE_BLOCK_SIZE];
-} cache_block;
 
 void cache_block_init(cache_block *this){
 	this->valid=false;
@@ -60,6 +42,8 @@ void cache_block_load(cache_block *this, paddr_t mem_addr){
 	printf("eip: 0x%x\tcache_block_load: before memcpy\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
 	printf("src=%p, dst=%p, len=%d\n",&hw_mem[mem_addr],this->content,CACHE_BLOCK_SIZE);
 	printf("hw_mem[0x37570] at %p\n", &hw_mem[0x37570]);
+	printf("Cache at %p ~ %p\n",&nemu_cache, &nemu_cache+sizeof(nemu_cache));
+	printf("hwmem at %p ~ %p\n",hw_mem,hw_mem+sizeof(hw_mem));
 	memcpy(this->content, &hw_mem[mem_addr], CACHE_BLOCK_SIZE);
 	printf("eip: 0x%x\tcache_block_load: after memcpy\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
 }
@@ -86,9 +70,6 @@ void cache_block_write(cache_block *this, u32 offset, u32 data, size_t len){
 	memcpy(dst, &data, len);
 }
 
-typedef struct{
-	cache_block members[GRP_SIZE];
-} cache_group;
 
 void cache_group_init(cache_group *this){
 	for(int i=0;i<GRP_SIZE;i++){
@@ -164,9 +145,6 @@ u8 cache_group_has_cache(cache_group *this, paddr_t mem_addr){
 	return 0;
 }
 
-typedef struct{
-	cache_group groups[GRP_NUM];
-} cache;
 
 void cache_init(cache *this){
 	for(int i=0;i<GRP_NUM;i++){
@@ -196,11 +174,6 @@ void cache_write(cache *this, paddr_t mem_addr, u32 data, size_t len){
 	cache_group_write(group, mem_addr, data, len);
 }
 
-typedef enum{
-	covered,
-	not_loaded,
-	not_aligned
-} cache_coverage;
 
 cache_coverage cache_has_data(cache *this, paddr_t mem_addr, size_t len){
 	memaddr addr=memaddr_load(mem_addr);
@@ -211,7 +184,6 @@ cache_coverage cache_has_data(cache *this, paddr_t mem_addr, size_t len){
 	return covered;
 }
 
-cache nemu_cache;
 
 // init the cache
 void init_cache()
