@@ -241,10 +241,12 @@ uint32_t cached_read(paddr_t paddr, size_t len)
 	u32 result;
 	if(coverage==not_aligned){
 		result=hw_mem_read(paddr, len);
-	}else if(coverage==not_loaded){
-		cache_load(&nemu_cache, paddr);
+	}else{
+		if(coverage==not_loaded)
+			cache_load(&nemu_cache, paddr);
+		result=cache_read(&nemu_cache, paddr, len);
 	}
-	result=cache_read(&nemu_cache, paddr, len);
+
 
 	u32 ground_truth=hw_mem_read(paddr, len);
 
