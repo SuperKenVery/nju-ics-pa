@@ -43,7 +43,7 @@ void cache_block_load(cache_block *this, paddr_t mem_addr){
 	printf("src=%p, dst=%p, len=%d\n",&hw_mem[mem_addr],this->content,CACHE_BLOCK_SIZE);
 	printf("hw_mem[0x37570] at %p\n", &hw_mem[0x37570]);
 	printf("Cache at %p ~ %p\n",&nemu_cache, &nemu_cache+sizeof(nemu_cache));
-	printf("hwmem at %p ~ %p\n",hw_mem,hw_mem+sizeof(hw_mem));
+	printf("hwmem at %p ~ %p\n",hw_mem,hw_mem+(MEM_SIZE_B));
 	memcpy(this->content, &hw_mem[mem_addr], CACHE_BLOCK_SIZE);
 	printf("eip: 0x%x\tcache_block_load: after memcpy\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
 }
