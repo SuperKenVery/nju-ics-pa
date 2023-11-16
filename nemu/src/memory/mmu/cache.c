@@ -74,7 +74,7 @@ u32 cache_block_read(cache_block *this, u32 offset, size_t len){
 
 // Write to cache
 void cache_block_write(cache_block *this, u32 offset, u32 data, size_t len){
-	assert(offset>=0 && offset<CACHE_BLOCK_SIZE);
+	assert(offset>=0 && offset+len<=CACHE_BLOCK_SIZE);
 	char* dst=&this->content[offset];
 
 	memcpy(dst, &data, len);
