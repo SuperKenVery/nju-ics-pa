@@ -56,5 +56,6 @@ make_instr_func(jmp_near_indirect){
         cpu.eip=rm.val;
         
         // Don't add anything to ip anymore
+        assert(false);
         return 0;
 }
