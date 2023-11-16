@@ -222,7 +222,16 @@ uint32_t cached_read(paddr_t paddr, size_t len)
 		printf("Result from memory: 0x%x\tResult from cache: 0x%x\n",ground_truth,result);
 		memaddr mem=memaddr_load(paddr);
 		printf("0x%x: offset=%d\tgroup_idx=%d\tmark=%d\n",paddr,mem.offset,mem.group_idx,mem.mark);
-		h
+		u32 mask=~0b111111;
+		hexdump_pointer(hw_mem+(paddr&mask),CACHE_BLOCK_SIZE);
+		cache_group *grp=&nemu_cache.groups[mem.group_idx];
+		for(int i=0;i<GRP_SIZE;i++){
+			cache_block *target=&grp->members[i];
+			if(target->mark==mem.mark){
+				hexdump_pointer(target->content, CACHE_BLOCK_SIZE);
+				break;
+			}
+		}
 		assert(0);
 	}
 	
