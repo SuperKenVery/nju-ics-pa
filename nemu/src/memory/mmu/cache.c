@@ -55,7 +55,9 @@ void cache_block_load(cache_block *this, paddr_t mem_addr){
 	this->valid=true;
 	memaddr addr=memaddr_load(mem_addr);
 	this->mark=addr.mark;
+	printf("eip: 0x%x\tcache_block_load: before memcpy\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
 	memcpy(this->content, &hw_mem[mem_addr], CACHE_BLOCK_SIZE);
+	printf("eip: 0x%x\tcache_block_load: after memcpy\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
 }
 
 // Read from cache
