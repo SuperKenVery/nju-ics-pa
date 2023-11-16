@@ -216,7 +216,7 @@ void init_cache()
 // write data to cache
 void cached_write(paddr_t paddr, size_t len, uint32_t data)
 {
-	if(paddr==0x37570){
+	if(paddr<=0x37570 && paddr+len>=0x37570){
 		printf("Writing 37570\n");
 	}
 	hw_mem_write(paddr, len, data);
@@ -226,7 +226,7 @@ void cached_write(paddr_t paddr, size_t len, uint32_t data)
 // read data from cache
 uint32_t cached_read(paddr_t paddr, size_t len)
 {
-	if(paddr==0x37570){
+	if(paddr<=0x37570 && paddr+len>=0x37570){
 		printf("Reading 37570\n");
 	}
 	cache_coverage coverage=cache_has_data(&nemu_cache, paddr, len);
