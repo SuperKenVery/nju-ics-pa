@@ -43,11 +43,14 @@ make_instr_func(jmp_eb) {
 
 // FF
 make_instr_func(jmp_near_indirect){
+        printf("eip: 0x%x\tEnter FF\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
         int len=1;
         OPERAND rm;
         rm.data_size=data_size;
         len+=modrm_rm(eip+len,&rm);
+        printf("eip: 0x%x\tAfter modrm\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
         operand_read(&rm);
+        printf("eip: 0x%x\tAfter operand read\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
 
         print_asm_1("jmp", "", len, &rm);
         cpu.eip=rm.val;
