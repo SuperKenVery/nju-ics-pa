@@ -3,7 +3,7 @@
 CC := gcc
 LD := ld
 CFLAGS := -ggdb3 -MMD -MP -Wall -Werror -O2 -I./include -I../include -I../libs -I../libs/nemu-ref/include -Wno-unused-result -fsanitize=address -fsanitize=undefined
-LDFLAGS := -lreadline -lSDL -lasan
+LDFLAGS := -lreadline -lSDL -lasan -lubsan
 
 CFILES := $(shell find src/ -name "*.c")
 OBJS := $(CFILES:.c=.o)
