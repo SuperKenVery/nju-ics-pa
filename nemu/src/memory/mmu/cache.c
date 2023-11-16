@@ -198,6 +198,7 @@ typedef enum{
 
 cache_coverage cache_has_data(cache *this, paddr_t mem_addr, size_t len){
 	memaddr addr=memaddr_load(mem_addr);
+	printf("cache_has_data: offset=%d len=%d\n",addr.offset,len);
 
 	cache_group *grp=&this->groups[addr.group_idx];
 	if(addr.offset+len>CACHE_BLOCK_SIZE) return not_aligned;
@@ -223,7 +224,20 @@ void cached_write(paddr_t paddr, size_t len, uint32_t data)
 // read data from cache
 uint32_t cached_read(paddr_t paddr, size_t len)
 {
+	memaddr addr=memaddr_load(paddr);
+	printf("cached_read: offset=%d len=%d\n",addr.offset, len);
 	cache_coverage coverage=cache_has_data(&nemu_cache, paddr, len);
+	switch (coverage) {
+		case covered:
+			printf("Has cache\n");
+			break;
+		case not_aligned:
+			printf("Not aligned\n");
+			break;
+		case not_loaded:
+			printf("Not loaded\n");
+			break;
+  }
 	u32 result;
 	if(coverage==not_aligned){
 		result=hw_mem_read(paddr, len);
