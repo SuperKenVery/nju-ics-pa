@@ -195,7 +195,7 @@ u8 cache_has_data(cache *this, paddr_t mem_addr, size_t len){
 
 	cache_group *grp=&this->groups[addr.group_idx];
 	if(cache_group_has_cache(grp, mem_addr)==false) return false;
-	if(mem_addr+len>CACHE_BLOCK_SIZE) return false;
+	if(addr.offset+len>CACHE_BLOCK_SIZE) return false;
 	return true;
 }
 
