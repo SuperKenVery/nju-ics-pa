@@ -60,12 +60,12 @@ void cache_block_load(cache_block *this, paddr_t mem_addr){
 
 // Read from cache
 u32 cache_block_read(cache_block *this, u32 offset, size_t len){
-	u8 valid=(offset>=0 && offset+len<CACHE_BLOCK_SIZE);
+	u8 valid=(offset>=0 && offset+len<=CACHE_BLOCK_SIZE);
 	if(valid==false){
 		printf("Cache block read: Invalid arguments\n");
 		printf("offset=%d len=%d\n",offset,len);
 	}
-	assert(offset>=0 && offset+len<CACHE_BLOCK_SIZE);
+	assert(offset>=0 && offset+len<=CACHE_BLOCK_SIZE);
 
 	u32 ret=0;
 	memcpy(&ret,&this->content[offset],len);
