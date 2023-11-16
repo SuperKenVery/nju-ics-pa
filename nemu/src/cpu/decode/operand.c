@@ -12,7 +12,7 @@ void operand_read(OPERAND *opr)
 		//assert(opr->sreg == SREG_DS || opr->sreg == SREG_SS ...);
 		// thank Peiwen Yu from NJU CS'16 for fixing the data size issue
     printf("eip: 0x%x\tBefore vaddr_read\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
-		printf("addr=%x\tlen=%d\n",opr->addr,opr->data_size/8);
+		printf("addr=0x%x\tlen=%d\n",opr->addr,opr->data_size/8);
 		opr->val = vaddr_read(opr->addr, opr->sreg, opr->data_size / 8);
     printf("eip: 0x%x\tAfter vaddr_read\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
 		break;

@@ -35,11 +35,13 @@ void hw_mem_write(paddr_t paddr, size_t len, uint32_t data)
 uint32_t paddr_read(paddr_t paddr, size_t len)
 {
 	uint32_t ret = 0;
+	printf("eip: 0x%x\tEnter paddr_read\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
 #ifndef CACHE_ENABLED
 	ret = hw_mem_read(paddr, len);
 #else
 	ret = cached_read(paddr, len);
 #endif
+	printf("eip: 0x%x\tExit paddr_read\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
 	return ret;
 }
 
