@@ -20,11 +20,13 @@ uint32_t cached_read(paddr_t paddr, size_t len);
 #define GRP_SIZE 8
 #define GRP_NUM (CACHE_SIZE/(GRP_SIZE*CACHE_BLOCK_SIZE))
 
+// 128 groups, 10 bits
+// MemAddr:  19bit_mark   7bit_group_num   6bit_block_offset
 typedef struct{
 	// Little endian, low digit comes in low address
 	u32 offset:6;
-	u32 group_idx:10;
-	u32 mark:16;
+	u32 group_idx:7;
+	u32 mark:19;
 } memaddr;
 
 typedef union{
@@ -34,7 +36,7 @@ typedef union{
 
 typedef struct{
 	u8 valid;
-	u16 mark;
+	u32 mark;
 	char content[CACHE_BLOCK_SIZE];
 } cache_block;
 

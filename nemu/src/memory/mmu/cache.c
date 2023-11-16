@@ -11,8 +11,6 @@
 #include <string.h>
 
 
-// 1024 groups, 10 bits
-// MemAddr:  16bit_mark   10bit_group_num   6bit_block_offset
 
 cache nemu_cache;
 
@@ -26,6 +24,7 @@ memaddr memaddr_load(paddr_t addr){
 
 void cache_block_init(cache_block *this){
 	this->valid=false;
+	this->mark=0;
 }
 
 // Load a block of memory into cache
