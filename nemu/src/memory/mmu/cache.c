@@ -190,13 +190,19 @@ void cache_write(cache *this, paddr_t mem_addr, u32 data, size_t len){
 	cache_group_write(group, mem_addr, data, len);
 }
 
-u8 cache_has_data(cache *this, paddr_t mem_addr, size_t len){
+typedef enum{
+	covered,
+	not_loaded,
+	not_aligned
+} cache_coverage;
+
+cache_coverage cache_has_data(cache *this, paddr_t mem_addr, size_t len){
 	memaddr addr=memaddr_load(mem_addr);
 
 	cache_group *grp=&this->groups[addr.group_idx];
-	if(cache_group_has_cache(grp, mem_addr)==false) return false;
-	if(addr.offset+len>CACHE_BLOCK_SIZE) return false;
-	return true;
+	if(addr.offset+len>CACHE_BLOCK_SIZE) return not_aligned;
+	if(cache_group_has_cache(grp, mem_addr)==false) return not_loaded;
+	return covered;
 }
 
 cache nemu_cache;
@@ -217,11 +223,15 @@ void cached_write(paddr_t paddr, size_t len, uint32_t data)
 // read data from cache
 uint32_t cached_read(paddr_t paddr, size_t len)
 {
-	if(cache_has_data(&nemu_cache, paddr, len)==false){
+	cache_coverage coverage=cache_has_data(&nemu_cache, paddr, len);
+	u32 result;
+	if(coverage==not_aligned){
+		result=hw_mem_read(paddr, len);
+	}else if(coverage==not_loaded){
 		cache_load(&nemu_cache, paddr);
 	}
+	result=cache_read(&nemu_cache, paddr, len);
 
-	u32 result=cache_read(&nemu_cache, paddr, len);
 	u32 ground_truth=hw_mem_read(paddr, len);
 
 	if(result!=ground_truth){
