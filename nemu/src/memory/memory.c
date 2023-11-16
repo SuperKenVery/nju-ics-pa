@@ -22,6 +22,9 @@ void hw_mem_write(paddr_t paddr, size_t len, uint32_t data)
 		printf("Invalid memory write operation: write at %u\n",paddr);
 		exit(100);
 	}
+	if(paddr<=0x37570 && paddr+len>=0x37570){
+		printf("hwmem write 37570\n");
+	}
 	memcpy(hw_mem + paddr, &data, len);
 }
 
