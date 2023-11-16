@@ -18,7 +18,7 @@ uint32_t cached_read(paddr_t paddr, size_t len);
 #define CACHE_BLOCK_SIZE 64
 #define CACHE_SIZE 64*1024
 #define GRP_SIZE 8
-#define GRP_NUM CACHE_SIZE/(GRP_SIZE*CACHE_BLOCK_SIZE)
+#define GRP_NUM (CACHE_SIZE/(GRP_SIZE*CACHE_BLOCK_SIZE))
 
 typedef struct{
 	// Little endian, low digit comes in low address
