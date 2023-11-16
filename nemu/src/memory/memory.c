@@ -25,6 +25,7 @@ void hw_mem_write(paddr_t paddr, size_t len, uint32_t data)
 	if(paddr<=0x37570 && paddr+len>=0x37570){
 		printf("hwmem write 37570\n");
 	}
+	printf("eip: 0x%x\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
 	memcpy(hw_mem + paddr, &data, len);
 }
 
