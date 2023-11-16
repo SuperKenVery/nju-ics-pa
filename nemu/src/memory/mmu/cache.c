@@ -102,7 +102,7 @@ void cache_group_load(cache_group *this, paddr_t mem_addr){
 
 	// Case 3 - fuck an existing cache block
 	// pseudo random
-	u32 target_index=cpu.eip*3%GRP_SIZE;
+	u32 target_index=(cpu.eip*3)%GRP_SIZE;
 	cache_block *target=&this->members[target_index];
 	cache_block_load(target, mem_addr);
 }
