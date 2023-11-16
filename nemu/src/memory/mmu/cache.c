@@ -157,6 +157,8 @@ void cache_init(cache *this){
 void cache_load(cache *this, paddr_t mem_addr){
 	memaddr addr=memaddr_load(mem_addr);
 
+	printf("cache_load: this=%p\n",this);
+	assert(addr.group_idx>=0 && addr.group_idx<GRP_SIZE);
 	cache_group *grp=&this->groups[addr.group_idx];
 	cache_group_load(grp, mem_addr);
 }
