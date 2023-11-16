@@ -31,6 +31,7 @@ void cache_block_init(cache_block *this){
 void cache_block_load(cache_block *this, paddr_t mem_addr){
 	// Make sure we're operating on start of a block
 	u32 mask=~0b111111;
+	printf("Enter cache_block_load, this=%p\n",this);
 	printf("mem_addr was 0x%x\n",mem_addr);
 	mem_addr=mem_addr&mask;
 	printf("mem_addr became 0x%x\n",mem_addr);
