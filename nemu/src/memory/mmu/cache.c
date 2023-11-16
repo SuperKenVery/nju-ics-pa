@@ -31,22 +31,13 @@ void cache_block_init(cache_block *this){
 void cache_block_load(cache_block *this, paddr_t mem_addr){
 	// Make sure we're operating on start of a block
 	u32 mask=~0b111111;
-	printf("Enter cache_block_load, this=%p\n",this);
-	printf("mem_addr was 0x%x\n",mem_addr);
 	mem_addr=mem_addr&mask;
-	printf("mem_addr became 0x%x\n",mem_addr);
 	assert((mem_addr&0b111111)==0);
 
 	this->valid=true;
 	memaddr addr=memaddr_load(mem_addr);
 	this->mark=addr.mark;
-	printf("eip: 0x%x\tcache_block_load: before memcpy\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
-	printf("src=%p, dst=%p, len=%d\n",&hw_mem[mem_addr],this->content,CACHE_BLOCK_SIZE);
-	printf("hw_mem[0x37570] at %p\n", &hw_mem[0x37570]);
-	printf("Cache at %p ~ %p, size = %d\n",&nemu_cache, ((char*)&nemu_cache)+sizeof(nemu_cache),sizeof(nemu_cache));
-	printf("hwmem at %p ~ %p\n",hw_mem,hw_mem+(MEM_SIZE_B));
 	memcpy(this->content, &hw_mem[mem_addr], CACHE_BLOCK_SIZE);
-	printf("eip: 0x%x\tcache_block_load: after memcpy\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
 }
 
 // Read from cache
@@ -157,7 +148,6 @@ void cache_init(cache *this){
 void cache_load(cache *this, paddr_t mem_addr){
 	memaddr addr=memaddr_load(mem_addr);
 
-	printf("cache_load: this=%p, group_idx=%d, group_num=%d\n",this,addr.group_idx,GRP_NUM);
 	assert(addr.group_idx>=0 && addr.group_idx<GRP_NUM);
 	cache_group *grp=&this->groups[addr.group_idx];
 	cache_group_load(grp, mem_addr);
@@ -197,9 +187,6 @@ void init_cache()
 // write data to cache
 void cached_write(paddr_t paddr, size_t len, uint32_t data)
 {
-	if(paddr<=0x37570 && paddr+len>=0x37570){
-		printf("Writing 37570\n");
-	}
 	hw_mem_write(paddr, len, data);
 	cache_write(&nemu_cache, paddr, data, len);
 }
@@ -207,29 +194,19 @@ void cached_write(paddr_t paddr, size_t len, uint32_t data)
 // read data from cache
 uint32_t cached_read(paddr_t paddr, size_t len)
 {
-	printf("eip: 0x%x\tEnter cached_read\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
-	if(paddr<=0x37570 && paddr+len>=0x37570){
-		printf("Reading 37570\n");
-	}
 
 	cache_coverage coverage=cache_has_data(&nemu_cache, paddr, len);
-	printf("eip: 0x%x\tAfter coverage check\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
 	u32 result;
 	if(coverage==not_aligned){
-		printf("Not aligned, hw read\n");
 		result=hw_mem_read(paddr, len);
 	}else{
-		if(coverage==not_loaded) printf("Not loaded, loading paddr=0x%x\n",paddr);
 		if(coverage==not_loaded)
 			cache_load(&nemu_cache, paddr);
-		if(coverage==not_loaded) printf("eip: 0x%x\tAfter cache load\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
 		result=cache_read(&nemu_cache, paddr, len);
-		printf("eip: 0x%x\tAfter cache read\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
 	}
 
 
 	u32 ground_truth=hw_mem_read(paddr, len);
-	printf("eip: 0x%x\tAfter reading ground truth\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
 
 	if(result!=ground_truth){
 		printf("Cache read error! Reading %d bytes at 0x%x\n",len,paddr);
