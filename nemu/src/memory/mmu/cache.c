@@ -241,6 +241,7 @@ uint32_t cached_read(paddr_t paddr, size_t len)
 		if(coverage==not_loaded) printf("Not loaded, loading\n");
 		if(coverage==not_loaded)
 			cache_load(&nemu_cache, paddr);
+		if(coverage==not_loaded) printf("eip: 0x%x\tAfter cache load\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
 		result=cache_read(&nemu_cache, paddr, len);
 		printf("eip: 0x%x\tAfter cache read\t37570 is %x %x %x %x\n",cpu.eip,hw_mem[0x37570],hw_mem[0x37570+1],hw_mem[0x37570+2],hw_mem[0x37570+3]);
 	}
