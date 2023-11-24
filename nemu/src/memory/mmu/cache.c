@@ -200,10 +200,10 @@ uint32_t cached_read(paddr_t paddr, size_t len)
 	if(coverage==not_aligned){
 		memaddr addr=memaddr_load(paddr);
 		int left=CACHE_BLOCK_SIZE-addr.offset, right=len-left;
-		u32 low=cache_read(&nemu_cache, paddr, left);
-		u32 high=cache_read(&nemu_cache, paddr+left, right);
+		u32 low=cached_read( paddr, left);
+		u32 high=cached_read(paddr+left, right);
 		printf("Low is 0x%x(%d bytes), high is 0x%x(%d bytes)\n",low,left,high,right);
-		result=(high << (left*8)) | low;
+		result=(high << (left)) | low;
 	}else{
 		if(coverage==not_loaded)
 			cache_load(&nemu_cache, paddr);
