@@ -51,7 +51,7 @@ typedef struct{
 typedef enum{
 	covered,
 	not_loaded,
-	not_aligned
+	cross_block
 } cache_coverage;
 
 memaddr memaddr_load(paddr_t addr);

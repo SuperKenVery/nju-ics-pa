@@ -172,7 +172,7 @@ cache_coverage cache_has_data(cache *this, paddr_t mem_addr, size_t len){
 	memaddr addr=memaddr_load(mem_addr);
 
 	cache_group *grp=&this->groups[addr.group_idx];
-	if(addr.offset+len>CACHE_BLOCK_SIZE) return not_aligned;
+	if(addr.offset+len>CACHE_BLOCK_SIZE) return cross_block;
 	if(cache_group_has_cache(grp, mem_addr)==false) return not_loaded;
 	return covered;
 }
@@ -188,7 +188,16 @@ void init_cache()
 void cached_write(paddr_t paddr, size_t len, uint32_t data)
 {
 	hw_mem_write(paddr, len, data);
-	cache_write(&nemu_cache, paddr, data, len);
+	cache_coverage coverage=cache_has_data(&nemu_cache, paddr, len);
+	if(coverage==cross_block){
+		memaddr addr=memaddr_load(paddr);
+		int left=CACHE_BLOCK_SIZE-addr.offset, right=len-left;
+		u32 low_mask=(1<<(left*8))-1;
+		cached_write(paddr, left, data&low_mask);
+		cached_write(paddr+left, right, data&(~low_mask));
+	}else if(coverage==covered){
+		cache_write(&nemu_cache, paddr, data, len);
+	}
 }
 
 // read data from cache
@@ -197,7 +206,7 @@ uint32_t cached_read(paddr_t paddr, size_t len)
 
 	cache_coverage coverage=cache_has_data(&nemu_cache, paddr, len);
 	u32 result;
-	if(coverage==not_aligned){
+	if(coverage==cross_block){
 		memaddr addr=memaddr_load(paddr);
 		int left=CACHE_BLOCK_SIZE-addr.offset, right=len-left;
 		u32 low=cached_read( paddr, left);
