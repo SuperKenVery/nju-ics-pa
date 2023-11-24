@@ -198,7 +198,11 @@ uint32_t cached_read(paddr_t paddr, size_t len)
 	cache_coverage coverage=cache_has_data(&nemu_cache, paddr, len);
 	u32 result;
 	if(coverage==not_aligned){
-		result=hw_mem_read(paddr, len);
+		memaddr addr=memaddr_load(paddr);
+		int left=CACHE_BLOCK_SIZE-addr.offset, right=len-left;
+		u32 low=cache_read(&nemu_cache, paddr, left);
+		u32 high=cache_read(&nemu_cache, paddr+left, right);
+		result=(high << (left)) | low;
 	}else{
 		if(coverage==not_loaded)
 			cache_load(&nemu_cache, paddr);
