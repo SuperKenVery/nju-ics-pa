@@ -203,7 +203,7 @@ uint32_t cached_read(paddr_t paddr, size_t len)
 		u32 low=cache_read(&nemu_cache, paddr, left);
 		u32 high=cache_read(&nemu_cache, paddr+left, right);
 		printf("Low is 0x%x(%d bytes), high is 0x%x(%d bytes)\n",low,left,high,right);
-		result=(high << (left)) | low;
+		result=(high << (left*8)) | low;
 	}else{
 		if(coverage==not_loaded)
 			cache_load(&nemu_cache, paddr);
