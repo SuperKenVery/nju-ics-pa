@@ -87,3 +87,38 @@ make_instr_func(push_68) {
 
   return len;
 }
+
+#define PUSH_SEGREG(reg) \
+{                                           \
+  push(cpu.reg.val, sizeof(cpu.reg.val)*8); \
+}                                           
+
+make_instr_func(push_cs) {
+  PUSH_SEGREG(cs)
+  return 1;
+}
+
+make_instr_func(push_ss) {
+  PUSH_SEGREG(ss)
+  return 1;
+}
+
+make_instr_func(push_ds){
+  PUSH_SEGREG(ds)
+  return 1;
+}
+
+make_instr_func(push_es){
+  PUSH_SEGREG(es)
+  return 1;
+}
+
+make_instr_func(push_fs) {
+  PUSH_SEGREG(fs)
+  return 2;
+}
+
+make_instr_func(push_gs) {
+  PUSH_SEGREG(gs)
+  return 2;
+}

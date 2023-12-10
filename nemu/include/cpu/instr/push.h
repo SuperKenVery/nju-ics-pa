@@ -17,5 +17,11 @@ make_instr_func(push_16);
 make_instr_func(push_1e);
 make_instr_func(push_06);
 make_instr_func(push_0f);
+make_instr_func(push_cs);
+make_instr_func(push_ss);
+make_instr_func(push_ds);
+make_instr_func(push_es);
+make_instr_func(push_fs);
+make_instr_func(push_gs);
 
 #endif
