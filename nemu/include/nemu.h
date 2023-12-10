@@ -1,7 +1,7 @@
 #ifndef __NEMU2_H__
 #define __NEMU2_H__
 
-// #define NEMU_REF_INSTR 1
+#define NEMU_REF_INSTR 1
 
 #include "macro.h"
 #include <stdint.h>
