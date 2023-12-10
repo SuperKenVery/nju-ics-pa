@@ -3,6 +3,44 @@
 
 #include "nemu.h"
 
+typedef struct {
+  u32 limit : 16;
+  u32 base : 32;
+} GDTR;
+
+typedef union {
+  struct {
+    u32 pe : 1;
+    u32 mp : 1;
+    u32 em : 1;
+    u32 ts : 1;
+    u32 et : 1;
+    u32 reserve : 28;
+    u32 pg : 1;
+  };
+  u32 val;
+} CR0;
+
+typedef struct {
+  union {
+    u16 val;
+    struct {
+      u32 rpl : 2;
+      u32 ti : 1;
+      u32 index : 13;
+    };
+  };
+
+	// Invisible cache
+  struct {
+    u32 base;
+    u32 limit;
+    u32 type : 5;
+    u32 privilege_level : 2;
+    u32 soft_use : 1;
+  };
+} SegReg;
+
 // define the structure of registers
 typedef struct
 {
@@ -55,8 +93,8 @@ typedef struct
 	} eflags;
 
 #ifdef IA32_SEG
-	GDTR gdtr; // GDTR, todo: define type GDTR
-	// segment registers, todo: define type SegReg
+	GDTR gdtr;
+	// segment registers
 	union {
 		SegReg segReg[6];
 		struct

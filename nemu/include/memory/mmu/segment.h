@@ -1,5 +1,6 @@
 #ifndef __SEGMENT_H__
 #define __SEGMENT_H__
+#include <nemu.h>
 
 typedef union SegmentDescriptor {
 	struct
@@ -23,5 +24,8 @@ typedef union SegmentDescriptor {
 
 uint32_t segment_translate(uint32_t vaddr, uint8_t sreg);
 void load_sreg(uint8_t sreg);
+u32 get_base(SegDesc *desc);
+u32 get_limit(SegDesc *desc);
+u32 get_type(SegDesc *desc);
 
 #endif

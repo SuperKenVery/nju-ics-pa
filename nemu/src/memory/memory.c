@@ -1,4 +1,5 @@
 #include "memory/mmu/cache.h"
+#include "memory/mmu/segment.h"
 #include "nemu.h"
 #include "cpu/cpu.h"
 #include "memory/memory.h"
@@ -58,13 +59,25 @@ void laddr_write(laddr_t laddr, size_t len, uint32_t data)
 uint32_t vaddr_read(vaddr_t vaddr, uint8_t sreg, size_t len)
 {
 	assert(len == 1 || len == 2 || len == 4);
-	return laddr_read(vaddr, len);
+	laddr_t laddr;
+	if(cpu.cr0.pe){
+		laddr=segment_translate(vaddr, sreg);
+	}else{
+		laddr=vaddr;
+	}
+	return laddr_read(laddr, len);
 }
 
 void vaddr_write(vaddr_t vaddr, uint8_t sreg, size_t len, uint32_t data)
 {
 	assert(len == 1 || len == 2 || len == 4);
-	laddr_write(vaddr, len, data);
+	laddr_t laddr;
+	if(cpu.cr0.pe){
+		laddr=segment_translate(vaddr, sreg);
+	}else{
+		laddr=vaddr;
+	}
+	laddr_write(laddr, len, data);
 }
 
 void init_mem()

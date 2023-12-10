@@ -11,7 +11,7 @@
 extern CPU_STATE cpu;
 
 // initialize the cpu states
-void init_cpu();
+void init_cpu(const u32 init_eip);
 
 // execute n instructions starting from the current eip
 // change eip according to the length of the instruction in each step
