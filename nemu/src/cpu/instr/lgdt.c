@@ -11,6 +11,8 @@ Put the implementations of `lgdt' instructions here.
 make_instr_func(lgdt) {
   OPERAND mem;
   int len=2;
+  u8 x=instr_fetch(eip, 1);
+  printf("*eip = 0x%x\n",x);
   u8 a=instr_fetch(eip+len, 1);
   printf("ModRM Byte is: 0x%x\n", a);
   len+=modrm_rm(eip+len, &mem);
