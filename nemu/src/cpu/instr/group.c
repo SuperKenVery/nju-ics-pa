@@ -1,11 +1,12 @@
 #include "cpu/instr.h"
 
 #define make_group_impl(name)                               \
-	make_instr_func(name)                                   \
-	{                                                       \
-		uint8_t op_code;                                    \
-		modrm_opcode(eip + 1, &op_code);                    \
-		return concat(name, _entry)[op_code](eip, op_code); \
+	make_instr_func(name)                                     \
+	{                                                         \
+		printf("Group entry: eip=0x%x\n",eip);                  \
+		uint8_t op_code;                                        \
+		modrm_opcode(eip + 1, &op_code);                        \
+		return concat(name, _entry)[op_code](eip, op_code);     \
 	}
 #define make_group_impl_ref(name)                                    \
 	make_instr_func(name)                                            \
