@@ -71,7 +71,7 @@ void load_sreg(uint8_t sreg)
 	u32 desc_addr=gdt_addr+index*sizeof(SegDesc);
 	SegDesc desc;
 	for(int i=0;i<sizeof(desc)/sizeof(u32);i++){
-		*((u32*)&desc+i)=laddr_read(desc_addr+i, 4);
+		*(((u32*)&desc)+i)=laddr_read(desc_addr+i, 4);
 	}
 
 	// Checks under flat mode
