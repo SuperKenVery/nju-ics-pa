@@ -40,12 +40,27 @@ uint32_t segment_translate(uint32_t offset, uint8_t sreg)
 	return segreg->base+offset;
 }
 
+SegDesc get_seg_desc(int index){
+	u32 gdt_addr=cpu.gdtr.base;
+	if(index>=cpu.gdtr.limit){
+		printf("NEMU: Segment selector index out of range: limit is %d, requested %d.\n",
+			cpu.gdtr.limit, index);
+	}
+	u32 desc_addr=gdt_addr+index*sizeof(SegDesc);
+	SegDesc desc;
+	for(int i=0;i<sizeof(desc)/sizeof(u32);i++){
+		*((u32*)&desc+i)=laddr_read(desc_addr+i, 4);
+	}
+	return desc;
+}
+
 // load the invisible part of a segment register
 void load_sreg(uint8_t sreg)
 {
 	/* TODO: load the invisibile part of the segment register 'sreg' by reading the GDT.
 	 * The visible part of 'sreg' should be assigned by mov or ljmp already.
 	 */
+	assert(sreg<=5);
 	SegReg *reg=&cpu.segReg[sreg];
 	u32 gdt_addr=cpu.gdtr.base;
 	u32 index=reg->index;

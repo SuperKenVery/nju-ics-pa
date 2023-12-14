@@ -3,6 +3,9 @@
 #include "cpu/instr.h"
 #include "cpu/instr_helper.h"
 #include "cpu/operand.h"
+#include "cpu/reg.h"
+#include "memory/memory.h"
+#include "memory/mmu/segment.h"
 
 make_instr_func(jmp_near)
 {
@@ -54,4 +57,29 @@ make_instr_func(jmp_near_indirect){
         
         // Don't add anything to ip anymore
         return 0;
+}
+
+// EA
+make_instr_func(jmp_far) {
+        int len=1;
+        u32 offset=instr_fetch(eip+1, 4);
+        u16 selector=instr_fetch(eip+1+4, 2);
+        len+=(4+2);
+
+        if(cpu.cr0.pe==0 || (cpu.cr0.pe==1 && cpu.eflags.VM==1)){
+                // Real mode or Virtual 8086 mode
+                cpu.cs.val=selector;
+                cpu.eip=offset;
+                load_sreg(SREG_CS);
+        }
+
+        if(cpu.cr0.pe==1 && cpu.eflags.VM==0) {
+                // Protected mode
+
+                // Call gate, task gate and task state segments are not implemented.
+                SegDesc desc=get_seg_desc(selector);
+                load_sreg(selector);
+
+        }
+           
 }

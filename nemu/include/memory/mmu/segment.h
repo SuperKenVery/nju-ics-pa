@@ -27,5 +27,6 @@ void load_sreg(uint8_t sreg);
 u32 get_base(SegDesc *desc);
 u32 get_limit(SegDesc *desc);
 u32 get_type(SegDesc *desc);
+SegDesc get_seg_desc(int index);
 
 #endif
