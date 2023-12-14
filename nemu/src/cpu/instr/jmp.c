@@ -82,7 +82,7 @@ make_instr_func(jmp_far) {
                 SegDesc desc=get_seg_desc(selector);
                 {
                         printf("Segment selector is %d\n",selector);
-                        printf("Limit is 0x%x, base is 0x%x\n",get_limit(&desc),get_base(&desc))
+                        printf("Limit is 0x%x, base is 0x%x\n",get_limit(&desc),get_base(&desc));
                         hexdump(desc);
                 }
                 // We don't do priviledge checking...
