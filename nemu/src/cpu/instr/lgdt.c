@@ -18,6 +18,7 @@ make_instr_func(lgdt) {
   u32 base=laddr_read(mem.addr+2, 4);
   cpu.gdtr.base=base;
   cpu.gdtr.limit=limit;
+  printf("LGDT: base=0x%x, limit=0x%x\n",base,limit);
 
   print_asm_1("lgdt", "", len, &mem);
 
