@@ -72,7 +72,6 @@ make_instr_func(jmp_far) {
                 // Real mode or Virtual 8086 mode
                 cpu.cs.val=selector;
                 cpu.eip=offset;
-                load_sreg(SREG_CS);
         }
 
         if(cpu.cr0.pe==1 && cpu.eflags.VM==0) {
