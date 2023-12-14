@@ -6,6 +6,7 @@
 #include "cpu/reg.h"
 #include "memory/memory.h"
 #include "memory/mmu/segment.h"
+#include <assert.h>
 
 make_instr_func(jmp_near)
 {
@@ -78,8 +79,16 @@ make_instr_func(jmp_far) {
 
                 // Call gate, task gate and task state segments are not implemented.
                 SegDesc desc=get_seg_desc(selector);
-                load_sreg(selector);
-
+                // We don't do priviledge checking...
+                // u8 conforming=desc.type & (1<<2);
+                // TODO: Call exception handler
+                assert(desc.present);
+                assert(offset<get_limit(&desc));
+                cpu.cs.val=selector;
+                cpu.eip=offset;
+                load_sreg(SREG_CS);
         }
-           
+
+        // Don't modify eip anymore
+        return 0;
 }
