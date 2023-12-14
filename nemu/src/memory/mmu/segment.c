@@ -76,6 +76,7 @@ void load_sreg(uint8_t sreg)
 
 	// Checks under flat mode
 	{
+		assert(sizeof(SegDesc)==8);
 		assert(desc.base_15_0==0);
 		assert(desc.base_23_16==0);
 		assert(desc.base_31_24==0);
