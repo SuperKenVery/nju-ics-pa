@@ -1,4 +1,7 @@
 #include "cpu/instr.h"
+#include "cpu/instr_helper.h"
+#include "cpu/modrm.h"
+#include "cpu/operand.h"
 
 static void instr_execute_2op() 
 {
@@ -75,4 +78,19 @@ make_instr_func(mov_srm162r_l) {
 
 	print_asm_2("mov", "", len, &rm, &r);
         return len;
+}
+
+make_instr_func(mov_8e) {
+  int len=1;
+  OPERAND sreg, rm;
+  len+=modrm_r_rm(eip+len, &sreg, &rm);
+  sreg.type=OPR_SREG;
+
+  operand_read(&rm);
+  sreg.val=rm.val;
+  operand_write(&sreg);
+
+  print_asm_2("mov", "", len, &rm, &sreg);
+
+  return len;
 }
