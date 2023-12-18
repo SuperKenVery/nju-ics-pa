@@ -77,6 +77,7 @@ void load_sreg(uint8_t sreg)
 	for(int i=0;i<sizeof(desc)/sizeof(u32);i++){
 		*(((u32*)&desc)+i)=laddr_read(desc_addr+i, 4);
 	}
+	hexdump(desc);
 
 	// Checks under flat mode
 	{
