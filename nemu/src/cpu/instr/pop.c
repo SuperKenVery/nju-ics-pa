@@ -3,6 +3,7 @@
 #include "cpu/instr_helper.h"
 #include "cpu/modrm.h"
 #include "cpu/operand.h"
+#include "cpu/reg.h"
 #include "device/port_io.h"
 #include <assert.h>
 /*
@@ -18,6 +19,7 @@ u32 pop(int size) {
   operand_read(&esp);
 
   stack.type=OPR_MEM;
+  stack.sreg=SREG_SS;
   stack.data_size=size;
   stack.addr=esp.val;
   operand_read(&stack);

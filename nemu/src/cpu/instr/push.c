@@ -18,6 +18,7 @@ void push(u32 data, int size) {
   operand_write(&esp);
 
   stack.type=OPR_MEM;
+  stack.sreg=SREG_SS;
   stack.data_size=size;
   stack.addr=esp.val;
   stack.val=data;

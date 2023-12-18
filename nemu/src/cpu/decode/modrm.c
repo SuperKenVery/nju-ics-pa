@@ -1,3 +1,4 @@
+#include "cpu/reg.h"
 #include "nemu.h"
 #include "cpu/modrm.h"
 #include "cpu/sib.h"
