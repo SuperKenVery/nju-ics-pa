@@ -42,5 +42,7 @@ make_instr_func(cmove_rm2r_v);
 
 make_instr_func(mov_8e);
 make_instr_func(mov_8c);
+make_instr_func(mov_from_cr);
+make_instr_func(mov_to_cr);
 
 #endif
