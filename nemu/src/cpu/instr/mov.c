@@ -2,6 +2,7 @@
 #include "cpu/instr_helper.h"
 #include "cpu/modrm.h"
 #include "cpu/operand.h"
+#include "memory/memory.h"
 #include "memory/mmu/segment.h"
 
 static void instr_execute_2op() 
@@ -84,8 +85,10 @@ make_instr_func(mov_srm162r_l) {
 make_instr_func(mov_8e) {
   int len=1;
   OPERAND sreg, rm;
+  u8 modrm=instr_fetch(eip+len, 1);
   len+=modrm_r_rm(eip+len, &sreg, &rm);
   sreg.type=OPR_SREG;
+  printf("modrm: 0x%x\n",modrm);
   printf("rm: type=%d, addr=%d, size=%d\n",rm.type,rm.addr,rm.data_size);
   printf("sreg: type=%d, addr=%d, size=%d\n",sreg.type,sreg.addr,sreg.data_size);
   print_asm_2("mov", "", len, &sreg, &rm);
