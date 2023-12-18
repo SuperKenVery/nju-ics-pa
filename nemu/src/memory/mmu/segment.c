@@ -75,6 +75,8 @@ void load_sreg(uint8_t sreg)
 	hexdump_pointer((hw_mem+desc_addr), 8);
 	SegDesc desc;
 	for(int i=0;i<sizeof(desc)/sizeof(u32);i++){
+		u32 a=laddr_read(desc_addr+i, 4);
+		hexdump(a);
 		*(((u32*)&desc)+i)=laddr_read(desc_addr+i, 4);
 	}
 	hexdump(desc);
