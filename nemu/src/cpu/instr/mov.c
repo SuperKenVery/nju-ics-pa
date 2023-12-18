@@ -86,6 +86,7 @@ make_instr_func(mov_8e) {
   OPERAND sreg, rm;
   len+=modrm_r_rm(eip+len, &sreg, &rm);
   sreg.type=OPR_SREG;
+  print_asm_2("mov", "", len, &sreg, &rm);
 
   operand_read(&rm);
   sreg.val=rm.val;
