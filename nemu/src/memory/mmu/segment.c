@@ -1,5 +1,6 @@
 #include "cpu/cpu.h"
 #include "cpu/reg.h"
+#include "debug.h"
 #include "memory/memory.h"
 #include "memory/mmu/segment.h"
 #include <assert.h>
@@ -61,14 +62,17 @@ void load_sreg(uint8_t sreg)
 	 * The visible part of 'sreg' should be assigned by mov or ljmp already.
 	 */
 	assert(sreg<=5);
+	printf("sreg index: %d\n",sreg);
 	SegReg *reg=&cpu.segReg[sreg];
 	u32 gdt_addr=cpu.gdtr.base;
 	u32 index=reg->index;
+	printf("gdt index is %d\n", index);
 	if(index>=cpu.gdtr.limit){
 		printf("NEMU: Segment selector index out of range: limit is %d, requested %d.\n",
 			cpu.gdtr.limit, index);
 	}
 	u32 desc_addr=gdt_addr+index*sizeof(SegDesc);
+	hexdump_pointer((hw_mem+desc_addr), 64);
 	SegDesc desc;
 	for(int i=0;i<sizeof(desc)/sizeof(u32);i++){
 		*(((u32*)&desc)+i)=laddr_read(desc_addr+i, 4);
