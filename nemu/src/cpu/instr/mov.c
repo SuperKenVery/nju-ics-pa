@@ -85,7 +85,8 @@ make_instr_func(mov_srm162r_l) {
 make_instr_func(mov_8e) {
   int len=1;
   OPERAND sreg, rm;
-  u8 modrm=instr_fetch(eip+len, 1);
+  sreg.data_size=16;
+  rm.data_size=16;
   len+=modrm_r_rm(eip+len, &sreg, &rm);
   sreg.type=OPR_SREG;
   printf("modrm: 0x%x\n",modrm);
