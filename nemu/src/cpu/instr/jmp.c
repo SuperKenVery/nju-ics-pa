@@ -94,6 +94,7 @@ make_instr_func(jmp_far) {
                 load_sreg(SREG_CS);
         }
 
+
         // Don't modify eip anymore
         return 0;
 }

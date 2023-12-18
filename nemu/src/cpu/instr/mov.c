@@ -89,9 +89,6 @@ make_instr_func(mov_8e) {
   rm.data_size=16;
   len+=modrm_r_rm(eip+len, &sreg, &rm);
   sreg.type=OPR_SREG;
-  printf("rm: type=%d, addr=%d, size=%d\n",rm.type,rm.addr,rm.data_size);
-  printf("sreg: type=%d, addr=%d, size=%d\n",sreg.type,sreg.addr,sreg.data_size);
-  print_asm_2("mov", "", len, &sreg, &rm);
 
   operand_read(&rm);
   sreg.val=rm.val;
@@ -99,6 +96,23 @@ make_instr_func(mov_8e) {
 
   load_sreg(sreg.addr);
   print_asm_2("mov", "", len, &sreg, &rm);
+
+  return len;
+}
+
+make_instr_func(mov_8c) {
+  int len=1;
+  OPERAND sreg,rm;
+  sreg.data_size=16;
+  rm.data_size=16;
+  len+=modrm_r_rm(eip+len, &sreg, &rm);
+  sreg.type=OPR_SREG;
+
+  operand_read(&sreg);
+  rm.val=sreg.val;
+  operand_write(&rm);
+
+  print_asm_2("mov", "", len, &rm, &sreg);
 
   return len;
 }

@@ -1,6 +1,7 @@
 #ifndef __INSTR_MOV_H__
 #define __INSTR_MOV_H__
 
+#include "cpu-ref/instr_helper_ref.h"
 #include "cpu/instr_helper.h"
 make_instr_func(mov_r2rm_b);
 make_instr_func(mov_r2rm_v);
@@ -40,5 +41,6 @@ make_instr_func(cmovs_rm2r_v);
 make_instr_func(cmove_rm2r_v);
 
 make_instr_func(mov_8e);
+make_instr_func(mov_8c);
 
 #endif
