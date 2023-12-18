@@ -62,11 +62,9 @@ void load_sreg(uint8_t sreg)
 	 * The visible part of 'sreg' should be assigned by mov or ljmp already.
 	 */
 	assert(sreg<=5);
-	printf("sreg index: %d\n",sreg);
 	SegReg *reg=&cpu.segReg[sreg];
 	u32 gdt_addr=cpu.gdtr.base;
 	u32 index=reg->index;
-	printf("gdt index is %d\n", index);
 	if(index>=cpu.gdtr.limit){
 		printf("NEMU: Segment selector index out of range: limit is %d, requested %d.\n",
 			cpu.gdtr.limit, index);
@@ -75,11 +73,8 @@ void load_sreg(uint8_t sreg)
 	hexdump_pointer((hw_mem+desc_addr), 8);
 	SegDesc desc;
 	for(int i=0;i<sizeof(desc)/sizeof(u32);i++){
-		u32 a=laddr_read(desc_addr+i, 4);
-		hexdump(a);
 		*(((u32*)&desc)+i)=laddr_read(desc_addr+i*sizeof(u32), 4);
 	}
-	hexdump(desc);
 
 	// Checks under flat mode
 	{
