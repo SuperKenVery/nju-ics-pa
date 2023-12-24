@@ -47,8 +47,8 @@ void paddr_write(paddr_t paddr, size_t len, uint32_t data)
 #endif
 }
 
-#define PAGE(x) (x&0xfffff000)
-#define NEXTPAGE(x) ((x+4095)/4096*4096)
+#define PAGE(x) ((x)&0xfffff000)
+#define NEXTPAGE(x) (((x)+4095)/4096*4096)
 uint32_t laddr_read(laddr_t laddr, size_t len)
 {
 	if(PAGE(laddr)!=PAGE(laddr+len-1)){
