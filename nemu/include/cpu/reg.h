@@ -22,7 +22,7 @@ typedef union {
 } CR0;
 
 typedef union{
-	u32 value;
+	u32 val;
 	struct {
 		u32 reserved:12;
 		u32 pdbr:20; // page directory base register
