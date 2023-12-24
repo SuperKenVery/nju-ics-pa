@@ -21,6 +21,14 @@ typedef union {
   u32 val;
 } CR0;
 
+typedef union{
+	u32 value;
+	struct {
+		u32 reserved:12;
+		u32 pdbr:20; // page directory base register
+	};
+} CR3;
+
 typedef struct {
   union {
     u16 val;
@@ -108,7 +116,6 @@ typedef struct
 	uint8_t dummy_seg[142]; // make __ref_ instructions safe to use
 #endif
 #ifdef IA32_PAGE
-	// control registers, todo: define type CR3
 	CR3 cr3;
 #else
 	uint8_t dummy_page[4];

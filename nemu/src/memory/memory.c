@@ -1,4 +1,5 @@
 #include "memory/mmu/cache.h"
+#include "memory/mmu/page.h"
 #include "memory/mmu/segment.h"
 #include "nemu.h"
 #include "cpu/cpu.h"
@@ -19,7 +20,7 @@ uint32_t hw_mem_read(paddr_t paddr, size_t len)
 
 void hw_mem_write(paddr_t paddr, size_t len, uint32_t data)
 {
-	if(paddr<0 || paddr>=MEM_SIZE_B) {
+	if(paddr<0 || paddr+len>=MEM_SIZE_B) {
 		printf("Invalid memory write operation: write at %u\n",paddr);
 		exit(100);
 	}
@@ -46,14 +47,46 @@ void paddr_write(paddr_t paddr, size_t len, uint32_t data)
 #endif
 }
 
+#define PAGE(x) (x&0xfffff000)
+#define NEXTPAGE(x) ((x+4095)/4096*4096)
 uint32_t laddr_read(laddr_t laddr, size_t len)
 {
-	return paddr_read(laddr, len);
+	if(PAGE(laddr)!=PAGE(laddr+len-1)){
+		// Cross page
+		// low is both low addr and least significant
+		int lowlen=NEXTPAGE(laddr)-laddr+1;
+		u32 low=laddr_read(laddr, lowlen);
+		u32 high=laddr_read(NEXTPAGE(laddr),len-lowlen);
+		return (high<<(lowlen*8))|low;
+	}else{
+		laddr_parse_t addr;
+		addr.laddr=laddr;
+		paddr_t paddr;
+		if(cpu.cr0.pg==1){
+			paddr=page_translate(laddr);
+		}else{
+			paddr=laddr;
+		}
+		return paddr_read(paddr, len);
+	}
 }
 
 void laddr_write(laddr_t laddr, size_t len, uint32_t data)
 {
-	paddr_write(laddr, len, data);
+	if(PAGE(laddr)!=PAGE(laddr+len-1)){
+		// Cross page
+		int lowlen=NEXTPAGE(laddr)-laddr+1;
+		laddr_write(laddr, lowlen, data&((1<<(lowlen*8))-1));
+		laddr_write(NEXTPAGE(laddr), len-lowlen, data>>(lowlen*8));
+	}else{
+		paddr_t paddr;
+		if(cpu.cr0.pg==1){
+			paddr=page_translate(laddr);
+		}else{
+			paddr=laddr;
+		}
+		paddr_write(paddr, len, data);
+	}
 }
 
 uint32_t vaddr_read(vaddr_t vaddr, uint8_t sreg, size_t len)

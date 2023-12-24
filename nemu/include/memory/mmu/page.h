@@ -50,6 +50,15 @@ typedef union PageTableEntry {
 	uint32_t val;
 } PTE;
 
+typedef union{
+	laddr_t laddr;
+	struct{
+		u32 offset: 12;
+		u32 page_entry_index: 10;
+		u32 page_directory_index: 10;
+	};
+} laddr_parse_t;
+
 paddr_t page_translate(laddr_t laddr);
 paddr_t page_walk(laddr_t laddr);
 

@@ -37,7 +37,7 @@ uint32_t loader()
 	{
 		if (ph->p_type == PT_LOAD)
 		{
-
+			mm_malloc(ph->p_vaddr, ph->p_memsz);
 			char *dst=(char*)ph->p_vaddr, *src=((char*)elf)+ph->p_offset;
 			for(int offset=0;offset<ph->p_filesz;offset++){
 				dst[offset]=src[offset];
