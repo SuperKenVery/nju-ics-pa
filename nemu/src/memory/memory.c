@@ -14,7 +14,7 @@ uint8_t hw_mem[MEM_SIZE_B];
 uint32_t hw_mem_read(paddr_t paddr, size_t len)
 {
 	if(paddr<0 || paddr+len>=MEM_SIZE_B) {
-		printf("Invalid memory read operation: write at %u\n",paddr);
+		printf("Invalid hardware memory read operation: write at %u\n",paddr);
 		exit(100);
 	}
 	uint32_t ret = 0;
@@ -25,7 +25,7 @@ uint32_t hw_mem_read(paddr_t paddr, size_t len)
 void hw_mem_write(paddr_t paddr, size_t len, uint32_t data)
 {
 	if(paddr<0 || paddr+len>=MEM_SIZE_B) {
-		printf("Invalid memory write operation: write at %u\n",paddr);
+		printf("Invalid hardware memory write operation: write at %u\n",paddr);
 		exit(100);
 	}
 	memcpy(hw_mem + paddr, &data, len);
@@ -33,6 +33,10 @@ void hw_mem_write(paddr_t paddr, size_t len, uint32_t data)
 
 uint32_t paddr_read(paddr_t paddr, size_t len)
 {
+	if(paddr<0 || paddr+len>=MEM_SIZE_B) {
+		printf("Invalid physical memory read operation: write at %u\n",paddr);
+		exit(100);
+	}
 	uint32_t ret = 0;
 #ifndef CACHE_ENABLED
 	ret = hw_mem_read(paddr, len);
