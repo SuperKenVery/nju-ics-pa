@@ -59,8 +59,6 @@ uint32_t laddr_read(laddr_t laddr, size_t len)
 		u32 high=laddr_read(NEXTPAGE(laddr),len-lowlen);
 		return (high<<(lowlen*8))|low;
 	}else{
-		laddr_parse_t addr;
-		addr.laddr=laddr;
 		paddr_t paddr;
 		if(cpu.cr0.pg==1){
 			paddr=page_translate(laddr);
