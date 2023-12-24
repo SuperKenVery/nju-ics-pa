@@ -11,11 +11,15 @@
 
 uint8_t hw_mem[MEM_SIZE_B];
 
+void pinvalid_addr(char *msg, u32 addr){
+	printf("%s: \033[38;2;255;0;0mInvalid memory address \033[38;2;255;255;0m0x%x\033[0m\n",addr);
+	exit(100);
+}
+
 uint32_t hw_mem_read(paddr_t paddr, size_t len)
 {
 	if(paddr<0 || paddr+len>=MEM_SIZE_B) {
-		printf("Invalid hardware memory read operation: write at %u\n",paddr);
-		exit(100);
+		pinvalid_addr("hw_mem_read", paddr);
 	}
 	uint32_t ret = 0;
 	memcpy(&ret, hw_mem + paddr, len);
@@ -25,8 +29,7 @@ uint32_t hw_mem_read(paddr_t paddr, size_t len)
 void hw_mem_write(paddr_t paddr, size_t len, uint32_t data)
 {
 	if(paddr<0 || paddr+len>=MEM_SIZE_B) {
-		printf("Invalid hardware memory write operation: write at %u\n",paddr);
-		exit(100);
+		pinvalid_addr("hw_mem_write", paddr);
 	}
 	memcpy(hw_mem + paddr, &data, len);
 }
@@ -34,8 +37,7 @@ void hw_mem_write(paddr_t paddr, size_t len, uint32_t data)
 uint32_t paddr_read(paddr_t paddr, size_t len)
 {
 	if(paddr<0 || paddr+len>=MEM_SIZE_B) {
-		printf("Invalid physical memory read operation: write at %u\n",paddr);
-		exit(100);
+		pinvalid_addr("paddr_read", paddr);
 	}
 	uint32_t ret = 0;
 #ifndef CACHE_ENABLED
@@ -48,6 +50,9 @@ uint32_t paddr_read(paddr_t paddr, size_t len)
 
 void paddr_write(paddr_t paddr, size_t len, uint32_t data)
 {
+	if(paddr<0 || paddr+len>=MEM_SIZE_B) {
+		pinvalid_addr("paddr_write", paddr);
+	}
 #ifndef CACHE_ENABLED
 	hw_mem_write(paddr, len, data);
 #else
