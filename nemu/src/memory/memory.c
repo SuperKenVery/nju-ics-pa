@@ -13,6 +13,10 @@ uint8_t hw_mem[MEM_SIZE_B];
 
 uint32_t hw_mem_read(paddr_t paddr, size_t len)
 {
+	if(paddr<0 || paddr+len>=MEM_SIZE_B) {
+		printf("Invalid memory read operation: write at %u\n",paddr);
+		exit(100);
+	}
 	uint32_t ret = 0;
 	memcpy(&ret, hw_mem + paddr, len);
 	return ret;
