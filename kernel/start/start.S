@@ -11,7 +11,7 @@
 	# To understand macros here, see i386 manual.
 	#define GDT_ENTRY(n) ((n) << 3)
 
-	#define MAKE_NULL_SEG_DESC   \
+ 	#define MAKE_NULL_SEG_DESC   \
 		.word 0, 0;              \
 		.byte 0, 0, 0, 0
 

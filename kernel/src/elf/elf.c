@@ -37,7 +37,7 @@ uint32_t loader()
 	{
 		if (ph->p_type == PT_LOAD)
 		{
-			Log("Segment vaddr=0x%x\n",ph->p_vaddr);
+			// Log("Segment vaddr=0x%x\n",ph->p_vaddr);
 			uint32_t uaddr=mm_malloc(ph->p_vaddr, ph->p_memsz);
 			char *dst=(char*)uaddr, *src=((char*)elf)+ph->p_offset;
 			for(int offset=0;offset<ph->p_filesz;offset++){
