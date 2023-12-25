@@ -5,6 +5,15 @@
 #include <elf.h>
 #include <stdint.h>
 
+typedef union{
+	uint32_t laddr;
+	struct{
+		uint32_t offset: 12;
+		uint32_t page_entry_index: 10;
+		uint32_t page_directory_index: 10;
+	};
+} laddr_parse_t;
+
 #ifdef HAS_DEVICE_IDE
 #define ELF_OFFSET_IN_DISK 0
 #endif
@@ -40,9 +49,8 @@ uint32_t loader()
 		if (ph->p_type == PT_LOAD)
 		{
 			laddr_parse_t laddr;
-			laddr.val=ph->p_vaddr;
-			
-			Log("Segment vaddr=0x%x",ph->p_vaddr);
+			laddr.laddr=ph->p_vaddr;
+			Log("Segment vaddr=0x%x 0x%x %x %x",ph->p_vaddr, laddr.page_directory_index, laddr.page_entry_index, laddr.offset);
 			uint32_t uaddr=mm_malloc(ph->p_vaddr, ph->p_memsz);
 			char *dst=(char*)uaddr, *src=((char*)elf)+ph->p_offset;
 			for(int offset=0;offset<ph->p_filesz;offset++){
