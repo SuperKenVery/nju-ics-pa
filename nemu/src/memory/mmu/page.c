@@ -64,12 +64,14 @@ paddr_t page_translate(laddr_t laddr)
 	u32 PDE_addr=(page_directory_base<<12)+addr.page_directory_index*(sizeof(PDE));
 	PDE pde;
 	pde.val=paddr_read(PDE_addr,4);
+	if(pde.present==0) debug_print_page_tables(laddr);
 	assert(pde.present==1);
 
 	// Second level
 	u32 PTE_addr=(pde.page_frame<<12)+addr.page_entry_index*(sizeof(PTE));
 	PTE pte;
 	pte.val=paddr_read(PTE_addr, 4);
+	if(pte.present==0) debug_print_page_tables(laddr);
 	assert(pte.present==1);
 
 	return (pte.page_frame<<12)+addr.offset;
