@@ -55,7 +55,7 @@ void exec(uint32_t n)
 {
 	static BP *bp = NULL;
 	verbose = (n <= 100000);
-	// verbose=true;
+	verbose=true;
 	int instr_len = 0;
 	bool hit_break_rerun = false;
 
