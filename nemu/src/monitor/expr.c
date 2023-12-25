@@ -132,6 +132,7 @@ uint32_t expr(char *e, bool *success)
 	}
 
 	int result=strtol(e, NULL, base);
+	*success=true;
 
 	return result;
 }
