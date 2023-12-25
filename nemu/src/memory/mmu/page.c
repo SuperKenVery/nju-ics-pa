@@ -2,9 +2,10 @@
 #include "memory/memory.h"
 #include "memory/mmu/page.h"
 
-void debug_print(laddr_t laddr){
+void debug_print_page_tables(laddr_t laddr){
 	CR3 *cr=&cpu.cr3;
 	u32 page_directory_base=cr->pdbr;
+	printf("Read page_directory_base=0x%x\n", page_directory_base);
 	laddr_parse_t addr;
 	addr.laddr=laddr;
 
@@ -45,7 +46,7 @@ void debug_print(laddr_t laddr){
 paddr_t page_translate(laddr_t laddr)
 {
 #ifndef TLB_ENABLED
-	debug_print(laddr);
+	debug_print_page_tables(laddr);
 	CR3 *cr=&cpu.cr3;
 	u32 page_directory_base=cr->pdbr;
 	laddr_parse_t addr;
