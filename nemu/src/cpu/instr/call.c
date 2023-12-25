@@ -34,7 +34,6 @@ make_instr_func(call_e8) {
 }
 
 make_instr_func(call_ff_2) {
-  printf("eip=0x%x: call_ff /2\n",cpu.eip);
   int len=1;
   OPERAND rm;
   rm.data_size=data_size;
@@ -46,10 +45,8 @@ make_instr_func(call_ff_2) {
   print_asm_1("call","",len,&rm);
 
   if(data_size==16){
-    printf("data size is 16\n");
     cpu.eip=rm.val&0x0000FFFF;
   }else{
-    printf("data size is 32, loading 0x%x into eip\n",rm.val);
     cpu.eip=rm.val;
   }
 

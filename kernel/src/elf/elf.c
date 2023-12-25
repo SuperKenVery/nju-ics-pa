@@ -49,9 +49,9 @@ uint32_t loader()
 	{
 		if (ph->p_type == PT_LOAD)
 		{
-			laddr_parse_t laddr;
-			laddr.laddr=ph->p_vaddr;
-			Log("Segment vaddr=0x%x 0x%x %x %x",ph->p_vaddr, laddr.page_directory_index, laddr.page_entry_index, laddr.offset);
+			// laddr_parse_t laddr;
+			// laddr.laddr=ph->p_vaddr;
+			// Log("Segment vaddr=0x%x 0x%x %x %x",ph->p_vaddr, laddr.page_directory_index, laddr.page_entry_index, laddr.offset);
 			uint32_t uaddr=mm_malloc(ph->p_vaddr, ph->p_memsz);
 			char *dst=(char*)uaddr, *src=((char*)elf)+ph->p_offset;
 			for(int offset=0;offset<ph->p_filesz;offset++){
@@ -77,18 +77,18 @@ uint32_t loader()
 	}
 
 	volatile uint32_t entry = elf->e_entry;
-	laddr_parse_t entry_p;
-	entry_p.laddr=entry;
-	Log("ELF entry is %x, 0x%x %x %x",entry, entry_p.page_directory_index, entry_p.page_entry_index, entry_p.offset);
+	// laddr_parse_t entry_p;
+	// entry_p.laddr=entry;
+	// Log("ELF entry is %x, 0x%x %x %x",entry, entry_p.page_directory_index, entry_p.page_entry_index, entry_p.offset);
 
 #ifdef IA32_PAGE
 	mm_malloc(KOFFSET - STACK_SIZE, STACK_SIZE);
 #ifdef HAS_DEVICE_VGA
 	create_video_mapping();
 #endif
-	CR3 ucr;
-	ucr.val=get_ucr3();
-	Log("page directory base addr: 0x%x",ucr.page_directory_base<<12);
+	// CR3 ucr;
+	// ucr.val=get_ucr3();
+	// Log("page directory base addr: 0x%x",ucr.page_directory_base<<12);
 	write_cr3(get_ucr3());
 #endif
 	return entry;
