@@ -7,6 +7,7 @@
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
+#include <string.h>
 #include <sys/types.h>
 #include <regex.h>
 
@@ -123,9 +124,14 @@ uint32_t expr(char *e, bool *success)
 		return 0;
 	}
 
-	printf("\nPlease implement expr at expr.c\n");
-	fflush(stdout);
-	assert(0);
+	int base;
+	if(strncmp(e, "0x", 2)==0){
+		base=0;
+	}else{
+		base=16;
+	}
 
-	return 0;
+	int result=strtol(e, NULL, base);
+
+	return result;
 }
