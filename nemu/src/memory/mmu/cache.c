@@ -37,7 +37,6 @@ void cache_block_load(cache_block *this, paddr_t mem_addr){
 	this->valid=true;
 	memaddr addr=memaddr_load(mem_addr);
 	this->mark=addr.mark;
-	printf("cache_block_load: copying from hwmem 0x%x to host mem %p\n",mem_addr, this->content);
 	memcpy(this->content, &hw_mem[mem_addr], CACHE_BLOCK_SIZE);
 }
 
