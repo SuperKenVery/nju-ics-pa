@@ -67,7 +67,7 @@ uint32_t laddr_read(laddr_t laddr, size_t len)
 	if(PAGE(laddr)!=PAGE(laddr+len-1)){
 		// Cross page
 		// low is both low addr and least significant
-		int lowlen=NEXTPAGE(laddr)-laddr+1;
+		int lowlen=NEXTPAGE(laddr)-laddr;
 		u32 low=laddr_read(laddr, lowlen);
 		u32 high=laddr_read(NEXTPAGE(laddr),len-lowlen);
 		return (high<<(lowlen*8))|low;
@@ -86,7 +86,7 @@ void laddr_write(laddr_t laddr, size_t len, uint32_t data)
 {
 	if(PAGE(laddr)!=PAGE(laddr+len-1)){
 		// Cross page
-		int lowlen=NEXTPAGE(laddr)-laddr+1;
+		int lowlen=NEXTPAGE(laddr)-laddr;
 		laddr_write(laddr, lowlen, data&((1<<(lowlen*8))-1));
 		laddr_write(NEXTPAGE(laddr), len-lowlen, data>>(lowlen*8));
 	}else{

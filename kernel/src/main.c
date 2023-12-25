@@ -36,6 +36,8 @@ void init()
 /* Jump to init_cond() to continue initialization. */
 // need to plus the offset 0xc0000000 if using gcc-6, strange
 #ifdef IA32_PAGE
+	// TODO: No need to +0xc... here in gcc8
+	// Might need to revert on server with gcc6
 	asm volatile("jmp *%0"
 				 :
 				 : "r"(init_cond /*+ 0xc0000000*/));
