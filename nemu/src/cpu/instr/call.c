@@ -34,7 +34,7 @@ make_instr_func(call_e8) {
 }
 
 make_instr_func(call_ff_2) {
-  printf("call_ff /2\n");
+  printf("eip=0x%x: call_ff /2\n",cpu.eip);
   int len=1;
   OPERAND rm;
   rm.data_size=data_size;
