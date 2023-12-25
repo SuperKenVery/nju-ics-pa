@@ -8,6 +8,8 @@ void debug_print(laddr_t laddr){
 	laddr_parse_t addr;
 	addr.laddr=laddr;
 
+	printf("Accessing addr: 0x%x %x %x\n",addr.page_directory_index,addr.page_entry_index,addr.offset);
+
 	// First level
 	printf("Page directory entries: \n");
 	for(int i=0;i<NR_PDE;i++){
