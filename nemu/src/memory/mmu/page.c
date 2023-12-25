@@ -47,11 +47,11 @@ paddr_t page_translate(laddr_t laddr)
 {
 #ifndef TLB_ENABLED
 	// Only print once
-	static int print_count=0;
-	if(print_count==0){
-		debug_print_page_tables(laddr);
-		print_count++;
-	}
+	// static int print_count=0;
+	// if(print_count==0){
+	// 	debug_print_page_tables(laddr);
+	// 	print_count++;
+	// }
 	CR3 *cr=&cpu.cr3;
 	u32 page_directory_base=cr->pdbr;
 	laddr_parse_t addr;
