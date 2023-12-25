@@ -118,11 +118,11 @@ static bool make_token(char *e)
 
 uint32_t expr(char *e, bool *success)
 {
-	if (!make_token(e))
-	{
-		*success = false;
-		return 0;
-	}
+	// if (!make_token(e))
+	// {
+	// 	*success = false;
+	// 	return 0;
+	// }
 
 	int base;
 	if(strncmp(e, "0x", 2)==0){
