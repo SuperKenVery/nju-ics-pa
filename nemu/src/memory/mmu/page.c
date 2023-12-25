@@ -21,6 +21,10 @@ void debug_print(laddr_t laddr){
 	}
 	printf("\n\n");
 
+	u32 PDE_addr=page_directory_base+addr.page_directory_index*(sizeof(PDE));
+	PDE pde;
+	pde.val=paddr_read(PDE_addr,4);
+
 	// Second level
 	printf("Page table entries: \n");
 	for(int i=0;i<NR_PTE;i++){
