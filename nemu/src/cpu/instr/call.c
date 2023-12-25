@@ -53,8 +53,6 @@ make_instr_func(call_ff_2) {
     cpu.eip=rm.val;
   }
 
-  load_sreg(SREG_CS);
-
   // Don't modify eip anymore
   return 0;
 }
