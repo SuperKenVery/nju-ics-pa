@@ -66,4 +66,7 @@ make_instr_func(call_ff_3) {
     len+=4;
   }
   cpu.eip=offset;
+
+  // Don't modify ip anymore
+  return 0;
 }
