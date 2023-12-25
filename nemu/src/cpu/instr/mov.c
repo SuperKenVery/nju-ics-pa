@@ -2,6 +2,8 @@
 #include "cpu/instr_helper.h"
 #include "cpu/modrm.h"
 #include "cpu/operand.h"
+#include "cpu/reg.h"
+#include "debug.h"
 #include "memory/memory.h"
 #include "memory/mmu/segment.h"
 
@@ -90,8 +92,6 @@ make_instr_func(mov_8e) {
   len+=modrm_r_rm(eip+len, &sreg, &rm);
   sreg.type=OPR_SREG;
 
-  print_asm_2("mov", "", len, &sreg, &rm);
-
   operand_read(&rm);
   sreg.val=rm.val;
   operand_write(&sreg);
@@ -147,6 +147,11 @@ make_instr_func(mov_to_cr) {
   operand_read(&rm);
   cr.val=rm.val;
   operand_write(&cr);
+
+  printf("Moving TO CR addr=%d\n", cr.addr);
+  CR3 c;
+  c.val=cr.val;
+  hexdump_pointer((hw_mem+(c.pdbr<<12)), 1024*4);
 
   print_asm_2("mov", "", len, &rm, &cr);
 
