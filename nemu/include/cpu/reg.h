@@ -15,7 +15,7 @@ typedef union {
     u32 em : 1;
     u32 ts : 1;
     u32 et : 1;
-    u32 reserve : 28;
+    u32 reserve : 26;
     u32 pg : 1;
   };
   u32 val;
