@@ -148,10 +148,10 @@ make_instr_func(mov_to_cr) {
   cr.val=rm.val;
   operand_write(&cr);
 
-  printf("Moving TO CR addr=%d\n", cr.addr);
-  CR3 c;
-  c.val=cr.val;
-  hexdump_pointer((hw_mem+(c.pdbr<<12)), 1024*4);
+  // printf("Moving TO CR addr=%d\n", cr.addr);
+  // CR3 c;
+  // c.val=cr.val;
+  // hexdump_pointer((hw_mem+(c.pdbr<<12)), 1024*4);
 
   print_asm_2("mov", "", len, &rm, &cr);
 
