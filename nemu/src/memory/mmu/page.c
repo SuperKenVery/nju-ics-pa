@@ -57,6 +57,8 @@ paddr_t page_translate(laddr_t laddr)
 	laddr_parse_t addr;
 	addr.laddr=laddr;
 
+	printf("eip=0x%x translating 0x%x %x %x\n",cpu.eip, addr.page_directory_index, addr.page_entry_index, addr.offset);
+
 	// First level
 	u32 PDE_addr=(page_directory_base<<12)+addr.page_directory_index*(sizeof(PDE));
 	PDE pde;
