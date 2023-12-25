@@ -2,10 +2,44 @@
 #include "memory/memory.h"
 #include "memory/mmu/page.h"
 
+void debug_print(laddr_t laddr){
+	CR3 *cr=&cpu.cr3;
+	u32 page_directory_base=cr->pdbr;
+	laddr_parse_t addr;
+	addr.laddr=laddr;
+
+	// First level
+	printf("Page directory entries: \n");
+	for(int i=0;i<NR_PDE;i++){
+		u32 pde_addr=page_directory_base+i*sizeof(PDE);
+		PDE pde;
+		pde.val=paddr_read(pde_addr, 4);
+		if(pde.present==0) continue;
+		printf("0x%x -> [0x%x] 0x%x", pde_addr, i, pde.page_frame<<12);
+		if(i==addr.page_directory_index) printf(" [ <- ] ");
+		printf("\n");
+	}
+	printf("\n\n");
+
+	// Second level
+	printf("Page table entries: \n");
+	for(int i=0;i<NR_PTE;i++){
+		u32 pte_addr=pde.page_frame+i*sizeof(PTE);
+		PTE pte;
+		pte.val=paddr_read(pte_addr, 4);
+		if(pte.present==0) continue;
+		printf("0x%x -> [0x%x] 0x%x", pte_addr, i, pte.page_frame<<12);
+		if(i==addr.page_entry_index) printf(" [ <- ] ");
+		printf("\n");
+	}
+	printf("\n\n");
+}
+
 // translate from linear address to physical address
 paddr_t page_translate(laddr_t laddr)
 {
 #ifndef TLB_ENABLED
+	debug_print(laddr);
 	CR3 *cr=&cpu.cr3;
 	u32 page_directory_base=cr->pdbr;
 	laddr_parse_t addr;
