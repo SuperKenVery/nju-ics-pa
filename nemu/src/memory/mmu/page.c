@@ -4,7 +4,7 @@
 
 void debug_print_page_tables(laddr_t laddr){
 	CR3 *cr=&cpu.cr3;
-	u32 page_directory_base=cr->pdbr;
+	u32 page_directory_base=cr->pdbr << 12;
 	printf("eip=0x%x Read page_directory_base=0x%x\n", cpu.eip, page_directory_base);
 	laddr_parse_t addr;
 	addr.laddr=laddr;
@@ -24,14 +24,14 @@ void debug_print_page_tables(laddr_t laddr){
 	}
 	printf("\n\n");
 
-	u32 PDE_addr=page_directory_base+addr.page_directory_index*(sizeof(PDE));
+	u32 PDE_addr=(page_directory_base<<12)+addr.page_directory_index*(sizeof(PDE));
 	PDE pde;
 	pde.val=paddr_read(PDE_addr,4);
 
 	// Second level
 	printf("Page table entries: \n");
 	for(int i=0;i<NR_PTE;i++){
-		u32 pte_addr=pde.page_frame+i*sizeof(PTE);
+		u32 pte_addr=(pde.page_frame<<12)+i*sizeof(PTE);
 		PTE pte;
 		pte.val=paddr_read(pte_addr, 4);
 		if(pte.present==0) continue;
