@@ -46,6 +46,7 @@ void init_page(void)
 	write_cr0(cr0.val);
 
 	Log("hello");
+	Log("kpdir at %p", kpdir);
 }
 
 /* GDT in the kernel's memory, whose virtual memory is greater than 0xC0000000. */
