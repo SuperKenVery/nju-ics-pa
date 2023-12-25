@@ -38,14 +38,14 @@ uint32_t loader()
 		if (ph->p_type == PT_LOAD)
 		{
 			Log("Segment vaddr=0x%x\n",ph->p_vaddr);
-			mm_malloc(ph->p_vaddr, ph->p_memsz);
-			char *dst=(char*)ph->p_vaddr, *src=((char*)elf)+ph->p_offset;
+			uint32_t uaddr=mm_malloc(ph->p_vaddr, ph->p_memsz);
+			char *dst=(char*)uaddr, *src=((char*)elf)+ph->p_offset;
 			for(int offset=0;offset<ph->p_filesz;offset++){
 				dst[offset]=src[offset];
 			}
 
 			int zero_out_size=ph->p_memsz-ph->p_filesz;
-			dst=((char*)ph->p_vaddr)+ph->p_filesz;
+			dst=((char*)uaddr)+ph->p_filesz;
 			for(int offset=0;offset<zero_out_size;offset++){
 				dst[offset]=0;
 			}
