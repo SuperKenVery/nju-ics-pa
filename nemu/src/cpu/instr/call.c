@@ -54,6 +54,7 @@ make_instr_func(call_ff_3) {
   push(cpu.eip, data_size);
 
   u16 selector=instr_fetch(eip+len, 2);
+  cpu.cs.val=selector;
   len+=2;
   u32 offset=0;
   if(data_size==16){
