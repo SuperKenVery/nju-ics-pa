@@ -3,6 +3,7 @@
 #include "string.h"
 
 #include <elf.h>
+#include <stdint.h>
 
 #ifdef HAS_DEVICE_IDE
 #define ELF_OFFSET_IN_DISK 0
@@ -38,6 +39,9 @@ uint32_t loader()
 	{
 		if (ph->p_type == PT_LOAD)
 		{
+			laddr_parse_t laddr;
+			laddr.val=ph->p_vaddr;
+			
 			Log("Segment vaddr=0x%x",ph->p_vaddr);
 			uint32_t uaddr=mm_malloc(ph->p_vaddr, ph->p_memsz);
 			char *dst=(char*)uaddr, *src=((char*)elf)+ph->p_offset;
