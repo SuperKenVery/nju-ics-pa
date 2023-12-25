@@ -50,7 +50,7 @@ make_instr_func(call_ff_2) {
 
 make_instr_func(call_ff_3) {
   int len=1;
-  push(cpu.cs,16);
+  push(cpu.cs.val,16);
   push(cpu.eip, data_size);
 
   u16 selector=instr_fetch(eip+len, 2);
