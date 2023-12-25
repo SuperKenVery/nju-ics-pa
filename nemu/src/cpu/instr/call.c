@@ -5,6 +5,7 @@
 #include "cpu/reg.h"
 #include "memory/memory.h"
 #include "memory/mmu/segment.h"
+#include "nemu.h"
 /*
 Put the implementations of `call' instructions here.
 */
@@ -33,6 +34,7 @@ make_instr_func(call_e8) {
 }
 
 make_instr_func(call_ff_2) {
+  printf("call_ff /2\n");
   int len=1;
   OPERAND rm;
   rm.data_size=data_size;
@@ -56,6 +58,7 @@ make_instr_func(call_ff_2) {
 }
 
 make_instr_func(call_ff_3) {
+  printf("call_ff /3\n");
   int len=1;
 
   push(cpu.cs.val, data_size);
