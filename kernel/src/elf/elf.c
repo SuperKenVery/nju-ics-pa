@@ -1,6 +1,7 @@
 #include "common.h"
 #include "memory.h"
 #include "string.h"
+#include "x86/cpu.h"
 
 #include <elf.h>
 #include <stdint.h>
@@ -76,12 +77,18 @@ uint32_t loader()
 	}
 
 	volatile uint32_t entry = elf->e_entry;
+	laddr_parse_t entry_p;
+	entry_p.laddr=entry;
+	Log("ELF entry is %x, 0x%x %x %x",entry, entry_p.page_directory_index, entry_p.page_entry_index, entry_p.offset);
 
 #ifdef IA32_PAGE
 	mm_malloc(KOFFSET - STACK_SIZE, STACK_SIZE);
 #ifdef HAS_DEVICE_VGA
 	create_video_mapping();
 #endif
+	CR3 ucr;
+	ucr.val=get_ucr3();
+	Log("page directory base addr: 0x%x",ucr.page_directory_base<<12);
 	write_cr3(get_ucr3());
 #endif
 	return entry;
