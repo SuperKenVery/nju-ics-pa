@@ -24,7 +24,7 @@ void debug_print_page_tables(laddr_t laddr){
 	}
 	printf("\n\n");
 
-	u32 PDE_addr=(page_directory_base<<12)+addr.page_directory_index*(sizeof(PDE));
+	u32 PDE_addr=page_directory_base+addr.page_directory_index*(sizeof(PDE));
 	PDE pde;
 	pde.val=paddr_read(PDE_addr,4);
 
