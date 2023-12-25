@@ -30,6 +30,7 @@ uint32_t loader()
 #endif
 
 	/* Load each program segment */
+	// Without this Log the kernel would fail!!!
 	Log("elf at %p",&elf);
 	ph = (void *)elf + elf->e_phoff;
 	eph = ph + elf->e_phnum;
