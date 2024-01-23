@@ -117,9 +117,11 @@ def fail(nemu_env,ref_env,mismatch,extra_msg=None):
     if extra_msg:
         print(extra_msg)
     for i in nemu_env:
-        nemu_env[i]=hex(nemu_env[i])
+        if type(nemu_env[i])==int:
+            nemu_env[i]=hex(nemu_env[i])
     for i in ref_env:
-        ref_env[i]=hex(ref_env[i])
+        if type(ref_env[i])==int:
+            ref_env[i]=hex(ref_env[i])
     print("NEMU_REF:")
     print(ref_env)
     print("NEMU:")
