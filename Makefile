@@ -116,7 +116,7 @@ test_pa-3-3: nemu
 
 test_pa-4-1: nemu
 	$(call git_commit, "test_pa-4-1", $(TIME_MAKE))
-	# make test_batch-3-3-mute
+	make test_batch-3-3-mute
 	./nemu/nemu --autorun --testcase hello-inline --kernel
 
 test_pa-4-2: nemu
