@@ -12,9 +12,9 @@ void raise_intr(uint8_t intr_no)
 	push(cpu.cs.val, 32);
 	push(cpu.eip,32);
 
-	assert(intr_no<cpu.idtr.size);
+	assert(intr_no<cpu.idtr.limit);
 
-	u32 addr=cpu.idtr.offset+intr_no*sizeof(GateDesc);
+	u32 addr=cpu.idtr.base+intr_no*sizeof(GateDesc);
 	GateDesc desc;
 	desc.val[0]=laddr_read(addr, 4);
 	desc.val[1]=laddr_read(addr+4, 4);

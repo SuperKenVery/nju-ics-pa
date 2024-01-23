@@ -12,8 +12,8 @@ make_instr_func(lidt) {
   u16 size=instr_fetch(eip+len, 2); len+=2;
   u32 offset=instr_fetch(eip+len, 4); len+=4;
 
-  cpu.idtr.size=size;
-  cpu.idtr.offset=offset;
+  cpu.idtr.limit=size;
+  cpu.idtr.base=offset;
 
   print_asm_0("lidt", "", len);
 
