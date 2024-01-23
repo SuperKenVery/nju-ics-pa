@@ -9,7 +9,7 @@
 void raise_intr(uint8_t intr_no)
 {
 #ifdef IA32_INTR
-	printf("INT %d\n",intr_no);
+	printf("INT 0x%x\n",intr_no);
 	push(cpu.eflags.val, 32);
 	push(cpu.cs.val, 32);
 	push(cpu.eip,32);
