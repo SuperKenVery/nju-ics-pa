@@ -1,5 +1,6 @@
 #ifndef __INSTR_SPECIAL_H__
 #define __INSTR_SPECIAL_H__
+#include "cpu/instr_helper.h"
 
 make_instr_func(inv);
 make_instr_func(nemu_trap);

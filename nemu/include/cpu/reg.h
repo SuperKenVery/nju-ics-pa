@@ -21,6 +21,11 @@ typedef union {
   u32 val;
 } CR0;
 
+typedef struct IDTR {
+	u16 limit;
+	u32 base;
+} IDTR;
+
 typedef union{
 	u32 val;
 	struct {

@@ -32,7 +32,9 @@ make_group_impl_cond(group_2_cb)
 make_group_impl_cond(group_2_cv)
 make_group_impl_cond(group_3_b)
 make_group_impl_cond(group_3_v)
+#ifndef NEMU_REF_INSTR
 make_group_impl_cond(group_4)
+#endif
 make_group_impl_cond(group_5_indirect)
 make_group_impl_cond(group_7)
 make_group_impl_cond(group_x87_d8)

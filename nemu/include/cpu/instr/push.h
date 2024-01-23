@@ -5,6 +5,7 @@ Put the declarations of `push' instructions here.
 */
 
 #include <nemu.h>
+#include "cpu-ref/instr_helper_ref.h"
 #include "cpu/instr_helper.h"
 
 void push(u32 data,int size);
@@ -23,5 +24,6 @@ make_instr_func(push_ds);
 make_instr_func(push_es);
 make_instr_func(push_fs);
 make_instr_func(push_gs);
+make_instr_func(pusha);
 
 #endif

@@ -4,4 +4,7 @@
 Put the declarations of `sti' instructions here.
 */
 
+#include "cpu/instr_helper.h"
+make_instr_func(sti);
+
 #endif

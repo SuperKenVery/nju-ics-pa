@@ -14,5 +14,6 @@ make_instr_func(pop_1f);
 make_instr_func(pop_07);
 make_instr_func(pop_17);
 make_instr_func(pop_0f);
+make_instr_func(popa);
 
 #endif
