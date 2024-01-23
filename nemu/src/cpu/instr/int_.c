@@ -18,9 +18,9 @@ make_instr_func(int_3){
 make_instr_func(int_imm){
   int len=1;
   u8 imm=instr_fetch(eip+len, 1); len++;
-  raise_intr(imm);
+  raise_sw_intr(imm);
 
-  return len;
+  return 0;
 }
 
 make_instr_func(into){
