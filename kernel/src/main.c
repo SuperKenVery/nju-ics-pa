@@ -1,3 +1,4 @@
+#include "common.h"
 #include "memory.h"
 #include <stdint.h>
 #include <trap.h>
