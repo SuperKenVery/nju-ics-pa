@@ -70,4 +70,6 @@ make_instr_func(popa){
   cpu.edx=pop(4);
   cpu.ecx=pop(4);
   cpu.eax=pop(4);
+
+  return 1;
 }
