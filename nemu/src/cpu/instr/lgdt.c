@@ -10,6 +10,7 @@ Put the implementations of `lgdt' instructions here.
 
 make_instr_func(lgdt) {
   OPERAND mem;
+  mem.data_size=4;
   int len=1;
   len+=modrm_rm(eip+len, &mem);
 
