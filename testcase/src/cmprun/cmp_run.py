@@ -169,9 +169,13 @@ def cmp_run(testcase:str,mem_cmp_size:int,kernel:bool,skip:int):
         nemu_env=nemu.stepi()
         step+=1
 
-        for reg in ['eax','ebx','ecx','edx','esp','ebp','esi','edi','eip']:
-            if ref_env[reg]!=nemu_env[reg]:
-                fail(nemu_env,ref_env,reg)
+        try:
+            for reg in ['eax','ebx','ecx','edx','esp','ebp','esi','edi','eip']:
+                if ref_env[reg]!=nemu_env[reg]:
+                    fail(nemu_env,ref_env,reg)
+        except KeyError:
+            print("nemu exited abnormally")
+            exit(1)
 
         # For eflags we only check cf,pf,zf,sf,of
         check_eflags(nemu_env,ref_env)
