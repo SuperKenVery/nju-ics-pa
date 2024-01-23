@@ -123,3 +123,18 @@ make_instr_func(push_gs) {
   PUSH_SEGREG(gs)
   return 2;
 }
+
+make_instr_func(pusha){
+  u32 tmp=cpu.esp;
+
+  push(cpu.eax, 32);
+  push(cpu.ecx, 32);
+  push(cpu.edx, 32);
+  push(cpu.ebx, 32);
+  push(tmp, 32);
+  push(cpu.ebp, 32);
+  push(cpu.esi, 32);
+  push(cpu.edi, 32);
+
+  return 1;
+}
