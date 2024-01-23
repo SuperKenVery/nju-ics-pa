@@ -8,10 +8,10 @@ Put the implementations of `lidt' instructions here.
 */
 
 make_instr_func(lidt) {
-  int len=2;
+  int len=1;
   OPERAND mem;
   mem.data_size=4;
-  len+=modrm_rm(eip+1, &mem);
+  len+=modrm_rm(eip+len, &mem);
   print_asm_1("lidt", "", len, &mem);
 
   u16 limit=instr_fetch(mem.addr, 2);
