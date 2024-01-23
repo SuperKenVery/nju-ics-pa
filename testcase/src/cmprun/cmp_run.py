@@ -59,7 +59,7 @@ class Nemu:
         assert os.path.isfile(nemu_path),f"File {nemu_path} doesn't exist or isn't a file. "
         # assume that file is one of the testcases
         from pwn import process,context
-        # context.log_level='DEBUG'
+        context.log_level='DEBUG'
         cmdline=[nemu_path,"--testcase",testcase]
         if kernel:
             cmdline.append("--kernel")
@@ -89,27 +89,18 @@ class Nemu:
             else:
                 print("Did not receive anything when single stepping")
         regs=self.get_regs()
+        regs['output']=result
         return regs
 
     def skip(self,step):
         result=self.fetch(f"si {step}")
-        if result=='':
-            rest=self.sh.recv().decode()
-            if 'TRAP' in rest:
-                if 'GOOD' in rest:
-                    print("HIT GOOD TRAP")
-                    exit(0)
-                elif 'BAD' in rest:
-                    print("HIT BAD TRAP in skipped code")
-                    exit(0)
-            else:
-                print("Didn't recieve anything while skipping")
         regs=self.get_regs()
+        regs['output']=result
         return regs
 
     def get_regs(self):
         regs_raw=self.fetch('info r')
-        regs={}
+        regs={'regs_raw':regs_raw}
         for regline in regs_raw.split('\n'):
             splitted=regline.split('\t')
             if len(splitted)!=2: continue
@@ -174,7 +165,10 @@ def cmp_run(testcase:str,mem_cmp_size:int,kernel:bool,skip:int):
                 if ref_env[reg]!=nemu_env[reg]:
                     fail(nemu_env,ref_env,reg)
         except KeyError:
-            print("nemu exited abnormally")
+            print(ANSI.OKGREEN+f"At step {step}: "+ANSI.FAIL+"nemu exited abnormally"+ANSI.ENDC)
+            print(nemu_env['output'])
+            import pdb
+            pdb.set_trace()
             exit(1)
 
         # For eflags we only check cf,pf,zf,sf,of

@@ -34,15 +34,15 @@ uint32_t loader()
 	uint8_t buf[4096];
 	ide_read(buf, ELF_OFFSET_IN_DISK, 4096);
 	elf = (void *)buf;
-	Log("ELF loading from hard disk.");
+	// Log("ELF loading from hard disk.");
 #else
 	elf = (void *)0x0;
-	Log("ELF loading from ram disk.");
+	// Log("ELF loading from ram disk.");
 #endif
 
 	/* Load each program segment */
 	// Without this Log the kernel would fail!!!
-	Log("elf at %p",&elf);
+	// Log("elf at %p",&elf);
 	ph = (void *)elf + elf->e_phoff;
 	eph = ph + elf->e_phnum;
 	for (; ph < eph; ph++)
