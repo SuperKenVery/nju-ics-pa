@@ -58,7 +58,8 @@ class Nemu:
     def __init__(self,testcase,kernel=False,nemu_path='nemu/nemu'):
         assert os.path.isfile(nemu_path),f"File {nemu_path} doesn't exist or isn't a file. "
         # assume that file is one of the testcases
-        from pwn import process
+        from pwn import process,context
+        # context.log_level='DEBUG'
         cmdline=[nemu_path,"--testcase",testcase]
         if kernel:
             cmdline.append("--kernel")
@@ -78,7 +79,7 @@ class Nemu:
         return result.decode()
 
     def stepi(self):
-        result=self.fetch('si')
+        result=self.fetch('si 1')
         if result=='':
             rest=self.sh.recv().decode()
             if 'GOOD' in rest and 'TRAP' in rest:
@@ -87,6 +88,22 @@ class Nemu:
                 exit(0)
             else:
                 print("Did not receive anything when single stepping")
+        regs=self.get_regs()
+        return regs
+
+    def skip(self,step):
+        result=self.fetch(f"si {step}")
+        if result=='':
+            rest=self.sh.recv().decode()
+            if 'TRAP' in rest:
+                if 'GOOD' in rest:
+                    print("HIT GOOD TRAP")
+                    exit(0)
+                elif 'BAD' in rest:
+                    print("HIT BAD TRAP in skipped code")
+                    exit(0)
+            else:
+                print("Didn't recieve anything while skipping")
         regs=self.get_regs()
         return regs
 
@@ -137,13 +154,15 @@ def check_eflags(nemu_env,ref_env):
         if nflag!=qflag:
             fail(nemu_env,ref_env,'eflags',f"{ANSI.FAIL}{name}{ANSI.ENDC}: nemu_ref={qflag} nemu={nflag}")
 
-def cmp_run(testcase:str,mem_cmp_size:int,kernel:bool):
+def cmp_run(testcase:str,mem_cmp_size:int,kernel:bool,skip:int):
     from pwn import hexdump
     # nemu_ref=Qemu(file,mem_cmp_size)
     nemu_ref=Nemu(testcase,kernel=kernel,nemu_path='nemu/nemu_ref')
+    nemu_ref.skip(skip)
     nemu=Nemu(testcase,kernel=kernel)
+    nemu.skip(skip)
 
-    step=0
+    step=skip
     
     while True:
         ref_env=nemu_ref.stepi()
@@ -194,7 +213,8 @@ if __name__=='__main__':
     parser.add_argument("testcase_name",help="name of the test case",type=str)
     parser.add_argument("-m","--mem_cmp_size",help="How much memory to compare, in bytes. (Not implemented yet)",type=int,default=1024,required=False)
     parser.add_argument("-k","--kernel",action="store_true",help="Whether to add --kernel to nemu")
+    parser.add_argument("-s","--skip",help="Skip first x instructions, to reduce wait time",type=int,default=0,required=False)
     args=parser.parse_args()
 
-    cmp_run(args.testcase_name,args.mem_cmp_size,args.kernel)
+    cmp_run(args.testcase_name,args.mem_cmp_size,args.kernel,args.skip)
     

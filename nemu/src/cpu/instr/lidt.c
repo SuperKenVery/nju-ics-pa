@@ -9,13 +9,17 @@ Put the implementations of `lidt' instructions here.
 
 make_instr_func(lidt) {
   int len=2;
-  u16 size=instr_fetch(eip+len, 2); len+=2;
-  u32 offset=instr_fetch(eip+len, 4); len+=4;
+  OPERAND mem;
+  len+=modrm_rm(eip+len, &mem);
+  assert(mem.type==OPR_MEM);
 
-  cpu.idtr.limit=size;
+  u16 limit=instr_fetch(mem.addr, 2);
+  u32 offset=instr_fetch(mem.addr+2, 4);
+
+  cpu.idtr.limit=limit;
   cpu.idtr.base=offset;
 
-  print_asm_0("lidt", "", len);
+  print_asm_1("lidt", "", len, &mem);
 
   return len;
 }
