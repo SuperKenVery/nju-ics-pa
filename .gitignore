@@ -47,8 +47,10 @@ game/game
 testcase/objdump4nemu-i386
 testcase/bin/
 testcase/src/*
+!testcase/src/cmprun
 !testcase/src/*.c
 !testcase/src/*.S
+testcase/src/cmprun/pyrsp/
 game/data/
 *.wav
 *.rpg
@@ -74,3 +76,5 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+.cache/
