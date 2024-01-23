@@ -62,14 +62,14 @@ make_instr_func(pop_58) {
 }
 
 make_instr_func(popa){
-  cpu.edi=pop(4);
-  cpu.esi=pop(4);
-  cpu.ebp=pop(4);
+  cpu.edi=pop(32);
+  cpu.esi=pop(32);
+  cpu.ebp=pop(32);
   cpu.esp+=4;
-  cpu.ebx=pop(4);
-  cpu.edx=pop(4);
-  cpu.ecx=pop(4);
-  cpu.eax=pop(4);
+  cpu.ebx=pop(32);
+  cpu.edx=pop(32);
+  cpu.ecx=pop(32);
+  cpu.eax=pop(32);
 
   return 1;
 }
