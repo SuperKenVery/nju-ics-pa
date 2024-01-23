@@ -1,5 +1,6 @@
-#include <bits/types.h>
 #include "memory.h"
+#include <stdint.h>
+#include <trap.h>
 
 void init_page();
 void init_serial();

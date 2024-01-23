@@ -1,4 +1,4 @@
-#include "common.h"
+#include <common.h>
 #include "x86.h"
 
 #define NR_IRQ_HANDLE 32
