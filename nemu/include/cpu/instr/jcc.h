@@ -1,6 +1,8 @@
 #ifndef __INSTR_JCC_H__
 #define __INSTR_JCC_H__
 
+#include "cpu/instr_helper.h"
+
 make_instr_func(je_short_);
 make_instr_func(ja_short_);
 make_instr_func(jae_short_);
