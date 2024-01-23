@@ -64,7 +64,11 @@ instr_func opcode_entry[256] = {
     /* 0xf0 - 0xf3*/ inv, break_point, inv, rep_repe,
     /* 0xf4 - 0xf7*/ hlt, inv, group_3_b, group_3_v,
     /* 0xf8 - 0xfb*/ clc, inv, cli, sti,
-    /* 0xfc - 0xff*/ cld, inv, /*group_4*/inv, group_5_indirect,
+#ifndef NEMU_REF_INSTR
+    /* 0xfc - 0xff*/ cld, inv, group_4, group_5_indirect,
+#else
+    /* 0xfc - 0xff*/ cld, inv, inv, group_5_indirect,
+#endif
 };
 
 /* 0x80 */
