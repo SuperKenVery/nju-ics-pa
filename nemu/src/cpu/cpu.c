@@ -107,6 +107,10 @@ void exec(uint32_t n)
 				nemu_state = NEMU_READY;
 				break;
 			}
+
+			#ifdef IA32_INTR
+			do_intr();
+			#endif
 		}
 #if defined(HAS_DEVICE_TIMER) || defined(HAS_DEVICE_VGA) || defined(HAS_DEVICE_KEYBOARD) || defined(HAS_DEVICE_AUDIO)
 	do_devices();
