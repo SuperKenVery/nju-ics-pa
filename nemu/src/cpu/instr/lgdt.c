@@ -12,7 +12,6 @@ make_instr_func(lgdt) {
   OPERAND mem;
   int len=1;
   len+=modrm_rm(eip+len, &mem);
-  assert(mem.type==OPR_MEM);
 
   u16 limit=laddr_read(mem.addr, 2);
   u32 base=laddr_read(mem.addr+2, 4);

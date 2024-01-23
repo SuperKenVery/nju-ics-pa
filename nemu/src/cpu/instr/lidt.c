@@ -11,7 +11,6 @@ make_instr_func(lidt) {
   int len=2;
   OPERAND mem;
   len+=modrm_rm(eip+len, &mem);
-  assert(mem.type==OPR_MEM);
 
   u16 limit=instr_fetch(mem.addr, 2);
   u32 offset=instr_fetch(mem.addr+2, 4);
