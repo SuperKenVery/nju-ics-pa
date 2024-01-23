@@ -12,6 +12,7 @@ make_instr_func(lidt) {
   OPERAND mem;
   mem.data_size=4;
   len+=modrm_rm(eip+len, &mem);
+  print_asm_1("lidt", "", len, &mem);
 
   u16 limit=instr_fetch(mem.addr, 2);
   u32 offset=instr_fetch(mem.addr+2, 4);
@@ -19,7 +20,6 @@ make_instr_func(lidt) {
   cpu.idtr.limit=limit;
   cpu.idtr.base=offset;
 
-  print_asm_1("lidt", "", len, &mem);
 
   return len;
 }
