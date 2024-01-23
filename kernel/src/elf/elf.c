@@ -42,7 +42,6 @@ uint32_t loader()
 
 	/* Load each program segment */
 	// Without this Log the kernel would fail!!!
-	// Log("elf at %p",&elf);
 	ph = (void *)elf + elf->e_phoff;
 	eph = ph + elf->e_phnum;
 	for (; ph < eph; ph++)
@@ -51,7 +50,6 @@ uint32_t loader()
 		{
 			// laddr_parse_t laddr;
 			// laddr.laddr=ph->p_vaddr;
-			// Log("Segment vaddr=0x%x 0x%x %x %x",ph->p_vaddr, laddr.page_directory_index, laddr.page_entry_index, laddr.offset);
 			uint32_t uaddr=mm_malloc(ph->p_vaddr, ph->p_memsz);
 			char *dst=(char*)uaddr, *src=((char*)elf)+ph->p_offset;
 			for(int offset=0;offset<ph->p_filesz;offset++){
