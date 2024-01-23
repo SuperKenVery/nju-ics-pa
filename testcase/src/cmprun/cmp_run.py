@@ -59,7 +59,7 @@ class Nemu:
         assert os.path.isfile(nemu_path),f"File {nemu_path} doesn't exist or isn't a file. "
         # assume that file is one of the testcases
         from pwn import process,context
-        context.log_level='DEBUG'
+        # context.log_level='DEBUG'
         cmdline=[nemu_path,"--testcase",testcase]
         if kernel:
             cmdline.append("--kernel")
