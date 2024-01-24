@@ -30,6 +30,8 @@ make_instr_func(name) {                 \
   r.val=alu_sub(imm.val,r.val,size);    \
   operand_write(&r);                    \
                                         \
+  print_asm_2("sub", "", len, &imm, &r);\
+                                        \
   return len;                           \
 }
 
