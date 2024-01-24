@@ -39,7 +39,7 @@ uint32_t loader()
 	ide_read(buf, ELF_OFFSET_IN_DISK, len);
 	elf = (void *)buf;
 	Log("ELF loading from hard disk.");
-	hexdump_pointer(buf, 4096);
+	hexdump_pointer(buf, len);
 #else
 	elf = (void *)0x0;
 	Log("ELF loading from ram disk.");

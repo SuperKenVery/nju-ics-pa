@@ -1,4 +1,5 @@
 #include "common.h"
+#include "debug.h"
 
 #define WRITEBACK_TIME 1 /* writeback cache for every 1 second */
 #define HZ 100
@@ -21,6 +22,7 @@ void ide_read(uint8_t *buf, uint32_t offset, uint32_t len)
 	{
 		buf[i] = read_byte(offset + i);
 	}
+	hexdump_pointer(buf, len);
 }
 
 void ide_write(uint8_t *buf, uint32_t offset, uint32_t len)
