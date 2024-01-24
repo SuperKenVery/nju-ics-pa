@@ -69,6 +69,10 @@ void exec(uint32_t n)
 	{
 		if(!is_nemu_hlt)
 		{
+			#ifdef IA32_INTR
+			do_intr();
+			#endif
+
 			// printf("eip=0x%x\n", cpu.eip);
 			instr_len = exec_inst();
 			cpu.eip += instr_len;
@@ -108,9 +112,6 @@ void exec(uint32_t n)
 				break;
 			}
 
-			#ifdef IA32_INTR
-			do_intr();
-			#endif
 		}
 #if defined(HAS_DEVICE_TIMER) || defined(HAS_DEVICE_VGA) || defined(HAS_DEVICE_KEYBOARD) || defined(HAS_DEVICE_AUDIO)
 	do_devices();
