@@ -61,5 +61,6 @@ typedef union{
 
 paddr_t page_translate(laddr_t laddr);
 paddr_t page_walk(laddr_t laddr);
+void debug_print_page_tables(laddr_t laddr);
 
 #endif
