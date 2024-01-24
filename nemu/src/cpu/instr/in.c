@@ -37,7 +37,7 @@ make_instr_func(in_ec){
   src.addr=REG_EDX;
   src.data_size=8;
   operand_read(&src);
-  printf("eip=0x%x: IN from port 0x%x\n",eip,src.val);
+  // printf("eip=0x%x: IN from port 0x%x\n",eip,src.val);
 
   dst.type=OPR_REG;
   dst.addr=REG_EAX;
