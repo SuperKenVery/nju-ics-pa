@@ -2,7 +2,7 @@
 
 CC := gcc
 LD := ld
-CFLAGS := -ggdb3 -MMD -MP -Wall -Werror -O0 -I./include -I../include -I../libs -I../libs/nemu-ref/include -Wno-unused-result -fsanitize=address -fsanitize=undefined  -Wno-cpp
+CFLAGS := -ggdb3 -MMD -MP -Wall -Werror -O1 -I./include -I../include -I../libs -I../libs/nemu-ref/include -Wno-unused-result -fsanitize=address -fsanitize=undefined  -Wno-cpp
 LDFLAGS := -lasan -lreadline -lSDL -lubsan
 
 CFILES := $(shell find src/ -name "*.c")
