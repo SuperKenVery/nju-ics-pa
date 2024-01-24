@@ -21,7 +21,7 @@ void raise_intr(uint8_t intr_no)
 	desc.val[0]=laddr_read(addr, 4);
 	desc.val[1]=laddr_read(addr+4, 4);
 
-	printf("IRQ Handler at 0x%x%x\n",desc.offset_31_16,desc.offset_15_0);
+	// printf("IRQ Handler at 0x%x%x\n",desc.offset_31_16,desc.offset_15_0);
 
 	if(desc.type==0x5){
 		printf("Interrupt to task gate is not implemented. \n");
