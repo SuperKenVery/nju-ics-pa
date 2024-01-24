@@ -20,7 +20,9 @@ void pinvalid_addr(char *msg, u32 addr){
 uint32_t hw_mem_read(paddr_t paddr, size_t len)
 {
 	if(paddr<0 || paddr+len>=MEM_SIZE_B) {
-		pinvalid_addr("hw_mem_read", paddr);
+		if(paddr<0) printf("<0 ");
+		else printf(">= mem_size_b");
+		pinvalid_addr("hw_mem_read" , paddr);
 	}
 	uint32_t ret = 0;
 	memcpy(&ret, hw_mem + paddr, len);
