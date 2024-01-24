@@ -42,6 +42,7 @@ cache_fetch(uint32_t sector)
 	if (ptr->used == true && ptr->sector == sector)
 	{
 		/* cache hit, do nothing */
+		Log("Doing nothing");
 	}
 	else
 	{
