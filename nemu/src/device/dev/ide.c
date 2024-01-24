@@ -82,8 +82,17 @@ make_pio_handler(handler_ide)
 		{
 			/* read 4 bytes data from disk */
 			assert(!ide_write);
+			off_t pos=ftell(disk_fp);
 			fread(&buf, 4, 1, disk_fp);
 			write_io_port(IDE_PORT_BASE, 4, buf);
+
+		  char *data=(char*)&buf;
+			if(pos>=0x1038 && pos<=0x103f){
+				// Wanted: 0x103a, 0x103b
+				for(int i=0;i<4;i++){
+					printf("ide: pos=0x%x content=0x%x\n",pos+i,data[i]);
+				}
+			}
 
 			byte_cnt += 4;
 			if (byte_cnt == 512)
