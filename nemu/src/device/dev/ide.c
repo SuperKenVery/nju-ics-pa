@@ -90,7 +90,7 @@ make_pio_handler(handler_ide)
 			if(pos>=0x1038 && pos<=0x103f){
 				// Wanted: 0x103a, 0x103b
 				for(int i=0;i<4;i++){
-					printf("ide: pos=0x%x content=0x%x\n",pos+i,data[i]);
+					printf("ide: pos=0x%lx content=0x%x\n",pos+i,data[i]);
 				}
 			}
 
