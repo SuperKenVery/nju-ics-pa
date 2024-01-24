@@ -61,13 +61,13 @@ uint32_t loader()
 			unsigned char *dst=(unsigned char*)uaddr;
 			ide_read(dst, ELF_OFFSET_IN_DISK+ph->p_offset, ph->p_filesz);
 
-			hexdump_pointer(dst, ph->p_filesz);
 			int zero_out_size=ph->p_memsz-ph->p_filesz;
 			dst=((unsigned char*)uaddr)+ph->p_filesz;
 			for(int offset=0;offset<zero_out_size;offset++){
 				dst[offset]=0;
 			}
 
+			hexdump_pointer((void*)uaddr, ph->p_memsz);
 
 #ifdef IA32_PAGE
 			/* Record the program break for future use */
