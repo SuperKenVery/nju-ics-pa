@@ -1,4 +1,5 @@
 #include "nemu.h"
+#include "cpu/alu.h"
 #include "cpu/reg.h"
 #include "cpu/cpu.h"
 #include "cpu/intr.h"
