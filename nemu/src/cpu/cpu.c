@@ -134,9 +134,10 @@ void exec(uint32_t n)
 	}
 }
 
-#define CMP(x)                                  \
-	if(cpu_me.x != cpu.x) {                       \
-		printf(#x "mismatch at eip=0x%x\n",cpu.eip);\
+#define CMP(x)                                     \
+	if(cpu_me.x != cpu.x) {                          \
+		printf(#x " mismatch at eip=0x%x\n",cpu.eip);  \
+		assert(0);                                     \
 	}
 
 void cmp_cpu(){
