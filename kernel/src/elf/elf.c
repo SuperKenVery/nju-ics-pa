@@ -52,7 +52,7 @@ uint32_t loader()
 			Log("done malloc");
 			char *dst=(char*)uaddr, *src=((char*)elf)+ph->p_offset;
 			for(int offset=0;offset<ph->p_filesz;offset++){
-				Log("Loading byte %d",offset);
+				Log("Loading byte %d/%d",offset,ph->p_filesz);
 				dst[offset]=src[offset];
 			}
 
