@@ -86,7 +86,7 @@ make_pio_handler(handler_ide)
 			fread(&buf, 4, 1, disk_fp);
 			write_io_port(IDE_PORT_BASE, 4, buf);
 
-		  char *data=(char*)&buf;
+		  unsigned char *data=(unsigned char*)&buf;
 			if(pos>=0x1038 && pos<=0x103f){
 				// Wanted: 0x103a, 0x103b
 				for(int i=0;i<4;i++){
