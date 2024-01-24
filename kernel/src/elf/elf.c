@@ -4,6 +4,7 @@
 #include "x86/cpu.h"
 
 #include <elf.h>
+#include <stddef.h>
 #include <stdint.h>
 
 typedef union{
@@ -31,15 +32,15 @@ uint32_t loader()
 	Elf32_Phdr *ph, *eph;
 
 #ifdef HAS_DEVICE_IDE
-	const int len=256*1024;
-	// const int len=4096;
+	// const int len=256*1024;
+	const int len=4096;
 	uint8_t buf[len];
 	ide_read(buf, ELF_OFFSET_IN_DISK, len);
 	elf = (void *)buf;
-	// Log("ELF loading from hard disk.");
+	Log("ELF loading from hard disk.");
 #else
 	elf = (void *)0x0;
-	// Log("ELF loading from ram disk.");
+	Log("ELF loading from ram disk.");
 #endif
 
 	/* Load each program segment */
@@ -50,13 +51,11 @@ uint32_t loader()
 		if (ph->p_type == PT_LOAD)
 		{
 			uint32_t uaddr=mm_malloc(ph->p_vaddr, ph->p_memsz);
-			char *dst=(char*)uaddr, *src=((char*)elf)+ph->p_offset;
-			for(int offset=0;offset<ph->p_filesz;offset++){
-				dst[offset]=src[offset];
-			}
+			unsigned char *dst=(unsigned char*)uaddr;
+			ide_read(dst, ELF_OFFSET_IN_DISK+ph->p_offset, ph->p_filesz);
 
 			int zero_out_size=ph->p_memsz-ph->p_filesz;
-			dst=((char*)uaddr)+ph->p_filesz;
+			dst=((unsigned char*)uaddr)+ph->p_filesz;
 			for(int offset=0;offset<zero_out_size;offset++){
 				dst[offset]=0;
 			}
