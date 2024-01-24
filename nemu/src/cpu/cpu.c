@@ -134,13 +134,14 @@ void exec(uint32_t n)
 	}
 }
 
-#define CMP(x)                                     \
-	if(cpu_me.x != cpu.x) {                          \
-		printf(#x " mismatch at eip=0x%x\n",cpu.eip);  \
-		assert(0);                                     \
+#define CMP(x)                                                    \
+	if(cpu_me.x != cpu.x) {                                         \
+		printf(#x " mismatch at step=%d, eip=0x%x\n",count,cpu.eip);  \
+		assert(0);                                                    \
 	}
 
 void cmp_cpu(){
+	static int count=0;
 	CMP(eax)
 	CMP(ecx)
 	CMP(edx)
@@ -164,6 +165,7 @@ void cmp_cpu(){
 	CMP(idtr.limit)
 	CMP(idtr.base)
 	CMP(intr)
+	count++;
 }
 
 int exec_inst()
