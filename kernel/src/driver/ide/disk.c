@@ -73,9 +73,6 @@ void disk_do_read(void *buf, uint32_t sector)
 		*(((uint32_t *)buf) + i) = in_long(IDE_PORT_BASE);
 	}
 
-	if(sector==8){
-		hexdump_pointer(buf, 512)
-	}
 #endif
 }
 

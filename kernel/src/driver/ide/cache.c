@@ -64,14 +64,8 @@ cache_fetch(uint32_t sector)
 uint8_t
 read_byte(uint32_t offset)
 {
-	static bool my_print=false;
 	uint32_t sector = offset >> 9; // div by 512
 	struct SectorCache *ptr = cache_fetch(sector);
-
-	if(offset==0x103a && my_print==false){
-		my_print=true;
-		hexdump_pointer(ptr->content, 512);
-	}
 	return ptr->content[offset & 511];
 }
 

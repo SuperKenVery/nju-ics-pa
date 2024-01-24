@@ -48,6 +48,7 @@ void debug_print_page_tables(laddr_t laddr){
 	// page_translate(segment_translate(cpu.eip, SREG_CS))
 	hexdump_pointer(hw_mem+page_translate(segment_translate(cpu.eip, SREG_CS)), 24);
 
+
 }
 
 // translate from linear address to physical address
