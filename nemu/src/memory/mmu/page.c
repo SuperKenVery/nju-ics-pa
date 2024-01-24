@@ -5,7 +5,7 @@
 void debug_print_page_tables(laddr_t laddr){
 	CR3 *cr=&cpu.cr3;
 	u32 page_directory_base=cr->pdbr << 12;
-	printf("eip=0x%x Read page_directory_base=0x%x\n", cpu.eip, page_directory_base);
+	printf("eip=0x%x Read page_directory_base=0x%x, Accessing 0x%x\n", cpu.eip, page_directory_base, laddr);
 	laddr_parse_t addr;
 	addr.laddr=laddr;
 
