@@ -79,7 +79,7 @@ class Nemu:
         return result.decode()
 
     def stepi(self):
-        result=self.fetch('si 1')
+        result=self.fetch('si 2')
         if result=='':
             rest=self.sh.recv().decode()
             if 'GOOD' in rest and 'TRAP' in rest:
