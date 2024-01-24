@@ -1,4 +1,5 @@
 #include "common.h"
+#include "debug.h"
 #include "memory.h"
 #include "string.h"
 #include "x86/cpu.h"
@@ -64,6 +65,8 @@ uint32_t loader()
 			for(int offset=0;offset<zero_out_size;offset++){
 				dst[offset]=0;
 			}
+
+			hexdump_pointer(dst, ph->p_filesz);
 
 #ifdef IA32_PAGE
 			/* Record the program break for future use */
