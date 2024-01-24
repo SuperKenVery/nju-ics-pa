@@ -31,7 +31,7 @@ void raise_intr(uint8_t intr_no)
 		assert(0);
 	}
 	
-	// if(desc.type==0xe) cpu.eflags.IF=0; // Interrupt gate
+	if(desc.type==0xe) cpu.eflags.IF=0; // Interrupt gate
 
 	cpu.cs.val=desc.selector;
 	cpu.eip=(desc.offset_31_16<<16)|(desc.offset_15_0);
