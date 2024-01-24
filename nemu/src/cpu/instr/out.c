@@ -49,7 +49,7 @@ make_instr_func(out_ee){
 
   dst.type=OPR_REG;
   dst.addr=REG_EDX;
-  dst.data_size=8;
+  dst.data_size=16;
   operand_read(&dst);
 
   content.type=OPR_REG;
@@ -69,7 +69,7 @@ make_instr_func(out_ef){
 
   dst.type=OPR_REG;
   dst.addr=REG_EDX;
-  dst.data_size=8;
+  dst.data_size=16;
   operand_read(&dst);
 
   content.type=OPR_REG;
