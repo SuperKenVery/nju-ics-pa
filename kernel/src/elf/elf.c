@@ -53,6 +53,8 @@ uint32_t loader()
 			char *dst=(char*)uaddr, *src=((char*)elf)+ph->p_offset;
 			for(int offset=0;offset<ph->p_filesz;offset++){
 				Log("Loading byte %d/%d",offset,ph->p_filesz);
+				Log("access dst %d",dst[offset]);
+				Log("access src %d",src[offset]);
 				dst[offset]=src[offset];
 			}
 
