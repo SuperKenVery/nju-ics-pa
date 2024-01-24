@@ -12,13 +12,22 @@ Special note for `int': please use the instruction name `int_' instead of `int'.
 
 make_instr_func(int_3){
   raise_intr(3);
+
+  print_asm_0("int", "3", 1);
+  
   return 1;
 }
 
 make_instr_func(int_imm){
   int len=1;
-  u8 imm=instr_fetch(eip+len, 1); len++;
-  raise_sw_intr(imm);
+  OPERAND imm;
+  imm.data_size=8;
+  imm.type=OPR_IMM;
+  imm.addr=eip+len; len+=imm.data_size/8;
+  operand_read(&imm);
+  raise_sw_intr(imm.val);
+
+  print_asm_1("int","",len,&imm);
 
   return 0;
 }

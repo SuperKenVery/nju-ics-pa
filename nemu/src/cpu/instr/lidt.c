@@ -20,6 +20,7 @@ make_instr_func(lidt) {
   cpu.idtr.limit=limit;
   cpu.idtr.base=offset;
 
+  print_asm_1("lidt", "", len, &mem);
 
   return len;
 }

@@ -11,5 +11,7 @@ make_instr_func(iret){
   cpu.cs.val=pop(32);
   cpu.eflags.val=pop(32);
 
+  print_asm_0("iret", "", 1);
+
   return 0;
 }
