@@ -37,7 +37,6 @@ void cache_writeback(void)
 static struct SectorCache *
 cache_fetch(uint32_t sector)
 {
-	Log("Fetching sector %d",sector);
 	struct SectorCache *ptr = &cache[sector % NR_SEC_CACHE];
 
 	if (ptr->used == true && ptr->sector == sector)
@@ -46,6 +45,7 @@ cache_fetch(uint32_t sector)
 	}
 	else
 	{
+		Log("Fetching sector %d",sector);
 		if (ptr->used == true && ptr->dirty == true)
 		{
 			/* write back */
