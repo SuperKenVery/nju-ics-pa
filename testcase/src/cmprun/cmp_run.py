@@ -35,7 +35,8 @@ class Qemu:
         return reg_vals
         
 
-    def stepi(self):
+    def stepi(self,step:int):
+        assert step==1, "step other than 1 is not supported on qemu backend"
         last=self.debugger.write("x/i $pc")
         self.last_instr=last[1]['payload']
         step_res=self.debugger.write("-exec-step-instruction")
@@ -78,8 +79,8 @@ class Nemu:
 
         return result.decode()
 
-    def stepi(self):
-        result=self.fetch('si 2')
+    def stepi(self,step:int):
+        result=self.fetch(f'si {step}')
         if result=='':
             rest=self.sh.recv().decode()
             if 'GOOD' in rest and 'TRAP' in rest:
@@ -147,7 +148,7 @@ def check_eflags(nemu_env,ref_env):
         if nflag!=qflag:
             fail(nemu_env,ref_env,'eflags',f"{ANSI.FAIL}{name}{ANSI.ENDC}: nemu_ref={qflag} nemu={nflag}")
 
-def cmp_run(testcase:str,mem_cmp_size:int,kernel:bool,skip:int):
+def cmp_run(testcase:str,mem_cmp_size:int,kernel:bool,skip:int,verbose:bool,strode:int):
     from pwn import hexdump
     # nemu_ref=Qemu(file,mem_cmp_size)
     nemu_ref=Nemu(testcase,kernel=kernel,nemu_path='nemu/nemu_ref')
@@ -158,9 +159,13 @@ def cmp_run(testcase:str,mem_cmp_size:int,kernel:bool,skip:int):
     step=skip
     
     while True:
-        ref_env=nemu_ref.stepi()
-        nemu_env=nemu.stepi()
-        step+=1
+        ref_env=nemu_ref.stepi(strode)
+        nemu_env=nemu.stepi(strode)
+        step+=strode
+
+        if verbose:
+            print('nemu:'+nemu_env['output'])
+            print('ref :'+ref_env['output'])
 
         try:
             for reg in ['eax','ebx','ecx','edx','esp','ebp','esi','edi','eip']:
@@ -190,7 +195,10 @@ def cmp_run(testcase:str,mem_cmp_size:int,kernel:bool,skip:int):
                     hexdump(nmem)
                     exit(1)
 
-        print(f"{ANSI.UP}{ANSI.CLEAR}{step}\tip={hex(nemu_env['eip'])}\t{ANSI.OKGREEN}pass{ANSI.ENDC}")
+        if not verbose:
+            print(f"{ANSI.UP}{ANSI.CLEAR}{step}\tip={hex(nemu_env['eip'])}\t{ANSI.OKGREEN}pass{ANSI.ENDC}")
+        else:
+            print(f"{step}\tip={hex(nemu_env['eip'])}\t{ANSI.OKGREEN}pass{ANSI.ENDC}")
                     
 
 # https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal
@@ -214,7 +222,9 @@ if __name__=='__main__':
     parser.add_argument("-m","--mem_cmp_size",help="How much memory to compare, in bytes. (Not implemented yet)",type=int,default=1024,required=False)
     parser.add_argument("-k","--kernel",action="store_true",help="Whether to add --kernel to nemu")
     parser.add_argument("-s","--skip",help="Skip first x instructions, to reduce wait time",type=int,default=0,required=False)
+    parser.add_argument("-v","--verbose",action="store_true",help="Be verbose",default=False,required=False)
+    parser.add_argument("-d","--strode",help="How many instructions to execute one time",type=int,default=1,required=False)
     args=parser.parse_args()
 
-    cmp_run(args.testcase_name,args.mem_cmp_size,args.kernel,args.skip)
+    cmp_run(args.testcase_name,args.mem_cmp_size,args.kernel,args.skip,args.verbose,args.strode)
     

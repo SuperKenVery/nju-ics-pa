@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-CPU_STATE cpu;
+CPU_STATE cpu, cpu_me, cpu_old;
 FPU fpu;
 int nemu_state;
 uint8_t data_size = 32;
@@ -134,6 +134,37 @@ void exec(uint32_t n)
 	}
 }
 
+#define CMP(x)                                  \
+	if(cpu_me.x != cpu.x) {                       \
+		printf(#x "mismatch at eip=0x%x\n",cpu.eip);\
+	}
+
+void cmp_cpu(){
+	CMP(eax)
+	CMP(ecx)
+	CMP(edx)
+	CMP(ebx)
+	CMP(esp)
+	CMP(ebp)
+	CMP(esi)
+	CMP(edi)
+	CMP(eip)
+	CMP(eflags.val)
+	CMP(gdtr.limit)
+	CMP(gdtr.base)
+	CMP(es.val)
+	CMP(cs.val)
+	CMP(ss.val)
+	CMP(ds.val)
+	CMP(fs.val)
+	CMP(gs.val)
+	CMP(cr0.val)
+	CMP(cr3.val)
+	CMP(idtr.limit)
+	CMP(idtr.base)
+	CMP(intr)
+}
+
 int exec_inst()
 {
 	uint8_t opcode = 0;
@@ -144,7 +175,12 @@ int exec_inst()
 #ifdef NEMU_REF_INSTR
 	int len = __ref_opcode_entry[opcode](cpu.eip, opcode);
 #else
+	cpu_old=cpu;
 	int len = opcode_entry[opcode](cpu.eip, opcode);
+	cpu_me=cpu;
+	cpu=cpu_old;
+	__ref_opcode_entry[opcode](cpu.eip, opcode);
+	cmp_cpu();
 #endif
 	return len;
 }
