@@ -47,6 +47,7 @@ uint32_t loader()
 	{
 		if (ph->p_type == PT_LOAD)
 		{
+			Log("Found load seg, disk_addr=0x%x, mem_addr=0x%x, filesz=0x%x",ph->p_offset,ph->p_vaddr,ph->p_filesz);
 			// laddr_parse_t laddr;
 			// laddr.laddr=ph->p_vaddr;
 			uint32_t uaddr=mm_malloc(ph->p_vaddr, ph->p_memsz);
@@ -57,6 +58,7 @@ uint32_t loader()
 
 			int zero_out_size=ph->p_memsz-ph->p_filesz;
 			dst=((char*)uaddr)+ph->p_filesz;
+			if(zero_out_size>0) Log("Zeroing out remainings...");
 			for(int offset=0;offset<zero_out_size;offset++){
 				dst[offset]=0;
 			}
