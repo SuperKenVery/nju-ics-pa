@@ -10,28 +10,42 @@ Put the implementations of `in' instructions here.
 */
 
 make_instr_func(in_e4){
-  u8 imm=instr_fetch(eip+1, 1);
-  OPERAND dst;
+  int len=1;
+  OPERAND dst,imm;
+  imm.type=OPR_IMM;
+  imm.data_size=8;
+  imm.addr=eip+len; len+=imm.data_size/8;
+  operand_read(&imm);
   dst.type=OPR_REG;
   dst.addr=REG_EAX;
   dst.data_size=8;
-  dst.val=pio_read(imm, 1);
+  dst.val=pio_read(imm.val, 1);
   operand_write(&dst);
+
+  print_asm_2("in", "", len, &imm, &dst);
+  
   return 2;
 }
 
 make_instr_func(in_e5){
-  u8 imm=instr_fetch(eip+1, 1);
-  OPERAND dst;
+  int len=1;
+  OPERAND dst,imm;
+  imm.type=OPR_IMM;
+  imm.data_size=8;
+  imm.addr=eip+len; len+=imm.data_size/8;
+  operand_read(&imm);
   dst.type=OPR_REG;
   dst.addr=REG_EAX;
   dst.data_size=data_size;
-  dst.val=pio_read(imm, data_size/8);
+  dst.val=pio_read(imm.val, data_size/8);
   operand_write(&dst);
-  return 2;
+
+  print_asm_2("in", "", len, &imm, &dst);
+  return len;
 }
 
 make_instr_func(in_ec){
+  int len=1;
   OPERAND dst,src;
   src.type=OPR_REG;
   src.addr=REG_EDX;
@@ -44,10 +58,14 @@ make_instr_func(in_ec){
   dst.data_size=data_size;
   dst.val=pio_read(src.val, 1);
   operand_write(&dst);
-  return 1;
+
+  print_asm_2("in", "", len, &src, &dst);
+  
+  return len;
 }
 
 make_instr_func(in_ed){
+  int len=1;
   OPERAND dst,src;
   src.type=OPR_REG;
   src.addr=REG_EDX;
@@ -59,5 +77,8 @@ make_instr_func(in_ed){
   dst.data_size=data_size;
   dst.val=pio_read(src.val, data_size/8);
   operand_write(&dst);
-  return 1;
+
+  print_asm_2("in", "", len, &src, &dst);
+  
+  return len;
 }
