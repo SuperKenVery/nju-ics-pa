@@ -51,7 +51,11 @@ uint32_t loader()
 		if (ph->p_type == PT_LOAD)
 		{
 			uint32_t uaddr=mm_malloc(ph->p_vaddr, ph->p_memsz);
-			Log("Allocating 0x%x - 0x%x",ph->p_vaddr,ph->p_vaddr+ph->p_memsz);
+			Log("Allocating 0x%x - 0x%x, loading 0x%x - 0x%x from 0x%x - 0x%x",
+				ph->p_vaddr,ph->p_vaddr+ph->p_memsz,
+				ph->p_vaddr,ph->p_vaddr+ph->p_filesz,
+				ph->p_offset,ph->p_offset+ph->p_filesz
+			);
 			unsigned char *dst=(unsigned char*)uaddr;
 			ide_read(dst, ELF_OFFSET_IN_DISK+ph->p_offset, ph->p_filesz);
 
