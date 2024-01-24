@@ -48,11 +48,11 @@ uint32_t loader()
 		if (ph->p_type == PT_LOAD)
 		{
 			Log("Found load seg, disk_addr=0x%x, mem_addr=0x%x, filesz=0x%x, memsz=0x%x",ph->p_offset,ph->p_vaddr,ph->p_filesz,ph->p_memsz);
-			// laddr_parse_t laddr;
-			// laddr.laddr=ph->p_vaddr;
 			uint32_t uaddr=mm_malloc(ph->p_vaddr, ph->p_memsz);
+			Log("done malloc");
 			char *dst=(char*)uaddr, *src=((char*)elf)+ph->p_offset;
 			for(int offset=0;offset<ph->p_filesz;offset++){
+				Log("Loading byte %d",offset);
 				dst[offset]=src[offset];
 			}
 
