@@ -1,5 +1,6 @@
 #include "common.h"
 #include "x86.h"
+#include "x86/io.h"
 
 #define SERIAL_PORT 0x3F8
 
@@ -16,5 +17,5 @@ void serial_printc(char ch)
 	while (!serial_idle())
 		; // wait untile serial is idle
 	// print 'ch' via out instruction here
-	HIT_BAD_TRAP;
+	out_byte(SERIAL_PORT, ch);
 }
