@@ -42,11 +42,9 @@ cache_fetch(uint32_t sector)
 	if (ptr->used == true && ptr->sector == sector)
 	{
 		/* cache hit, do nothing */
-		if(sector>=6) Log("Doing nothing");
 	}
 	else
 	{
-		Log("Fetching sector %d",sector);
 		if (ptr->used == true && ptr->dirty == true)
 		{
 			/* write back */
