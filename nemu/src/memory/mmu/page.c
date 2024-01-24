@@ -1,7 +1,9 @@
 #include "cpu/cpu.h"
+#include "cpu/reg.h"
 #include "memory/memory.h"
 #include "memory/mmu/page.h"
 #include "debug.h"
+#include "memory/mmu/segment.h"
 
 void debug_print_page_tables(laddr_t laddr){
 	CR3 *cr=&cpu.cr3;
@@ -42,7 +44,8 @@ void debug_print_page_tables(laddr_t laddr){
 	}
 	printf("\n\n");
 
-	hexdump_pointer(hw_mem+cpu.eip, 24);
+	// page_translate(segment_translate(cpu.eip, SREG_CS))
+	hexdump_pointer(hw_mem+page_translate(segment_translate(cpu.eip, SREG_CS)), 24);
 }
 
 // translate from linear address to physical address
