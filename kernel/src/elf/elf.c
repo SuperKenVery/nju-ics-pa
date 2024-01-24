@@ -72,6 +72,8 @@ uint32_t loader()
 		}
 	}
 
+	Log("Done loading ELF");
+
 	volatile uint32_t entry = elf->e_entry;
 	// laddr_parse_t entry_p;
 	// entry_p.laddr=entry;
