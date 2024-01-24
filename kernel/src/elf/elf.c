@@ -31,7 +31,8 @@ uint32_t loader()
 	Elf32_Phdr *ph, *eph;
 
 #ifdef HAS_DEVICE_IDE
-	const int len=256*1024;
+	// const int len=256*1024;
+	const int len=4096;
 	uint8_t buf[len];
 	ide_read(buf, ELF_OFFSET_IN_DISK, len);
 	elf = (void *)buf;
