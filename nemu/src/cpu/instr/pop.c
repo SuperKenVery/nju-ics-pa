@@ -71,5 +71,7 @@ make_instr_func(popa){
   cpu.ecx=pop(32);
   cpu.eax=pop(32);
 
+  print_asm_0("popa", "", 1);
+
   return 1;
 }

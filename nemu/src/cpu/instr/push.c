@@ -136,5 +136,7 @@ make_instr_func(pusha){
   push(cpu.esi, 32);
   push(cpu.edi, 32);
 
+  print_asm_0("pusha", "", 1);
+
   return 1;
 }

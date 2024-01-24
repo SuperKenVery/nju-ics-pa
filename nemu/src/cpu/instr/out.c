@@ -31,7 +31,7 @@ make_instr_func(out_e7){
   int len=1;
   OPERAND al,imm;
   imm.type=OPR_IMM;
-  imm.data_size=data_size;
+  imm.data_size=8;
   imm.addr=eip+len; len+=imm.data_size/8;
   al.type=OPR_REG;
   al.addr=REG_EAX;
