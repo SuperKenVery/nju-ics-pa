@@ -178,12 +178,12 @@ int exec_inst()
 #ifdef NEMU_REF_INSTR
 	int len = __ref_opcode_entry[opcode](cpu.eip, opcode);
 #else
-	cpu_old=cpu;
+	// cpu_old=cpu;
 	int len = opcode_entry[opcode](cpu.eip, opcode);
-	cpu_me=cpu;
-	cpu=cpu_old;
-	__ref_opcode_entry[opcode](cpu.eip, opcode);
-	cmp_cpu();
+	// cpu_me=cpu;
+	// cpu=cpu_old;
+	// __ref_opcode_entry[opcode](cpu.eip, opcode);
+	// cmp_cpu();
 #endif
 	return len;
 }
