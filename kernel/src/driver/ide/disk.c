@@ -70,8 +70,9 @@ void disk_do_read(void *buf, uint32_t sector)
 	for (i = 0; i < 512 / sizeof(uint32_t); i++)
 	{
 		*(((uint32_t *)buf) + i) = in_long(IDE_PORT_BASE);
-		if(sector==8 && i>=57 && i<=60){
-			Log("sec 8 off %d = 0x%x",i, ((char*)buf)[i]);
+		int x=i*4;
+		if(sector==8 && x>=57 && x<=60){
+			Log("sec 8 off %d = 0x%x",x, ((char*)buf)[x]);
 		}
 	}
 #endif
