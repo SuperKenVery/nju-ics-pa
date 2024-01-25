@@ -69,7 +69,6 @@ void init_cond()
 	sti();
 #endif
 
-	Log("init_cond");
 #ifdef HAS_DEVICE_IDE
 	/* Initialize the IDE driver. */
 	init_ide();
@@ -92,11 +91,14 @@ void init_cond()
 #endif
 	/* Load the program. */
 	uint32_t eip = loader();
+	Log("Program loaded");
 #ifdef HAS_DEVICE_VGA
 	/* Read data in the video memory to check whether 
 	 * the test data is written sucessfully.
 	 */
+	Log("Running vram read test");
 	video_mapping_read_test();
+	Log("Clearing vram");
 
 	/* Clear the test data we just written in the video memory. */
 	video_mapping_clear();
