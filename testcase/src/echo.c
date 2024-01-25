@@ -52,7 +52,6 @@ void keyboard_event_handler()
 }
 
 void *sbrk(int incr){
-	nemu_assert(0);
 	return NULL;
 }
 
@@ -73,7 +72,6 @@ printk(const char *ctl, ...)
 int main()
 {
 	// register for keyboard events
-	HIT_BAD_TRAP;
 	printk("echo.c: Adding func %p for irq_id 1\n");
 	add_irq_handler(1, keyboard_event_handler);
 	printk("echo.c: done adding irq handler\n");
