@@ -83,30 +83,23 @@ void init_cond()
 	 * Note that the output is actually performed only when
 	 * the serial port is available in NEMU.
 	 */
-	Log("Hello, NEMU world!");
+	// Log("Hello, NEMU world!");
 
 #ifdef HAS_DEVICE_VGA
 	/* Write some test data to the video memory. */
-	Log("vram writing test");
 	video_mapping_write_test();
 #endif
 	/* Load the program. */
-	Log("loading program");
 	uint32_t eip = loader();
-	Log("Program loaded");
 #ifdef HAS_DEVICE_VGA
 	/* Read data in the video memory to check whether 
 	 * the test data is written sucessfully.
 	 */
-	Log("Running vram read test");
 	video_mapping_read_test();
-	Log("Clearing vram");
 
 	/* Clear the test data we just written in the video memory. */
 	video_mapping_clear();
 #endif
-
-	Log("Here we go");
 
 #ifdef IA32_PAGE
 	/* Set the %esp for user program, which is one of the

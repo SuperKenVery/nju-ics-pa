@@ -38,7 +38,6 @@ uint32_t loader()
 	uint8_t buf[len];
 	ide_read(buf, ELF_OFFSET_IN_DISK, len);
 	elf = (void *)buf;
-	Log("Loading elf from disk");
 #else
 	elf = (void *)0x0;
 #endif
@@ -74,9 +73,9 @@ uint32_t loader()
 	}
 
 	volatile uint32_t entry = elf->e_entry;
-	laddr_parse_t entry_p;
-	entry_p.laddr=entry;
-	Log("ELF entry is %x, 0x%x %x %x",entry, entry_p.page_directory_index, entry_p.page_entry_index, entry_p.offset);
+	// laddr_parse_t entry_p;
+	// entry_p.laddr=entry;
+	// Log("ELF entry is %x, 0x%x %x %x",entry, entry_p.page_directory_index, entry_p.page_entry_index, entry_p.offset);
 
 #ifdef IA32_PAGE
 	mm_malloc(KOFFSET - STACK_SIZE, STACK_SIZE);

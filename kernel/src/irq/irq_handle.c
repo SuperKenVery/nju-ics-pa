@@ -28,7 +28,6 @@ void add_irq_handle(int irq, void (*func)(void))
 	ptr->routine = func;
 	ptr->next = handles[irq]; /* insert into the linked list */
 	handles[irq] = ptr;
-	Log("Adding func %p for irq_id %d",func,irq);
 }
 
 void irq_handle(TrapFrame *tf)
@@ -51,13 +50,11 @@ void irq_handle(TrapFrame *tf)
 	{
 		int irq_id = irq - 1000;
 		assert(irq_id < NR_HARD_INTR);
-		if(irq_id!=14) Log("got irq 1000 + %d",irq_id);
 
 		struct IRQ_t *f = handles[irq_id];
 
 		while (f != NULL)
 		{ /* call handlers one by one */
-			if(irq_id!=14) Log("Calling routine at %p",f->routine);
 			f->routine();
 			f = f->next;
 		}
