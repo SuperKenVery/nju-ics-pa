@@ -1,5 +1,6 @@
 #include "trap.h"
 #include <stdint.h>
+#include <stdio.h>
 #include <sys/syscall.h>
 
 // read a byte from the port
@@ -50,10 +51,26 @@ void keyboard_event_handler()
 	}
 }
 
+void __attribute__((__noinline__))
+printk(const char *ctl, ...)
+{
+	static char buf[256];
+	void *args = (void **)&ctl + 1;
+	int len = vsnprintf(buf, 256, ctl, args);
+
+
+	int i;
+	for(i = 0; i < len; i ++) {
+		printc(buf[i]);
+	}
+}
+
 int main()
 {
 	// register for keyboard events
+	printk("echo.c: Adding func %p for irq_id 1\n");
 	add_irq_handler(1, keyboard_event_handler);
+	printk("echo.c: done adding irq handler\n");
 	while (1)
 		asm volatile("hlt");
 	return 0;
