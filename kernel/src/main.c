@@ -83,10 +83,11 @@ void init_cond()
 	 * Note that the output is actually performed only when
 	 * the serial port is available in NEMU.
 	 */
-	// Log("Hello, NEMU world!");
+	Log("Hello, NEMU world!");
 
 #ifdef HAS_DEVICE_VGA
 	/* Write some test data to the video memory. */
+	Log("vram writing test");
 	video_mapping_write_test();
 #endif
 	/* Load the program. */
