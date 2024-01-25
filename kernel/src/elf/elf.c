@@ -38,10 +38,8 @@ uint32_t loader()
 	uint8_t buf[len];
 	ide_read(buf, ELF_OFFSET_IN_DISK, len);
 	elf = (void *)buf;
-	Log("ELF loading from hard disk.");
 #else
 	elf = (void *)0x0;
-	Log("ELF loading from ram disk.");
 #endif
 
 	/* Load each program segment */
@@ -73,8 +71,6 @@ uint32_t loader()
 #endif
 		}
 	}
-
-	Log("Done loading ELF");
 
 	volatile uint32_t entry = elf->e_entry;
 	// laddr_parse_t entry_p;
