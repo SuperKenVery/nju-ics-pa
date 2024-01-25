@@ -72,9 +72,7 @@ printk(const char *ctl, ...)
 int main()
 {
 	// register for keyboard events
-	printk("echo.c: Adding func %p for irq_id 1\n");
 	add_irq_handler(1, keyboard_event_handler);
-	printk("echo.c: done adding irq handler\n");
 	while (1)
 		asm volatile("hlt");
 	return 0;
