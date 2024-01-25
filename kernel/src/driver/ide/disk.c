@@ -76,6 +76,7 @@ void disk_do_read(void *buf, uint32_t sector)
 		uint32_t data = in_long(IDE_PORT_BASE);
 		wbuf[i] = data;
 		if(sector==8) printk("kernel disk_do_read: got 0x%x, in buf=0x%x\n", data, wbuf[i]);
+		assert(wbuf[i]==data);
 		wbuf[i]=data;
 		int x=i*4;
 		// Wanted: 0x103a, 0x103b, offset 0x3a, 0x3b
