@@ -44,6 +44,7 @@ make_instr_func(mov_r2rm_v){
   bool b=verbose;
   verbose=true;
   // print_asm_2("mov_89", "", len, &r, &rm);             
+  printf("mov_89, src=0x%x, dst=0x%x\n",r.val,rm.val);
   verbose=b;
   return len;                                                                                                                            
 }
