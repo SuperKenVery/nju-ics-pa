@@ -31,7 +31,7 @@ make_instr_impl_2op(mov, a, o, v)
 make_instr_impl_2op(mov, o, a, b)
 make_instr_impl_2op(mov, o, a, v)
 
-make_instr_func_ref(mov_r2rm_v){
+make_instr_func(mov_r2rm_v){
   int len = 1;                                                                                                                           
   OPERAND rm,r;
   rm.data_size=data_size;
