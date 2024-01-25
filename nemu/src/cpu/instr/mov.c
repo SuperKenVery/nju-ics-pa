@@ -1,3 +1,5 @@
+#include "cpu-ref/instr_helper_ref.h"
+#include "cpu-ref/instr_ref.h"
 #include "cpu/instr.h"
 #include "cpu/instr_helper.h"
 #include "cpu/modrm.h"
@@ -6,6 +8,8 @@
 #include "debug.h"
 #include "memory/memory.h"
 #include "memory/mmu/segment.h"
+#include "nemu.h"
+#include <SDL/SDL_version.h>
 
 static void instr_execute_2op() 
 {
@@ -15,7 +19,7 @@ static void instr_execute_2op()
 }
 
 make_instr_impl_2op(mov, r, rm, b)
-make_instr_impl_2op(mov, r, rm, v)
+// make_instr_impl_2op(mov, r, rm, v)
 make_instr_impl_2op(mov, rm, r, b)
 make_instr_impl_2op(mov, rm, r, v)
 make_instr_impl_2op(mov, i, rm, b)
@@ -26,6 +30,23 @@ make_instr_impl_2op(mov, a, o, b)
 make_instr_impl_2op(mov, a, o, v)
 make_instr_impl_2op(mov, o, a, b)
 make_instr_impl_2op(mov, o, a, v)
+
+make_instr_func_ref(mov_r2rm_v){
+  int len = 1;                                                                                                                           
+  OPERAND rm,r;
+  rm.data_size=data_size;
+  r.data_size=data_size;
+  len+=modrm_r_rm(eip,&r,&rm);
+  operand_read(&r);
+  rm.val=r.val;
+  operand_write(&rm);
+
+  bool b=verbose;
+  verbose=true;
+  print_asm_2("mov_89", opr_dest.data_size == 8 ? "b" : (opr_dest.data_size == 16 ? "w" : "l"), len, &r, &rm);             
+  verbose=false;
+  return len;                                                                                                                            
+}
 
 make_instr_func(mov_zrm82r_v) {
 	int len = 1;
