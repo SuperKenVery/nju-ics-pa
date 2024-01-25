@@ -101,6 +101,8 @@ void init_cond()
 	video_mapping_clear();
 #endif
 
+	Log("Here we go");
+
 #ifdef IA32_PAGE
 	/* Set the %esp for user program, which is one of the
 	 * convention of the "advanced" runtime environment. */
