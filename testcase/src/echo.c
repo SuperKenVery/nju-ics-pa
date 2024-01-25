@@ -51,6 +51,11 @@ void keyboard_event_handler()
 	}
 }
 
+void *sbrk(int incr){
+	nemu_assert(0);
+	return NULL;
+}
+
 void __attribute__((__noinline__))
 printk(const char *ctl, ...)
 {
