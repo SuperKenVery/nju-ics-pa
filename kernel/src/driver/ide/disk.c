@@ -75,7 +75,7 @@ void disk_do_read(volatile void *buf, uint32_t sector)
 		uint32_t data = in_long(IDE_PORT_BASE);
 		wbuf[i] = data;
 		if(wbuf[i]!=data){
-			printk("Data corruption: 0x%x -> 0x%x\n",data,wbuf[i]);
+			Log("Data corruption: 0x%x -> 0x%x",data,wbuf[i]);
 		}
 		assert(wbuf[i]==data);
 	}
