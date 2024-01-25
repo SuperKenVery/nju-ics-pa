@@ -74,12 +74,12 @@ void disk_do_read(void *buf, uint32_t sector)
 	{
 		*(((uint32_t *)buf) + i) = in_long(IDE_PORT_BASE);
 		int x=i*4;
-		// Wanted: 0x103a, 0x103b
-		if(x>=0x1038 && x<=0x103f){
+		// Wanted: 0x103a, 0x103b, offset 0x3a, 0x3b
+		if(x>=0x30 && x<=0x3f){
 			uint32_t data=*(((uint32_t *)buf) + i);
 			uint8_t *buf=(uint8_t*)&data;
 			for(int j=0;j<4;j++){
-				printk("kernel disk_do_read: 0x%x -> 0x%x\n",x+j,buf[j]);
+				printk("kernel disk_do_read: 0x%x -> 0x%x\n",512*8+x+j,buf[j]);
 			}
 		}
 	}
