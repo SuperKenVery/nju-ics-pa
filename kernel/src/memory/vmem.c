@@ -65,6 +65,7 @@ void video_mapping_write_test()
 	{
 		buf[i] = i;
 	}
+	Log("vram writing test done");
 }
 
 void video_mapping_read_test()
