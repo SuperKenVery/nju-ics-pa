@@ -26,7 +26,7 @@ in
     buildInputs=with new32pkgs; [
       gcc
       readline
-      SDL
+      pkgs.SDL
       bear
       newpkgs.pwndbg
       newpkgs.pwntools
