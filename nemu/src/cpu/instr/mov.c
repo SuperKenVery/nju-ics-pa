@@ -44,7 +44,7 @@ make_instr_func_ref(mov_r2rm_v){
   bool b=verbose;
   verbose=true;
   print_asm_2("mov_89", opr_dest.data_size == 8 ? "b" : (opr_dest.data_size == 16 ? "w" : "l"), len, &r, &rm);             
-  verbose=false;
+  verbose=b;
   return len;                                                                                                                            
 }
 
