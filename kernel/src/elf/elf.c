@@ -39,7 +39,6 @@ uint32_t loader()
 	ide_read(buf, ELF_OFFSET_IN_DISK, len);
 	elf = (void *)buf;
 	Log("ELF loading from hard disk.");
-	hexdump_pointer(buf, len);
 #else
 	elf = (void *)0x0;
 	Log("ELF loading from ram disk.");
@@ -53,11 +52,6 @@ uint32_t loader()
 		if (ph->p_type == PT_LOAD)
 		{
 			uint32_t uaddr=mm_malloc(ph->p_vaddr, ph->p_memsz);
-			Log("Allocating 0x%x - 0x%x, loading 0x%x - 0x%x from 0x%x - 0x%x",
-				ph->p_vaddr,ph->p_vaddr+ph->p_memsz,
-				ph->p_vaddr,ph->p_vaddr+ph->p_filesz,
-				ph->p_offset,ph->p_offset+ph->p_filesz
-			);
 			unsigned char *dst=(unsigned char*)uaddr;
 			ide_read(dst, ELF_OFFSET_IN_DISK+ph->p_offset, ph->p_filesz);
 
@@ -67,7 +61,6 @@ uint32_t loader()
 				dst[offset]=0;
 			}
 
-			hexdump_pointer((void*)uaddr, ph->p_memsz);
 
 #ifdef IA32_PAGE
 			/* Record the program break for future use */

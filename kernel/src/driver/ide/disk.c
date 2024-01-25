@@ -54,7 +54,7 @@ issue_write()
 	out_byte(IDE_PORT_BASE + 7, 0x30);
 }
 
-void disk_do_read(void *buf, uint32_t sector)
+void disk_do_read(volatile void *buf, uint32_t sector)
 {
 #ifdef USE_DMA_READ
 	dma_prepare(buf);
@@ -69,25 +69,12 @@ void disk_do_read(void *buf, uint32_t sector)
 
 #ifndef USE_DMA_READ
 	int i;
-	uint32_t *wbuf=(uint32_t*)buf;
-	printk("kernel disk_do_read sec=%d\n",sector);
+	volatile uint32_t *wbuf=(uint32_t*)buf;
 	for (i = 0; i < 512 / sizeof(uint32_t); i++)
 	{
 		uint32_t data = in_long(IDE_PORT_BASE);
 		wbuf[i] = data;
-		if(sector==8) printk("kernel disk_do_read: got 0x%x, in buf=0x%x\n", data, wbuf[i]);
 		assert(wbuf[i]==data);
-		wbuf[i]=data;
-		int x=i*4;
-		// Wanted: 0x103a, 0x103b, offset 0x3a, 0x3b
-		if(x>=0x30 && x<=0x3f){
-			printk("kernel disk_do_read inside if: got 0x%x, in buf=0x%x\n", data, wbuf[i]);
-			uint32_t _data=wbuf[i];
-			uint8_t *buf=(uint8_t*)&_data;
-			for(int j=0;j<4;j++){
-				printk("kernel disk_do_read: 0x%x -> 0x%x\n",512*8+x+j,buf[j]);
-			}
-		}
 	}
 
 #endif
