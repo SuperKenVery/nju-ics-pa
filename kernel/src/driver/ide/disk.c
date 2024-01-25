@@ -74,6 +74,8 @@ void disk_do_read(volatile void *buf, uint32_t sector)
 	for (i = 0; i < 512 / sizeof(uint32_t); i++)
 	{
 		uint32_t data = in_long(IDE_PORT_BASE);
+		// If you copy the whole uint32_t, sometimes it will be truncated. 
+		// By copying them one-by-one, the data read from disk is intact. 
 		uint8_t *d=(uint8_t*)&data;
 		for(int off=0;off<4;off++){
 			cbuf[4*i+off]=d[off];
@@ -84,7 +86,7 @@ void disk_do_read(volatile void *buf, uint32_t sector)
 		}else{
 			// if(data!=0) Log("Data normal: 0x%x",data);
 		}
-		// assert(wbuf[i]==data);
+		assert(wbuf[i]==data);
 	}
 
 #endif
