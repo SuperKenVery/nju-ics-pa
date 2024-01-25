@@ -28,7 +28,7 @@ void i8259_raise_intr(uint8_t irq_no)
 	{
 		// priority
 		i8259_intr_no = irq_no + IRQ_BASE;
-		//printf("i8259 raise %d, %d\n", irq_no, i8259_intr_no);
+		printf("i8259 raise %d, %d\n", irq_no, i8259_intr_no);
 	}
 #ifdef IA32_INTR
 	cpu.intr = 1;
