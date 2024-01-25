@@ -69,6 +69,7 @@ void disk_do_read(void *buf, uint32_t sector)
 
 #ifndef USE_DMA_READ
 	int i;
+	printk("kernel disk_do_read sec=%d\n",sector);
 	for (i = 0; i < 512 / sizeof(uint32_t); i++)
 	{
 		*(((uint32_t *)buf) + i) = in_long(IDE_PORT_BASE);
