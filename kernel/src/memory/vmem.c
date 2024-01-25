@@ -55,6 +55,7 @@ void create_video_mapping()
 		table[page_table_entry].page_frame=(page_directory_entry << 10)|page_table_entry;
 		table[page_directory_entry].present=1;
 	}
+	Log("Done video mapping");
 
 }
 
