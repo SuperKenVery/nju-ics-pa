@@ -23,10 +23,10 @@ let
 in
   pkgs.stdenv.mkDerivation {
     name="gcc8";
-    buildInputs=with new32pkgs; [
+    buildInputs=with pkgs; [
       gcc
-      pkgs.readline
-      pkgs.SDL
+      readline
+      SDL
       bear
       newpkgs.pwndbg
       newpkgs.pwntools

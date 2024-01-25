@@ -70,10 +70,15 @@ void disk_do_read(volatile void *buf, uint32_t sector)
 #ifndef USE_DMA_READ
 	int i;
 	volatile uint32_t *wbuf=(uint32_t*)buf;
+	volatile uint8_t *cbuf=(uint8_t*)buf;
 	for (i = 0; i < 512 / sizeof(uint32_t); i++)
 	{
 		uint32_t data = in_long(IDE_PORT_BASE);
-		wbuf[i] = data;
+		uint8_t *d=(uint8_t*)&data;
+		for(int off=0;off<4;off++){
+			cbuf[4*i+off]=d[off];
+		}
+		// wbuf[i] = data;
 		if(wbuf[i]!=data){
 			Log("Data corruption: 0x%x -> 0x%x",data,wbuf[i]);
 		}else{
