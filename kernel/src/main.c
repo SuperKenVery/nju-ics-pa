@@ -69,6 +69,7 @@ void init_cond()
 	sti();
 #endif
 
+	Log("init_cond");
 #ifdef HAS_DEVICE_IDE
 	/* Initialize the IDE driver. */
 	init_ide();
