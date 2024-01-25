@@ -25,7 +25,7 @@ in
     name="gcc8";
     buildInputs=with new32pkgs; [
       gcc
-      readline
+      pkgs.readline
       pkgs.SDL
       bear
       newpkgs.pwndbg
