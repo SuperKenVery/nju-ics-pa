@@ -15,6 +15,7 @@ void debug_print_page_tables(laddr_t laddr){
 
 	printf("Accessing addr: 0x%x %x %x\n",addr.page_directory_index,addr.page_entry_index,addr.offset);
 
+	return;
 	// First level
 	printf("Page directory entries: \n");
 	for(int i=0;i<NR_PDE;i++){
