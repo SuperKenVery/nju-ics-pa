@@ -42,13 +42,18 @@ uint32_t paddr_read(paddr_t paddr, size_t len)
 	if(paddr<0 || paddr+len>=MEM_SIZE_B) {
 		pinvalid_addr("paddr_read", paddr);
 	}
-	uint32_t ret = 0;
+	int map_num=is_mmio(paddr);
+	if(map_num==-1){
+		uint32_t ret = 0;
 #ifndef CACHE_ENABLED
-	ret = hw_mem_read(paddr, len);
+		ret = hw_mem_read(paddr, len);
 #else
-	ret = cached_read(paddr, len);
+		ret = cached_read(paddr, len);
 #endif
-	return ret;
+		return ret;
+	}else{
+		return mmio_read(paddr, len, map_num);
+	}
 }
 
 void paddr_write(paddr_t paddr, size_t len, uint32_t data)
@@ -56,11 +61,16 @@ void paddr_write(paddr_t paddr, size_t len, uint32_t data)
 	if(paddr<0 || paddr+len>=MEM_SIZE_B) {
 		pinvalid_addr("paddr_write", paddr);
 	}
+	int map_num=is_mmio(paddr);
+	if(map_num==-1){
 #ifndef CACHE_ENABLED
-	hw_mem_write(paddr, len, data);
+		hw_mem_write(paddr, len, data);
 #else
-	cached_write(paddr, len, data);
+		cached_write(paddr, len, data);
 #endif
+	}else{
+		mmio_write(paddr, len, data, map_num);
+	}
 }
 
 #define PAGE(x) ((x)&0xfffff000)
