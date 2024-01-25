@@ -74,8 +74,9 @@ void disk_do_read(void *buf, uint32_t sector)
 	for (i = 0; i < 512 / sizeof(uint32_t); i++)
 	{
 		uint32_t data = in_long(IDE_PORT_BASE);
-		if(sector==8) printk("kernel disk_do_read: got 0x%x\n", data);
 		wbuf[i] = data;
+		if(sector==8) printk("kernel disk_do_read: got 0x%x, in buf=0x%x\n", data, wbuf[i]);
+		wbuf[i]=data;
 		int x=i*4;
 		// Wanted: 0x103a, 0x103b, offset 0x3a, 0x3b
 		if(x>=0x30 && x<=0x3f){
