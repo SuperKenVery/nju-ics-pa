@@ -125,11 +125,17 @@ uint32_t pio_read(uint16_t port, size_t len)
 void write_io_port(uint16_t port, size_t len, uint32_t data)
 {
 	memcpy(&(io_port[port]), &data, len);
+	if(port==IDE_PORT_BASE){
+		printf("nemu: ide --[0x%x]--> ide_port_base\n",data);
+	}
 }
 
 uint32_t read_io_port(uint16_t port, size_t len)
 {
 	uint32_t data = 0;
 	memcpy(&data, &(io_port[port]), len);
+	if(port==IDE_PORT_BASE){
+		printf("nemu: ide_port_base --[0x%x]--> os\n",data);
+	}
 	return data;
 }
