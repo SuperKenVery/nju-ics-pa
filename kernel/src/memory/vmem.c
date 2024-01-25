@@ -21,7 +21,7 @@ typedef union{
 
 PDE *get_updir();
 
-PTE new_table[NR_PTE]; align_to_page;
+PTE new_table[NR_PTE] align_to_page;
 
 void create_video_mapping()
 {
