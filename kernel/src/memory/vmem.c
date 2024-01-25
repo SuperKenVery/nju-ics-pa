@@ -3,7 +3,6 @@
 #include "x86/memory.h"
 #include <assert.h>
 #include <stdint.h>
-#include <stdlib.h>
 #include <string.h>
 
 #define VMEM_ADDR 0xa0000
