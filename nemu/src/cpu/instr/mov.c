@@ -36,7 +36,7 @@ make_instr_func(mov_r2rm_v){
   OPERAND rm,r;
   rm.data_size=data_size;
   r.data_size=data_size;
-  len+=modrm_r_rm(eip,&r,&rm);
+  len+=modrm_r_rm(eip+len,&r,&rm);
   operand_read(&r);
   rm.val=r.val;
   operand_write(&rm);
