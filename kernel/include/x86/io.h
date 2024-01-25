@@ -21,7 +21,6 @@ in_long(uint16_t port)
 	asm volatile("in %1, %0"
 				 : "=a"(data)
 				 : "d"(port));
-	printk("in_long <- 0x%x\n",data);
 	return data;
 }
 
