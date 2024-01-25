@@ -50,6 +50,7 @@ void irq_handle(TrapFrame *tf)
 	{
 		int irq_id = irq - 1000;
 		assert(irq_id < NR_HARD_INTR);
+		Log("got irl 1000 + %d",irq_id);
 
 		struct IRQ_t *f = handles[irq_id];
 
