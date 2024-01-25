@@ -55,7 +55,6 @@ void create_video_mapping()
 		table[page_table_entry].present=1;
 	}
 
-
 }
 
 void video_mapping_write_test()
@@ -66,7 +65,6 @@ void video_mapping_write_test()
 	{
 		buf[i] = i;
 	}
-	Log("vram writing test done");
 }
 
 void video_mapping_read_test()
