@@ -91,6 +91,7 @@ void init_cond()
 	video_mapping_write_test();
 #endif
 	/* Load the program. */
+	Log("loading program");
 	uint32_t eip = loader();
 	Log("Program loaded");
 #ifdef HAS_DEVICE_VGA
