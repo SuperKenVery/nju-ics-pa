@@ -66,10 +66,12 @@ void do_keyboard()
 			else if (e.type == SDL_KEYDOWN)
 			{
 				keyboard_down(e.key.keysym.sym);
+				printf("nemu: got keydown event sym=%d\n",e.key.keysym.sym);
 			}
 			else if (e.type == SDL_KEYUP)
 			{
 				keyboard_up(e.key.keysym.sym);
+				printf("nemu: got keyup event sym=%d\n",e.key.keysym.sym);
 			}
 		}
 		last_time = current_time;
