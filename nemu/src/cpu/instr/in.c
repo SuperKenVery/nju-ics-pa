@@ -76,7 +76,6 @@ make_instr_func(in_ed){
   dst.data_size=data_size;
   dst.val=pio_read(src.val, data_size/8);
   operand_write(&dst);
-  printf("nemu: in_ed: read 0x%x, eax=0x%x\n",dst.val,cpu.eax);
 
   print_asm_2("in", "", len, &src, &dst);
   
