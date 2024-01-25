@@ -75,7 +75,7 @@ make_instr_func(in_ed){
   dst.addr=REG_EAX;
   dst.data_size=data_size;
   dst.val=pio_read(src.val, data_size/8);
-  printf("nemu: in_ed: read 0x%d\n",dst.val);
+  printf("nemu: in_ed: read 0x%x\n",dst.val);
   operand_write(&dst);
 
   print_asm_2("in", "", len, &src, &dst);
