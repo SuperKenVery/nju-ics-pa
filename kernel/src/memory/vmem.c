@@ -8,6 +8,9 @@
 #define SCR_SIZE (320 * 200)
 #define NR_PT ((SCR_SIZE + PT_SIZE - 1) / PT_SIZE) // number of page tables to cover the vmem
 
+void video_mapping_write_test();
+void video_mapping_read_test();
+
 typedef union{
 	uint32_t addr;
 	struct {
