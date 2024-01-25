@@ -33,6 +33,7 @@ void create_video_mapping()
 	 * some page tables to create this mapping.
 	 */
 
+	Log("Creating video mapping");
 	memaddr start,end;
 	start.addr=0xa0000;
 	end.addr=0xa0000+SCR_SIZE;

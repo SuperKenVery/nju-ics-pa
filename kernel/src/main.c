@@ -85,15 +85,15 @@ void init_cond()
 	 */
 	Log("Hello, NEMU world!");
 
-	/* Load the program. */
-	Log("loading program");
-	uint32_t eip = loader();
-	Log("Program loaded");
 #ifdef HAS_DEVICE_VGA
 	/* Write some test data to the video memory. */
 	Log("vram writing test");
 	video_mapping_write_test();
 #endif
+	/* Load the program. */
+	Log("loading program");
+	uint32_t eip = loader();
+	Log("Program loaded");
 #ifdef HAS_DEVICE_VGA
 	/* Read data in the video memory to check whether 
 	 * the test data is written sucessfully.
