@@ -41,10 +41,10 @@ make_instr_func(mov_r2rm_v){
   rm.val=r.val;
   operand_write(&rm);
 
-  // bool b=verbose;
-  // verbose=true;
-  // print_asm_2("mov_89", opr_dest.data_size == 8 ? "b" : (opr_dest.data_size == 16 ? "w" : "l"), len, &r, &rm);             
-  // verbose=b;
+  bool b=verbose;
+  verbose=true;
+  print_asm_2("mov_89", "", len, &r, &rm);             
+  verbose=b;
   return len;                                                                                                                            
 }
 
