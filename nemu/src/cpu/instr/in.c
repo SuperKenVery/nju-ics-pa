@@ -10,7 +10,6 @@ Put the implementations of `in' instructions here.
 */
 
 make_instr_func(in_e4){
-  printf("in_e4\n");
   int len=1;
   OPERAND dst,imm;
   imm.type=OPR_IMM;
@@ -29,7 +28,6 @@ make_instr_func(in_e4){
 }
 
 make_instr_func(in_e5){
-  printf("in_e5\n");
   int len=1;
   OPERAND dst,imm;
   imm.type=OPR_IMM;
@@ -47,7 +45,6 @@ make_instr_func(in_e5){
 }
 
 make_instr_func(in_ec){
-  printf("in_ec\n");
   int len=1;
   OPERAND dst,src;
   src.type=OPR_REG;
@@ -67,7 +64,6 @@ make_instr_func(in_ec){
 }
 
 make_instr_func(in_ed){
-  printf("in_ed\n");
   int len=1;
   OPERAND dst,src;
   src.type=OPR_REG;
