@@ -50,12 +50,13 @@ void irq_handle(TrapFrame *tf)
 	{
 		int irq_id = irq - 1000;
 		assert(irq_id < NR_HARD_INTR);
-		Log("got irl 1000 + %d",irq_id);
+		Log("got irq 1000 + %d",irq_id);
 
 		struct IRQ_t *f = handles[irq_id];
 
 		while (f != NULL)
 		{ /* call handlers one by one */
+			Log("Calling routine at %p",f->routine);
 			f->routine();
 			f = f->next;
 		}
