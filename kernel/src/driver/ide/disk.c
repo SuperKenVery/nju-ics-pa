@@ -78,6 +78,7 @@ void disk_do_read(void *buf, uint32_t sector)
 		int x=i*4;
 		// Wanted: 0x103a, 0x103b, offset 0x3a, 0x3b
 		if(x>=0x30 && x<=0x3f){
+			printk("kernel disk_do_read inside if: got 0x%x\n", data);
 			uint32_t _data=*(((uint32_t *)buf) + i);
 			uint8_t *buf=(uint8_t*)&_data;
 			for(int j=0;j<4;j++){
