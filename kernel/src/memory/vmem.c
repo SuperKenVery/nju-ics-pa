@@ -51,8 +51,9 @@ void create_video_mapping()
 
 	PTE* table=(PTE*)((updir[page_directory_entry].page_frame)<<12);
 	Log("Before for");
-	for(int page_table_entry=start.page_entry_index;page_table_entry<=end.page_entry_index;page_directory_entry++){
+	for(int page_table_entry=start.page_entry_index;page_table_entry<=end.page_entry_index;page_table_entry++){
 		assert(page_table_entry==(page_table_entry&0x3ff));
+		Log("[0x%x 0x%x 0x%x]",start.page_entry_index,page_table_entry,end.page_entry_index)
 		table[page_table_entry].page_frame=(page_directory_entry << 10)|page_table_entry;
 		table[page_directory_entry].present=1;
 	}
