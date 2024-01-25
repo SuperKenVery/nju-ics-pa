@@ -75,6 +75,7 @@ void video_mapping_read_test()
 	{
 		assert(buf[i] == i);
 	}
+	assert(0);
 }
 
 void video_mapping_clear()
