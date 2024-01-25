@@ -1,8 +1,7 @@
 #include "common.h"
 #include "memory.h"
 #include "x86/memory.h"
-#include <assert.h>
-#include <stdint.h>
+#include "debug.h"
 #include <string.h>
 
 #define VMEM_ADDR 0xa0000
