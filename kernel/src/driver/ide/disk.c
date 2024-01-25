@@ -1,6 +1,7 @@
 #include "common.h"
 #include "debug.h"
 #include "x86.h"
+#include <stdint.h>
 
 //#define USE_DMA_READ
 
@@ -71,6 +72,15 @@ void disk_do_read(void *buf, uint32_t sector)
 	for (i = 0; i < 512 / sizeof(uint32_t); i++)
 	{
 		*(((uint32_t *)buf) + i) = in_long(IDE_PORT_BASE);
+		int x=i*4;
+		// Wanted: 0x103a, 0x103b
+		if(x>=0x1038 && x<=0x103f){
+			uint32_t data=*(((uint32_t *)buf) + i);
+			uint8_t *buf=(uint8_t*)&data;
+			for(int j=0;j<4;j++){
+				printk("kernel disk_do_read: 0x%x -> 0x%x\n",x+j,buf[j]);
+			}
+		}
 	}
 
 #endif
