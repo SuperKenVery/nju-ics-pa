@@ -73,6 +73,7 @@ uint32_t loader()
 	}
 
 	volatile uint32_t entry = elf->e_entry;
+	Log("ELF entry at 0x%x",entry);
 	// laddr_parse_t entry_p;
 	// entry_p.laddr=entry;
 	// Log("ELF entry is %x, 0x%x %x %x",entry, entry_p.page_directory_index, entry_p.page_entry_index, entry_p.offset);
