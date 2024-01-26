@@ -38,6 +38,7 @@ uint32_t loader()
 	uint8_t buf[len];
 	ide_read(buf, ELF_OFFSET_IN_DISK, len);
 	elf = (void *)buf;
+	Log("Loading ELF from disk");
 #else
 	elf = (void *)0x0;
 #endif
