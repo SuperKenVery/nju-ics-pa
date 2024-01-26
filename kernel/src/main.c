@@ -42,7 +42,7 @@ void init()
 	// Might need to revert on server with gcc6
 	asm volatile("jmp *%0"
 				 :
-				 : "r"(init_cond /*+ 0xc0000000*/));
+				 : "r"(init_cond + 0xc0000000));
 #else
 	asm volatile("jmp *%0"
 				 :
