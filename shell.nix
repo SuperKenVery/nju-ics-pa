@@ -31,6 +31,7 @@ in
       newpkgs.pwndbg
       newpkgs.pwntools
       newpkgs.nasm
+      new32pkgs.patchelf
 
       (newpkgs.python311.withPackages my-py-pkgs)
     ];
