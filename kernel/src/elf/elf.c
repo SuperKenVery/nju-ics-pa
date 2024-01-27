@@ -43,6 +43,7 @@ uint32_t loader()
 	elf = (void *)0x0;
 #endif
 
+	#if 0
 	/* Load each program segment */
 	ph = (void *)elf + elf->e_phoff;
 	eph = ph + elf->e_phnum;
@@ -73,6 +74,7 @@ uint32_t loader()
 #endif
 		}
 	}
+	#endif
 
 	volatile uint32_t entry = elf->e_entry;
 	Log("ELF entry at 0x%x",entry);
