@@ -9,7 +9,7 @@
 *.obj
 *.elf
 *.img
-scripts/score_testcases/
+# scripts/score_testcases/
 !kernel/src/memory/mm_malloc.o
 #!scripts/score_testcases/30000/*.img
 
@@ -51,7 +51,7 @@ testcase/src/*
 !testcase/src/*.c
 !testcase/src/*.S
 testcase/src/cmprun/pyrsp/
-game/data/
+# game/data/
 *.wav
 *.rpg
 *.mkf
