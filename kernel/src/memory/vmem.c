@@ -2,6 +2,7 @@
 #include "memory.h"
 #include "x86/memory.h"
 #include "debug.h"
+#include <stdint.h>
 #include <string.h>
 
 #define VMEM_ADDR 0xa0000
@@ -75,7 +76,10 @@ void video_mapping_read_test()
 	for (i = 0; i < SCR_SIZE / 4; i++)
 	{
 		Log("Checking %p",&buf[i]);
-		assert(buf[i] == i);
+		uint32_t x=buf[i];
+		assert(x==i);
+		// assert(buf[i] == i);
+		Log("Done checking %p",&buf[i]);
 	}
 }
 
