@@ -43,10 +43,10 @@ uint32_t loader()
 	elf = (void *)0x0;
 #endif
 
-	#if 0
 	/* Load each program segment */
 	ph = (void *)elf + elf->e_phoff;
 	eph = ph + elf->e_phnum;
+	#if 0
 	for (; ph < eph; ph++)
 	{
 		if (ph->p_type == PT_LOAD)
