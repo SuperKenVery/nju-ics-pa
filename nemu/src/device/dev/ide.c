@@ -12,7 +12,8 @@ static FILE *disk_fp;
 // init the hard disk by loading the file into it
 void init_ide(const char *file_to_load)
 {
-	disk_fp = fopen(file_to_load, "rb");
+	// disk_fp = fopen(file_to_load, "rb");
+	disk_fp = fopen("./testcase/bin/mov-c", "rb");
 	assert(disk_fp != 0);
 	disk_idx = 0;
 	write_io_port(IDE_PORT_BASE + 7, 1, 0x40);
