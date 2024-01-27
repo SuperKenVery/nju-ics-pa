@@ -53,12 +53,12 @@ uint32_t loader()
 			uint32_t uaddr=mm_malloc(ph->p_vaddr, ph->p_memsz);
 			unsigned char *dst=(unsigned char*)uaddr;
 			Log("Loading elf to %p ~ %p len=0x%x",dst, dst+ph->p_filesz, ph->p_filesz);
-			// ide_read(dst, ELF_OFFSET_IN_DISK+ph->p_offset, ph->p_filesz);
+			ide_read(dst, ELF_OFFSET_IN_DISK+ph->p_offset, ph->p_filesz);
 
 			int zero_out_size=ph->p_memsz-ph->p_filesz;
 			dst=((unsigned char*)uaddr)+ph->p_filesz;
 			for(int offset=0;offset<zero_out_size;offset++){
-				dst[offset]=0;
+				// dst[offset]=0;
 			}
 
 
