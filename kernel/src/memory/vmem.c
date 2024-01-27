@@ -71,6 +71,7 @@ void video_mapping_read_test()
 {
 	int i;
 	uint32_t *buf = (void *)VMEM_ADDR;
+	Log("starting read test, vmem at %p",buf);
 	for (i = 0; i < SCR_SIZE / 4; i++)
 	{
 		assert(buf[i] == i);
