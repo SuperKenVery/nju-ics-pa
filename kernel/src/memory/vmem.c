@@ -74,6 +74,7 @@ void video_mapping_read_test()
 	Log("starting read test, vmem at %p",buf);
 	for (i = 0; i < SCR_SIZE / 4; i++)
 	{
+		Log("Checking %p",&buf[i]);
 		assert(buf[i] == i);
 	}
 }
