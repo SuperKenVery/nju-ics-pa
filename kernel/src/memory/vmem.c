@@ -76,7 +76,7 @@ void video_mapping_read_test()
 	for (i = 0; i < SCR_SIZE / 4; i++)
 	{
 		uint32_t *target=&buf[i];
-		Log("Checking %p",target);
+		// Log("Checking %p",target);
 		uint32_t x=*target;
 		assert(x==i);
 		// assert(buf[i] == i);
