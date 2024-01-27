@@ -48,7 +48,7 @@ uint32_t loader()
 	eph = ph + elf->e_phnum;
 	for (; ph < eph; ph++)
 	{
-		if (ph->p_type == PT_LOAD && false)
+		if (ph->p_type == PT_LOAD)
 		{
 			uint32_t uaddr=mm_malloc(ph->p_vaddr, ph->p_memsz);
 			unsigned char *dst=(unsigned char*)uaddr;
