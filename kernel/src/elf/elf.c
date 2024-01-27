@@ -34,7 +34,7 @@ uint32_t loader()
 
 #ifdef HAS_DEVICE_IDE
 	// const int len=256*1024;
-	const int len=8192;
+	const int len=4096;
 	uint8_t buf[len];
 	ide_read(buf, ELF_OFFSET_IN_DISK, len);
 	elf = (void *)buf;
@@ -52,6 +52,7 @@ uint32_t loader()
 		{
 			uint32_t uaddr=mm_malloc(ph->p_vaddr, ph->p_memsz);
 			unsigned char *dst=(unsigned char*)uaddr;
+			Log("Loading elf to %p len=0x%x",dst, ph->p_filesz);
 			ide_read(dst, ELF_OFFSET_IN_DISK+ph->p_offset, ph->p_filesz);
 
 			int zero_out_size=ph->p_memsz-ph->p_filesz;
