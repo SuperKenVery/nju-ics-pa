@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "x86.h"
+#include <stdarg.h>
 
 #define KERNEL_LABEL " {kernel} "
 
