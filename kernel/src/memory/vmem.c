@@ -2,12 +2,16 @@
 #include "memory.h"
 #include "x86/memory.h"
 #include "debug.h"
+#include "memory.h"
 #include <stdint.h>
 #include <string.h>
 
 #define VMEM_ADDR 0xa0000
 #define SCR_SIZE (320 * 200)
 #define NR_PT ((SCR_SIZE + PT_SIZE - 1) / PT_SIZE) // number of page tables to cover the vmem
+
+extern PDE kpdir[NR_PDE] align_to_page;
+extern PTE kptable[PHY_MEM/PAGE_SIZE] align_to_page;
 
 void video_mapping_write_test();
 void video_mapping_read_test();
@@ -44,9 +48,11 @@ void create_video_mapping()
 	PDE *updir=get_updir();
 	if(!updir[page_directory_entry].present){
 		for(int i=0;i<NR_PTE;i++) new_table[i].present=0;
-		assert((((uint32_t)new_table)&0xfff)==0);  // Really aligns to page
-		updir[page_directory_entry].page_frame=((uint32_t)new_table)>>12;
+		assert((((uint32_t)va_to_pa(new_table))&0xfff)==0);  // Really aligns to page
+		updir[page_directory_entry].page_frame=((uint32_t)va_to_pa(new_table))>>12;
 		updir[page_directory_entry].present=1;
+
+
 	}
 
 	PTE* table=(PTE*)((updir[page_directory_entry].page_frame)<<12);
