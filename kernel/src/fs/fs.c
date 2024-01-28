@@ -1,5 +1,6 @@
 #include "common.h"
 #include "string.h"
+#include "sys/types.h"
 
 typedef struct
 {
@@ -37,44 +38,120 @@ void ide_write(uint8_t *, uint32_t, uint32_t);
 
 int fs_open(const char *pathname, int flags)
 {
-	panic("Please implement fs_open at fs.c");
+	for(int findex=0;findex<NR_FILES;findex++){
+		const file_info *f=&file_table[findex];
+		if(strcmp(f->name,pathname)==0){
+			for(int fd=3;fd<NR_FILES+3;fd++)
+				if(files[fd].used==false){
+					files[fd].used=true;
+					files[fd].index=findex;
+					files[fd].offset=0;
+					return fd;
+				}
+
+			Log("File found, but no remaining fd");
+			return -1;
+		}
+	}
+	assert(0);
 	return -1;
 }
 
 size_t fs_read(int fd, void *buf, size_t len)
 {
 	assert(fd > 2);
-	panic("Please implement fs_read at fs.c");
-	return -1;
+	Fstate *f=&files[fd];
+	if(f->used==false){
+		Log("Reading from a not opened fd");
+		return -1;
+	}
+	if(f->offset+len>file_table[f->index].size){
+		Log("Reading more than file size, clipping");
+		len=file_table[f->index].size-f->offset;
+	}
+	ide_read(buf, file_table[f->index].disk_offset+f->offset, len);
+	return len;
 }
 
 size_t fs_write(int fd, void *buf, size_t len)
 {
-	assert(fd <= 2);
+	// assert(fd <= 2);
+	if(fd<=2){
 #ifdef HAS_DEVICE_SERIAL
-	int i;
-	extern void serial_printc(char);
-	for (i = 0; i < len; i++)
-	{
-		serial_printc(((char *)buf)[i]);
-	}
+		int i;
+		extern void serial_printc(char);
+		for (i = 0; i < len; i++)
+		{
+			serial_printc(((char *)buf)[i]);
+		}
 #else
-	asm volatile(".byte 0x82"
-				 : "=a"(len)
-				 : "a"(4), "b"(fd), "c"(buf), "d"(len));
+		asm volatile(".byte 0x82"
+					 : "=a"(len)
+					 : "a"(4), "b"(fd), "c"(buf), "d"(len));
 #endif
+	}else{
+		Fstate *f=&files[fd];
+		if(f->used==false){
+			Log("Writing to a not opened fd");
+			return -1;
+		}
+		if(f->offset+len>file_table[f->index].size){
+			Log("Writing more than file size, clipping");
+			len=file_table[f->index].size-f->offset;
+		}
+		ide_write(buf, file_table[f->index].disk_offset+f->offset, len);
+		
+	}
 
 	return len;
 }
 
+void check_boundary(int fd, off_t *offset){
+	Fstate *f=&files[fd];
+	const file_info *finfo=&file_table[f->index];
+
+	if(*offset>finfo->disk_offset){
+		Log("Seeking past end of file");
+		*offset=finfo->disk_offset;
+	}else if(*offset<0){
+		Log("Seeking before start of file");
+		*offset=0;
+	}
+}
+
 off_t fs_lseek(int fd, off_t offset, int whence)
 {
-	panic("Please implement fs_lseek at fs.c");
-	return -1;
+	if(fd<=2) return offset;
+	Fstate *f=&files[fd];
+	if(f->used==false){
+		Log("Seeking a not opened file");
+		return -1;
+	}
+	off_t new_off;
+	switch (whence) {
+		case SEEK_CUR:
+			new_off=f->offset+offset;
+			break;
+		case SEEK_END:
+			new_off=file_table[f->index].size+offset;
+			break;
+		case SEEK_SET:
+			new_off=offset;
+			break;
+  }
+
+	check_boundary(fd, &new_off);
+	return new_off;
 }
 
 int fs_close(int fd)
 {
-	panic("Please implement fs_close at fs.c");
-	return -1;
+	if(fd<=2) return 0;
+	Fstate *f=&files[fd];
+	if(f->used==false){
+		Log("Closing a not opened file");
+		return -1;
+	}
+	f->used=true;
+	return 0;
 }
