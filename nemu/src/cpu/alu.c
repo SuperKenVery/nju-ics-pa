@@ -265,11 +265,11 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 #endif
 }
 
-inline void set_CFOF(){
+void set_CFOF(){
 	cpu.eflags.CF=1;
 	cpu.eflags.OF=1;
 }
-inline void clear_CFOF(){
+void clear_CFOF(){
 	cpu.eflags.CF=0;
 	cpu.eflags.OF=0;
 }

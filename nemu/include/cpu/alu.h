@@ -42,6 +42,9 @@ int32_t alu_imod(int64_t src, int64_t dest);
 //#define sign_ext(x) ((int32_t)((int8_t)(x)))
 
 uint32_t sign_ext(uint32_t x, size_t data_size);
-
 uint64_t sign_ext_64(uint32_t x, size_t data_size);
+
+void set_CFOF();
+void clear_CFOF();
+
 #endif
