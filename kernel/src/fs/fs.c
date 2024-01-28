@@ -47,11 +47,11 @@ int fs_open(const char *pathname, int flags)
 					files[fd].used=true;
 					files[fd].index=findex;
 					files[fd].offset=0;
-					Log("Opened %s:",pathname);
-					char buf[64];
-					int headsize=f->size>64?64:f->size;
-					ide_read((void*)buf,f->disk_offset, headsize);
-					hexdump_pointer(buf, headsize);
+					// Log("Opened %s:",pathname);
+					// char buf[64];
+					// int headsize=f->size>64?64:f->size;
+					// ide_read((void*)buf,f->disk_offset, headsize);
+					// hexdump_pointer(buf, headsize);
 					return fd;
 				}
 
@@ -75,9 +75,13 @@ size_t fs_read(int fd, void *buf, size_t len)
 		Log("Reading more than file size, clipping");
 		len=file_table[f->index].size-f->offset;
 	}
+	if(len<=0){
+		Log("len<0");
+		return 0;
+	}
 	ide_read(buf, file_table[f->index].disk_offset+f->offset, len);
-	Log("fs_read file=%s",file_table[f->index].name);
-	hexdump_pointer(buf, len);
+	// Log("fs_read file=%s",file_table[f->index].name);
+	// hexdump_pointer(buf, len);
 	f->offset+=len;
 	return len;
 }

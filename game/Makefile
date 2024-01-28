@@ -8,8 +8,8 @@ GAME = nemu-pal
 CC = gcc
 CFLAGS = -m32 -MMD -Wall -Werror \
 		 -fno-builtin -fno-omit-frame-pointer -fno-stack-protector \
-		 -I./include -I../include -I$(NEWLIBC_DIR)/include
-LDFLAGS = -melf_i386 #-Ttext=0x800000
+		 -I./include -I../include -I$(NEWLIBC_DIR)/include -O2
+LDFLAGS = -melf_i386 -O2 #-Ttext=0x800000
 
 CFLAGS += -I./src/$(GAME)/include
 
