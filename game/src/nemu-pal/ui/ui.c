@@ -49,12 +49,14 @@ INT
    iSize = PAL_MKFGetChunkSize(CHUNKNUM_SPRITEUI, gpGlobals->f.fpDATA);
    if (iSize < 0)
    {
+      Log("Failed at PAL_MKFGetChunksize");
       return -1;
    }
 
    gpSpriteUI = (LPSPRITE)calloc(1, iSize);
    if (gpSpriteUI == NULL)
    {
+      Log("Failed at calloc");
       return -1;
    }
 
@@ -727,7 +729,7 @@ PAL_LoadObjectDesc(
       	   // printf(" i = %d\n", i);
       	   // memdump(pNew->lpDesc, strlen(pNew->lpDesc));
       	   // printf("\n");
-      printf("id=0x%x\n",i);
+      // printf("id=0x%x\n",i);
 
       pNew->next = lpDesc;
       lpDesc = pNew;
