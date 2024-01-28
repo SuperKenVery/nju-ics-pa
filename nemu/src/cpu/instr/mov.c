@@ -7,6 +7,7 @@
 #include "cpu/reg.h"
 #include "debug.h"
 #include "memory/memory.h"
+#include "memory/mmu/page.h"
 #include "memory/mmu/segment.h"
 #include "nemu.h"
 #include <SDL/SDL_version.h>
@@ -20,6 +21,7 @@ static void instr_execute_2op()
     assert(opr_src.type==OPR_MEM);
     assert(opr_src.data_size==32);
     printf(" (src at 0x%x, sreg=%d) ",opr_src.addr,opr_src.sreg);
+    debug_print_page_tables(opr_src.addr);
     // dbgbreak();
   }
 	operand_read(&opr_src);

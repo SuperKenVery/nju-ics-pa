@@ -13,7 +13,7 @@ uint8_t hw_mem[MEM_SIZE_B];
 
 void pinvalid_addr(char *msg, u32 addr){
 	printf("%s: \033[38;2;255;0;0mInvalid memory address \033[38;2;255;255;0m0x%x\033[0m at eip=0x%x\n",msg,addr,cpu.eip);
-	debug_print_page_tables(addr);
+	// debug_print_page_tables(addr);
 	assert(0);
 }
 
