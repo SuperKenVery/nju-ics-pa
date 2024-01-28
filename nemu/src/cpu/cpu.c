@@ -72,9 +72,9 @@ void exec(uint32_t n)
 			#ifdef IA32_INTR
 			do_intr();
 			#endif
-			static int step=0;
+			// static int step=0;
 			// printf("#%d eip=0x%x\n", step, cpu.eip);
-			step++;
+			// step++;
 			instr_len = exec_inst();
 			cpu.eip += instr_len;
 			n--;
