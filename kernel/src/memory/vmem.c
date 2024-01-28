@@ -81,6 +81,7 @@ void video_mapping_read_test()
 		assert(x==i);
 		// assert(buf[i] == i);
 	}
+	Log("Done vram read test");
 }
 
 void video_mapping_clear()
