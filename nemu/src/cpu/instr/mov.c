@@ -19,7 +19,7 @@ static void instr_execute_2op()
   if(cpu.eip==0xc0031b2e){
     assert(opr_src.type==OPR_MEM);
     assert(opr_src.data_size==32);
-    printf(" (src at 0x%x) ",opr_src.addr);
+    printf(" (src at 0x%x, sreg=%d) ",opr_src.addr,opr_src.sreg);
     // dbgbreak();
   }
 	operand_read(&opr_src);
