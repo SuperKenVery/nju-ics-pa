@@ -46,7 +46,7 @@ uint32_t loader()
 	/* Load each program segment */
 	ph = (void *)elf + elf->e_phoff;
 	eph = ph + elf->e_phnum;
-	for (; ph < eph && false; ph++)
+	for (; ph < eph; ph++)
 	{
 		assert(((uint32_t)ph)<((uint32_t)buf)+len);
 		if (ph->p_type == PT_LOAD)
