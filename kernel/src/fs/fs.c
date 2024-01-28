@@ -82,10 +82,10 @@ size_t fs_read(int fd, void *buf, size_t len)
 	ide_read(buf, file_table[f->index].disk_offset+f->offset, len);
 	// Log("fs_read file=%s",file_table[f->index].name);
 	// hexdump_pointer(buf, len);
-	if(strcmp(file_table[f->index].name,"data.mkf")==0){
-		Log("Reading data.mkf, offset=%d, len=%d",f->offset,len);
-		hexdump_pointer(buf, len);
-	}
+	// if(strcmp(file_table[f->index].name,"data.mkf")==0){
+	// 	Log("Reading data.mkf, offset=%d, len=%d",f->offset,len);
+	// 	hexdump_pointer(buf, len);
+	// }
 	f->offset+=len;
 	return len;
 }
