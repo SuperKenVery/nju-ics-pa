@@ -724,7 +724,7 @@ PAL_LoadObjectDesc(
       pNew->wObjectID = i;
       pNew->lpDesc = strdup(p);
 
-      	   printf("########################## i = %d\n", i);
+      	   // printf(" i = %d\n", i);
       	   // memdump(pNew->lpDesc, strlen(pNew->lpDesc));
       	   // printf("\n");
 
