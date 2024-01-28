@@ -14,16 +14,6 @@
 
 static void instr_execute_2op() 
 {
-  if(cpu.eip>=0xc0031af7 && cpu.eip<=0xc0031b9a){
-    // printf("");
-  }
-  if(cpu.eip==0xc0031b2e){
-    assert(opr_src.type==OPR_MEM);
-    assert(opr_src.data_size==32);
-    printf(" (src at 0x%x, sreg=%d) ",opr_src.addr,opr_src.sreg);
-    debug_print_page_tables(opr_src.addr);
-    // dbgbreak();
-  }
 	operand_read(&opr_src);
 	opr_dest.val = opr_src.val;
 	operand_write(&opr_dest);
@@ -32,7 +22,7 @@ static void instr_execute_2op()
 make_instr_impl_2op(mov, r, rm, b)
 make_instr_impl_2op(mov, r, rm, v)
 make_instr_impl_2op(mov, rm, r, b)
-make_instr_impl_2op(_mov, rm, r, v)
+make_instr_impl_2op(mov, rm, r, v)
 make_instr_impl_2op(mov, i, rm, b)
 make_instr_impl_2op(mov, i, rm, v)
 make_instr_impl_2op(mov, i, r, b)
@@ -42,20 +32,20 @@ make_instr_impl_2op(mov, a, o, v)
 make_instr_impl_2op(mov, o, a, b)
 make_instr_impl_2op(mov, o, a, v)
 
-make_instr_func(mov_rm2r_v){
-  bool backup;
-  if(eip>=0xc0031af7 && eip<=0xc0031b9a){
-    printf("[%x: eax=0x%x ",eip,cpu.eax);
-    backup=verbose;
-    verbose=true;
-  }
-  int result=_mov_rm2r_v(eip, opcode);
-  if(eip>=0xc0031af7 && eip<=0xc0031b9a){
-    printf("R *0x%x] ", opr_src.addr);
-    verbose=backup;
-  }
-  return result;
-}
+// make_instr_func(mov_rm2r_v){
+//   bool backup;
+//   if(eip>=0xc0031af7 && eip<=0xc0031b9a){
+//     printf("[%x: eax=0x%x ",eip,cpu.eax);
+//     backup=verbose;
+//     verbose=true;
+//   }
+//   int result=_mov_rm2r_v(eip, opcode);
+//   if(eip>=0xc0031af7 && eip<=0xc0031b9a){
+//     printf("R *0x%x] ", opr_src.addr);
+//     verbose=backup;
+//   }
+//   return result;
+// }
 
 make_instr_func(mov_zrm82r_v) {
 	int len = 1;

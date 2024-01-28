@@ -74,12 +74,10 @@ void exec(uint32_t n)
 			#endif
 			static int step=0;
 			// printf("#%d eip=0x%x\n", step, cpu.eip);
-		  if(cpu.eip>=0xc0031af7 && cpu.eip<=0xc0031b9a) printf("#%d eip=0x%x: edx=0x%x eax=0x%x  ",step, cpu.eip, cpu.edx, cpu.eax);
 			step++;
 			instr_len = exec_inst();
 			cpu.eip += instr_len;
 			n--;
-		  if(cpu.eip>=0xc0031af7 && cpu.eip<=0xc0031b9a) printf("\n");
 
 			if (hit_break_rerun)
 			{
