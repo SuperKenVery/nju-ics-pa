@@ -68,7 +68,7 @@ static void single_run(const char *img_file_path, const char *elf_file_path)
 #ifdef HAS_DEVICE_IDE
 	init_ide(elf_file_path); // Initialize hard drive
 #ifdef QUICK_START
-	load_exec(elf_file_path, 0);
+	load_exec(elf_file_path, 50*1024*1024); // Load game to memory, starting at 50MB
 #endif
 	// init_ide("./testcase/bin/mov-c");
 #else
