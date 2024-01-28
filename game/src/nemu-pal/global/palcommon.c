@@ -719,6 +719,7 @@ INT PAL_MKFGetChunkSize(
    //
    // Return the length of the chunk.
    //
+   Log("returning, uinext=0x%x, uioff=0x%x",uiNextOffset,uiOffset);
    return uiNextOffset - uiOffset;
 }
 
