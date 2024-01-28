@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <string.h>
 
-
+#ifdef CACHE_ENABLED
 
 cache nemu_cache;
 
@@ -241,3 +241,6 @@ uint32_t cached_read(paddr_t paddr, size_t len)
 	
 	return result;
 }
+
+#endif
+
