@@ -33,7 +33,7 @@ make_instr_impl_2op(mov, o, a, v)
 
 make_instr_func(mov_rm2r_v){
   int result=_mov_rm2r_v(eip, opcode);
-  if(eip>=0xc0031af7 && eip<=0xc0031b9a) printf("[R 0x%x]",opr_src.val);
+  if(eip>=0xc0031af7 && eip<=0xc0031b9a) printf("[R *0x%x] ",opr_src.addr);
   return result;
 }
 
