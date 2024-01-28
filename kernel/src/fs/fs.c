@@ -113,6 +113,10 @@ size_t fs_write(int fd, void *buf, size_t len)
 			len=file_table[f->index].size-f->offset;
 		}
 		ide_write(buf, file_table[f->index].disk_offset+f->offset, len);
+		if(strcmp(file_table[f->index].name,"data.mkf")==0){
+			Log("Reading data.mkf, offset=%d, len=%d",f->offset,len);
+			hexdump_pointer(buf, len);
+		}
 		f->offset+=len;
 	}
 
