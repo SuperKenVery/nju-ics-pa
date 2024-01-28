@@ -21,7 +21,7 @@ static void instr_execute_2op()
 make_instr_impl_2op(mov, r, rm, b)
 make_instr_impl_2op(mov, r, rm, v)
 make_instr_impl_2op(mov, rm, r, b)
-make_instr_impl_2op(mov, rm, r, v)
+make_instr_impl_2op(_mov, rm, r, v)
 make_instr_impl_2op(mov, i, rm, b)
 make_instr_impl_2op(mov, i, rm, v)
 make_instr_impl_2op(mov, i, r, b)
@@ -30,6 +30,12 @@ make_instr_impl_2op(mov, a, o, b)
 make_instr_impl_2op(mov, a, o, v)
 make_instr_impl_2op(mov, o, a, b)
 make_instr_impl_2op(mov, o, a, v)
+
+make_instr_func(mov_rm2r_v){
+  int result=_mov_rm2r_v(eip, opcode);
+  printf("[R 0x%x]",opr_src.val);
+  return result;
+}
 
 make_instr_func(mov_zrm82r_v) {
 	int len = 1;
