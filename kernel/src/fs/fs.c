@@ -161,6 +161,7 @@ off_t fs_lseek(int fd, off_t offset, int whence)
   }
 
 	check_boundary(fd, &new_off);
+	f->offset=new_off;
 	return new_off;
 }
 
