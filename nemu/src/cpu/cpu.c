@@ -79,7 +79,7 @@ void exec(uint32_t n)
 			instr_len = exec_inst();
 			cpu.eip += instr_len;
 			n--;
-			printf("\n");
+		  if(cpu.eip>=0xc0031af7 && cpu.eip<=0xc0031b9a) printf("\n");
 
 			if (hit_break_rerun)
 			{
