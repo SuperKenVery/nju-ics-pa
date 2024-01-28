@@ -148,15 +148,15 @@ off_t fs_lseek(int fd, off_t offset, int whence)
 	switch (whence) {
 		case SEEK_CUR:
 			new_off=f->offset+offset;
-		  Log("relative seek");
+		  // Log("relative seek");
 			break;
 		case SEEK_END:
 			new_off=file_table[f->index].size+offset;
-		  Log("end seek");
+		  // Log("end seek");
 			break;
 		case SEEK_SET:
 			new_off=offset;
-			Log("absolute seek to %d",new_off);
+			// Log("absolute seek to %d",new_off);
 			break;
   }
 
