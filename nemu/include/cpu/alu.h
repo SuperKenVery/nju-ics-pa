@@ -41,7 +41,7 @@ int32_t alu_imod(int64_t src, int64_t dest);
 #define sign(x) ((uint32_t)(x) >> 31)
 //#define sign_ext(x) ((int32_t)((int8_t)(x)))
 
-inline uint32_t sign_ext(uint32_t x, size_t data_size)
+uint32_t sign_ext(uint32_t x, size_t data_size)
 {
         assert(data_size == 16 || data_size == 8 || data_size == 32);
         switch (data_size)
@@ -55,7 +55,7 @@ inline uint32_t sign_ext(uint32_t x, size_t data_size)
         }
 }
 
-inline uint64_t sign_ext_64(uint32_t x, size_t data_size)
+uint64_t sign_ext_64(uint32_t x, size_t data_size)
 {
         assert(data_size == 16 || data_size == 8 || data_size == 32);
         switch (data_size)
