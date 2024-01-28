@@ -19,6 +19,7 @@ static int key_state[NR_KEYS];
 
 void keyboard_event(void)
 {
+	Log("got keyboard interrupt");
 	uint32_t code = in_byte(0x60);
 	uint32_t keycode = code & 0x7f;
 	int i;
@@ -88,5 +89,8 @@ bool process_keys(void (*key_press_callback)(int), void (*key_release_callback)(
 	}
 
 	sti();
+	if(have_event){
+		Log("process_keys: got event");
+	}
 	return have_event;
 }

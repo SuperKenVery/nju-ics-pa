@@ -28,8 +28,8 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	 * `dst' surface.
 	 */
 
-	for(int x=0;x<w;x++){
-		for(int y=0;y<h;y++){
+	for(int y=0;y<h;y++){
+		for(int x=0;x<w;x++){
 			dst->pixels[(dy+y)*dst->w+dx+x]=src->pixels[(sy+y)*src->w+sx+x];
 		}
 	}
@@ -58,8 +58,8 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color)
 	  dh=dstrect->h;
 	}
 
-	for(int x=dx;x<dx+dw;x++){
-		for(int y=dy;y<dy+dh;y++){
+	for(int y=dy;y<dy+dh;y++){
+		for(int x=dx;x<dx+dw;x++){
 			dst->pixels[y*dst->w+x]=color;
 		}
 	}
