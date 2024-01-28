@@ -152,7 +152,7 @@ off_t fs_lseek(int fd, off_t offset, int whence)
 			break;
 		case SEEK_SET:
 			new_off=offset;
-			Log("absolute seek");
+			Log("absolute seek to %d",new_off);
 			break;
   }
 
