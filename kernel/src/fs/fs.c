@@ -1,4 +1,5 @@
 #include "common.h"
+#include "debug.h"
 #include "string.h"
 #include "sys/types.h"
 
@@ -46,6 +47,11 @@ int fs_open(const char *pathname, int flags)
 					files[fd].used=true;
 					files[fd].index=findex;
 					files[fd].offset=0;
+					Log("Opened %s:",pathname);
+					char buf[64];
+					int headsize=f->size>64?64:f->size;
+					ide_read((void*)buf,f->disk_offset, headsize);
+					hexdump_pointer(buf, headsize);
 					return fd;
 				}
 
