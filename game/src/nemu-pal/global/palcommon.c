@@ -703,6 +703,7 @@ INT PAL_MKFGetChunkSize(
    uiChunkCount = PAL_MKFGetChunkCount(fp);
    if (uiChunkNum >= uiChunkCount)
    {
+      Log("(constant) uiChunkNum=%d >= uiChunkCount=%d (dynamically loaded)",uiChunkNum, uiChunkCount);
       return -1;
    }
 
