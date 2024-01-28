@@ -18,7 +18,7 @@
 #define HAS_DEVICE_VGA       // we then have display
 //#define HAS_DEVICE_AUDIO     // audio, this is experimental, need to enable when submit pa-4-3
 
-#define QUICK_START          // Skip ide game load
+// #define QUICK_START          // Skip ide game load
 
 // #define PA_ONLINE
 
