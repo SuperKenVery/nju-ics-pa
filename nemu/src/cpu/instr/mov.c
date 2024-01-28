@@ -32,11 +32,11 @@ make_instr_impl_2op(mov, o, a, b)
 make_instr_impl_2op(mov, o, a, v)
 
 make_instr_func(mov_rm2r_v){
-  bool backup=verbose;
-  if(eip>=0xc0031af7 && eip<=0xc0031b9a) verbose=true;
+  if(eip>=0xc0031af7 && eip<=0xc0031b9a){
+    printf("[%x: eax=0x%x ",cpu.eax);
+  }
   int result=_mov_rm2r_v(eip, opcode);
-  if(eip>=0xc0031af7 && eip<=0xc0031b9a) printf("[%x: R *0x%x] ",eip&0xfffff, opr_src.addr);
-  if(eip>=0xc0031af7 && eip<=0xc0031b9a) verbose=backup;
+  if(eip>=0xc0031af7 && eip<=0xc0031b9a) printf("R *0x%x] ",eip&0xfffff, opr_src.addr);
   return result;
 }
 
