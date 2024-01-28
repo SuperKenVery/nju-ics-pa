@@ -520,3 +520,33 @@ uint32_t alu_sal(uint32_t src, uint32_t dest, size_t data_size)
 	return alu_shl(src,dest,data_size);
 #endif
 }
+
+
+uint32_t sign_ext(uint32_t x, size_t data_size)
+{
+        assert(data_size == 16 || data_size == 8 || data_size == 32);
+        switch (data_size)
+        {
+        case 8:
+                return (int32_t)((int8_t)(x & 0xff));
+        case 16:
+                return (int32_t)((int16_t)(x & 0xffff));
+        default:
+                return (int32_t)x;
+        }
+}
+
+uint64_t sign_ext_64(uint32_t x, size_t data_size)
+{
+        assert(data_size == 16 || data_size == 8 || data_size == 32);
+        switch (data_size)
+        {
+        case 8:
+                return (int64_t)((int8_t)(x & 0xff));
+        case 16:
+                return (int64_t)((int16_t)(x & 0xffff));
+        default:
+                return (int64_t)((int32_t)x);
+        }
+}
+
