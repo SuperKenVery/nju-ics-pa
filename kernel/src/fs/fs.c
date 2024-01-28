@@ -76,6 +76,8 @@ size_t fs_read(int fd, void *buf, size_t len)
 		len=file_table[f->index].size-f->offset;
 	}
 	ide_read(buf, file_table[f->index].disk_offset+f->offset, len);
+	Log("fs_read file=%s",file_table[f->index].name);
+	hexdump_pointer(buf, len);
 	f->offset+=len;
 	return len;
 }
