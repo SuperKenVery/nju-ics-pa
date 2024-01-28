@@ -125,7 +125,7 @@ void check_boundary(int fd, off_t *offset){
 
 	if(*offset>finfo->disk_offset){
 		Log("Seeking past end of file");
-		*offset=finfo->disk_offset;
+		*offset=finfo->size;
 	}else if(*offset<0){
 		Log("Seeking before start of file");
 		*offset=0;
@@ -144,12 +144,15 @@ off_t fs_lseek(int fd, off_t offset, int whence)
 	switch (whence) {
 		case SEEK_CUR:
 			new_off=f->offset+offset;
+		  Log("relative seek");
 			break;
 		case SEEK_END:
 			new_off=file_table[f->index].size+offset;
+		  Log("end seek");
 			break;
 		case SEEK_SET:
 			new_off=offset;
+			Log("absolute seek");
 			break;
   }
 
