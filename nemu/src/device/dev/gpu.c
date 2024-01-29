@@ -2,6 +2,7 @@
 #include "cpu/reg.h"
 #include "memory/memory.h"
 #include "nemu.h"
+#include "debug.h"
 #include <SDL/SDL_video.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -45,6 +46,7 @@ make_pio_handler(gpu_cmd_handler){
   // Flat mode, seg doesn't matter
   GPU_CMD cmd;
   LOAD(cmd, addr.vaddr);
+  hexdump(cmd);
 
   SDL_Surface srcs, dsts;
   SDL_Rect srcr, dstr;
