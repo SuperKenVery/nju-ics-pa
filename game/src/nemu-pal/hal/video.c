@@ -54,6 +54,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	 * `w' X `h' of `src' surface to position (`dx', `dy') of
 	 * `dst' surface.
 	 */
+#ifdef HAS_DEVICE_GPU
 	SDL_Rect srcr={
 		.x=sx, .y=sy, .w=w, .h=h
 	};
@@ -63,12 +64,14 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 
 	gpu_blit(src, dst, &srcr, &dstr);
 
+#else
 
-	// for(int y=0;y<h;y++){
-	// 	for(int x=0;x<w;x++){
-	// 		dst->pixels[(dy+y)*dst->w+dx+x]=src->pixels[(sy+y)*src->w+sx+x];
-	// 	}
-	// }
+	for(int y=0;y<h;y++){
+		for(int x=0;x<w;x++){
+			dst->pixels[(dy+y)*dst->w+dx+x]=src->pixels[(sy+y)*src->w+sx+x];
+		}
+	}
+#endif
 
 }
 
