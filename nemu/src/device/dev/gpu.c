@@ -46,7 +46,6 @@ make_pio_handler(gpu_cmd_handler){
   // Flat mode, seg doesn't matter
   GPU_CMD cmd;
   LOAD(cmd, addr.vaddr);
-  hexdump(cmd);
 
   SDL_Surface srcs, dsts;
   SDL_Rect srcr, dstr;
