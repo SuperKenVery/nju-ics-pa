@@ -62,10 +62,12 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 		.x=dx, .y=dy, .w=w, .h=h
 	};
 
+	Log("GPU blit");
 	gpu_blit(src, dst, &srcr, &dstr);
 
 #else
 
+	Log("CPU blit");
 	for(int y=0;y<h;y++){
 		for(int x=0;x<w;x++){
 			dst->pixels[(dy+y)*dst->w+dx+x]=src->pixels[(sy+y)*src->w+sx+x];
