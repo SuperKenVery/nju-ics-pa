@@ -48,6 +48,7 @@ int fs_open(const char *pathname, int flags)
 		low_pathname[i]=tolower(((unsigned char*)pathname)[i]);
 	}
 	low_pathname[len]=0;
+	Log("Lowered name: %s",low_pathname);
 	for(int findex=0;findex<NR_FILES;findex++){
 		const file_info *f=&file_table[findex];
 		if(strcmp(f->name,low_pathname)==0){
