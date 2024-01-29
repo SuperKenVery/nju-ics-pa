@@ -3,7 +3,6 @@
 #include "memory/memory.h"
 #include "nemu.h"
 #include "debug.h"
-#include <SDL/SDL_video.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
