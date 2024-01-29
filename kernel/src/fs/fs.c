@@ -60,12 +60,10 @@ int fs_open(const char *pathname, int flags)
 					// int headsize=f->size>64?64:f->size;
 					// ide_read((void*)buf,f->disk_offset, headsize);
 					// hexdump_pointer(buf, headsize);
-					free(low_pathname);
 					return fd;
 				}
 
 			Log("File found, but no remaining fd");
-			free(low_pathname);
 			return -1;
 		}
 	}
