@@ -47,8 +47,8 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	int h = (srcrect==NULL?src->h: srcrect->h);
 	if(dst->w - dx < w) { w = dst->w - dx; }
 	if(dst->h - dy < h) { h = dst->h - dy; }
-	dstrect->w = w;
-	dstrect->h = h;
+	// dstrect->w = w;
+	// dstrect->h = h;
 
 	/* TODO: copy pixels from position (`sx', `sy') with size
 	 * `w' X `h' of `src' surface to position (`dx', `dy') of
