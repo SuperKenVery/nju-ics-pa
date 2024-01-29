@@ -2,8 +2,8 @@
 
 CC := gcc
 LD := ld
-CFLAGS := -m32 -ggdb3 -MMD -MP -Wall -Werror -O0 -I./include -I../include -I../libs -I../libs/nemu-ref/include -Wno-unused-result  -Wno-cpp
-LDFLAGS := -m32  -lreadline -lSDL  -O0
+CFLAGS := -m32 -ggdb3 -MMD -MP -Wall -Werror -O2 -I./include -I../include -I../libs -I../libs/nemu-ref/include -Wno-unused-result  -Wno-cpp
+LDFLAGS := -m32  -lreadline -lSDL  -O2
 
 CFILES := $(shell find src/ -name "*.c")
 OBJS := $(CFILES:.c=.o)
