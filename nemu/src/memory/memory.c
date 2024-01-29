@@ -6,6 +6,7 @@
 #include "memory/memory.h"
 #include "device/mm_io.h"
 #include <memory.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -113,9 +114,20 @@ void laddr_write(laddr_t laddr, size_t len, uint32_t data)
 	}
 }
 
+extern FILE* disk_fp;
 uint32_t vaddr_read(vaddr_t vaddr, uint8_t sreg, size_t len)
 {
 	assert(len == 1 || len == 2 || len == 4);
+#ifdef QUICK_DISK
+	if(vaddr>=QDISK_BASE){
+		off_t backup=ftell(disk_fp);
+		fseek(disk_fp, vaddr-QDISK_BASE, SEEK_SET);
+		uint32_t result;
+		fread(&result, len, 1, disk_fp);
+		fseek(disk_fp, backup, SEEK_SET);
+		return result;
+	}
+#endif
 	laddr_t laddr;
 	if(cpu.cr0.pe){
 		laddr=segment_translate(vaddr, sreg);
@@ -128,6 +140,15 @@ uint32_t vaddr_read(vaddr_t vaddr, uint8_t sreg, size_t len)
 void vaddr_write(vaddr_t vaddr, uint8_t sreg, size_t len, uint32_t data)
 {
 	assert(len == 1 || len == 2 || len == 4);
+#ifdef QUICK_DISK
+	if(vaddr>=QDISK_BASE){
+		off_t backup=ftell(disk_fp);
+		fseek(disk_fp, vaddr-QDISK_BASE, SEEK_SET);
+		fwrite(&data, len, 1, disk_fp);
+		fseek(disk_fp, backup, SEEK_SET);
+		return;
+	}
+#endif
 	laddr_t laddr;
 	if(cpu.cr0.pe){
 		laddr=segment_translate(vaddr, sreg);

@@ -7,7 +7,7 @@ static uint32_t disk_idx;
 static uint32_t sector;
 static uint32_t byte_cnt;
 static bool ide_write;
-static FILE *disk_fp;
+FILE *disk_fp;
 
 // init the hard disk by loading the file into it
 void init_ide(const char *file_to_load)

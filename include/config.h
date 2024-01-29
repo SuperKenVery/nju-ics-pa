@@ -20,6 +20,7 @@
 
 // #define QUICK_START          // Skip ide game load
 #define HAS_DEVICE_GPU
+#define QUICK_DISK
 
 // #define PA_ONLINE
 
