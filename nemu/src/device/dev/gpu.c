@@ -35,7 +35,7 @@ make_pio_handler(gpu_data_handler){
   printf("Reading " #x " from 0x%x\n",addr); \
   char *w=(char*)&(x);                       \
   for(int i=0;i<sizeof(x);i++){              \
-    w[i]=vaddr_read((addr)+i, SREG_CS, 1);   \
+    w[i]=vaddr_read((addr)+i, SREG_DS, 1);   \
   }                                          \
 }                                            \
 
@@ -59,8 +59,8 @@ make_pio_handler(gpu_cmd_handler){
 
   for(int y=srcr.y;y<srcr.y+srcr.h;y++){
     for(int x=srcr.x;x<srcr.x+srcr.w;x++){
-      uint8_t data=vaddr_read((vaddr_t)(srcs.pixels+y*srcs.w+x), SREG_CS, 1);
-      vaddr_write((vaddr_t)(dsts.pixels+y*dsts.w+x), SREG_CS, 1, data);
+      uint8_t data=vaddr_read((vaddr_t)(srcs.pixels+y*srcs.w+x), SREG_DS, 1);
+      vaddr_write((vaddr_t)(dsts.pixels+y*dsts.w+x), SREG_DS, 1, data);
     }
   }
 }

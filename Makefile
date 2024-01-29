@@ -127,7 +127,7 @@ test_pa-4-2: nemu
 
 test_pa-4-3: nemu game
 	$(call git_commit, "test_pa-4-3", $(TIME_MAKE))
-	./nemu/nemu --test-game $(STU_ID) --kernel --autorun
+	gdb -ex r --args ./nemu/nemu --test-game $(STU_ID) --kernel --autorun
 
 
 # submit to different stages of PA
