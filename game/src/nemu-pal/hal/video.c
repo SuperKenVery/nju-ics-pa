@@ -18,16 +18,16 @@ typedef struct GPU_CMD{
 #define BLIT_CMD 0x01
 
 void gpu_blit(SDL_Surface *srcs, SDL_Surface *dsts, SDL_Rect *srcr, SDL_Rect *dstr){
-	GPU_CMD cmd={
+	volatile GPU_CMD cmd={
 		.src_surface=(vaddr_t) srcs,
 		.dst_surface=(vaddr_t) dsts,
 		.src_rect=(vaddr_t) srcr,
 		.dst_rect=(vaddr_t) dstr,
 	};
-	hexdump(cmd);
+	// hexdump(cmd);
 
-	vaddr_t addr=(vaddr_t)&cmd;
-	char *r=(char*)&addr;
+	volatile vaddr_t addr=(vaddr_t)&cmd;
+	volatile char *r=(char*)&addr;
 	for(int i=0;i<sizeof(addr);i++){
 		out_byte(GPU_DATA_PORT_BASE+i, r[i]);
 	}

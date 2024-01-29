@@ -32,7 +32,6 @@ make_pio_handler(gpu_data_handler){
 // addr: virtual memory in VM
 #define LOAD(x,addr)                         \
 {                                            \
-  printf("Reading " #x " from 0x%x\n",addr); \
   char *w=(char*)&(x);                       \
   for(int i=0;i<sizeof(x);i++){              \
     w[i]=vaddr_read((addr)+i, SREG_DS, 1);   \
