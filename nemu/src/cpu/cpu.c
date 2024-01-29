@@ -170,7 +170,7 @@ void cmp_cpu(){
 	count++;
 }
 
-int exec_inst()
+inline int exec_inst()
 {
 	uint8_t opcode = 0;
 	// get the opcode

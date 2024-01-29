@@ -5,7 +5,7 @@
 Put the implementations of `not' instructions here.
 */
 
-void instr_execute_1op(){
+static inline void instr_execute_1op(){
   operand_read(&opr_src);
   opr_src.val=~opr_src.val;
   operand_write(&opr_src);

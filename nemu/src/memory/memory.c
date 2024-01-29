@@ -19,7 +19,7 @@ void pinvalid_addr(char *msg, u32 addr){
 	assert(0);
 }
 
-uint32_t hw_mem_read(paddr_t paddr, size_t len)
+inline uint32_t hw_mem_read(paddr_t paddr, size_t len)
 {
 	if(paddr<0 || paddr+len>=MEM_SIZE_B) {
 		if(paddr<0) printf("<0 ");
@@ -31,7 +31,7 @@ uint32_t hw_mem_read(paddr_t paddr, size_t len)
 	return ret;
 }
 
-void hw_mem_write(paddr_t paddr, size_t len, uint32_t data)
+inline void hw_mem_write(paddr_t paddr, size_t len, uint32_t data)
 {
 	if(paddr<0 || paddr+len>=MEM_SIZE_B) {
 		pinvalid_addr("hw_mem_write", paddr);
@@ -39,7 +39,7 @@ void hw_mem_write(paddr_t paddr, size_t len, uint32_t data)
 	memcpy(hw_mem + paddr, &data, len);
 }
 
-uint32_t paddr_read(paddr_t paddr, size_t len)
+inline uint32_t paddr_read(paddr_t paddr, size_t len)
 {
 	if(paddr<0 || paddr+len>=MEM_SIZE_B) {
 		pinvalid_addr("paddr_read", paddr);
@@ -58,7 +58,7 @@ uint32_t paddr_read(paddr_t paddr, size_t len)
 	}
 }
 
-void paddr_write(paddr_t paddr, size_t len, uint32_t data)
+inline void paddr_write(paddr_t paddr, size_t len, uint32_t data)
 {
 	if(paddr<0 || paddr+len>=MEM_SIZE_B) {
 		pinvalid_addr("paddr_write", paddr);
@@ -77,7 +77,7 @@ void paddr_write(paddr_t paddr, size_t len, uint32_t data)
 
 #define PAGE(x) ((x)&0xfffff000)
 #define NEXTPAGE(x) (((x)+4095)/4096*4096)
-uint32_t laddr_read(laddr_t laddr, size_t len)
+inline uint32_t laddr_read(laddr_t laddr, size_t len)
 {
 	if(PAGE(laddr)!=PAGE(laddr+len-1)){
 		// Cross page
@@ -97,7 +97,7 @@ uint32_t laddr_read(laddr_t laddr, size_t len)
 	}
 }
 
-void laddr_write(laddr_t laddr, size_t len, uint32_t data)
+inline void laddr_write(laddr_t laddr, size_t len, uint32_t data)
 {
 	if(PAGE(laddr)!=PAGE(laddr+len-1)){
 		// Cross page
@@ -116,7 +116,7 @@ void laddr_write(laddr_t laddr, size_t len, uint32_t data)
 }
 
 extern FILE* disk_fp;
-uint32_t vaddr_read(vaddr_t vaddr, uint8_t sreg, size_t len)
+inline uint32_t vaddr_read(vaddr_t vaddr, uint8_t sreg, size_t len)
 {
 	assert(len == 1 || len == 2 || len == 4);
 #ifdef QUICK_DISK
@@ -138,7 +138,7 @@ uint32_t vaddr_read(vaddr_t vaddr, uint8_t sreg, size_t len)
 	return laddr_read(laddr, len);
 }
 
-void vaddr_write(vaddr_t vaddr, uint8_t sreg, size_t len, uint32_t data)
+inline void vaddr_write(vaddr_t vaddr, uint8_t sreg, size_t len, uint32_t data)
 {
 	assert(len == 1 || len == 2 || len == 4);
 #ifdef QUICK_DISK
@@ -159,7 +159,7 @@ void vaddr_write(vaddr_t vaddr, uint8_t sreg, size_t len, uint32_t data)
 	laddr_write(laddr, len, data);
 }
 
-void init_mem()
+inline void init_mem()
 {
 	// clear the memory on initiation
 	memset(hw_mem, 0, MEM_SIZE_B);
@@ -173,7 +173,7 @@ void init_mem()
 #endif
 }
 
-uint32_t instr_fetch(vaddr_t vaddr, size_t len)
+inline uint32_t instr_fetch(vaddr_t vaddr, size_t len)
 {
 	assert(len == 1 || len == 2 || len == 4);
 	return vaddr_read(vaddr, SREG_CS, len);

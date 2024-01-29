@@ -9,7 +9,7 @@ Put the implementations of `xor' instructions here.
 */
 
 
-static void instr_execute_2op(){
+static inline void instr_execute_2op(){
   operand_read(&opr_src);
   operand_read(&opr_dest);
 

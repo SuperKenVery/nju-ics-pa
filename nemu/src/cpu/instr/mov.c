@@ -12,7 +12,7 @@
 #include "nemu.h"
 #include <SDL/SDL_version.h>
 
-static void instr_execute_2op() 
+static inline void instr_execute_2op() 
 {
 	operand_read(&opr_src);
 	opr_dest.val = opr_src.val;
