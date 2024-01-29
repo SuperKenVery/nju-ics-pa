@@ -19,14 +19,14 @@ void audio_event(void)
 	audio_reload = 1;
 }
 
-static void write_audio_data()
-{
-	if (fp == NULL)
-		return;
-	audio_data.len = fread(audio_data.pcm_buffer, 1, PCM_BUF_SIZE, fp);
-	// audio_data.len = PCM_BUF_SIZE;
-	audio_write(&audio_data);
-}
+// static void write_audio_data()
+// {
+// 	if (fp == NULL)
+// 		return;
+// 	audio_data.len = fread(audio_data.pcm_buffer, 1, PCM_BUF_SIZE, fp);
+// 	// audio_data.len = PCM_BUF_SIZE;
+// 	audio_write(&audio_data);
+// }
 
 void roll_text();
 
@@ -37,7 +37,7 @@ void main_loop(void)
 	// register audio event
 	add_irq_handle(2, audio_event);
 	// start audio playback
-	audio_pause(0);
+	// audio_pause(0);
 	uint32_t tick = 0;
 	while (true)
 	{
@@ -47,7 +47,7 @@ void main_loop(void)
 		{
 			//Log("reload audio");
 			// the time for write audio data must be less than the time for playing it
-			write_audio_data();
+			// write_audio_data();
 			audio_reload = 0;
 		}
 		if (tick % 200 == 0)
