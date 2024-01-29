@@ -12,7 +12,7 @@
 #define MEM_SIZE_B 128 * 1024 * 1024
 
 #ifdef QUICK_DISK
-extern const uint32_t QDISK_BASE;
+extern uint32_t QDISK_BASE;
 #endif
 
 extern uint8_t hw_mem[];
