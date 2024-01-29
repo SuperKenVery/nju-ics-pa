@@ -4,7 +4,7 @@
 #include <string.h>
 
 static FILE *fp = NULL;
-static Audio_Data audio_data;
+// static Audio_Data audio_data;
 
 void add_irq_handle(int irq, void *handler);
 
