@@ -65,6 +65,7 @@ void clear_key(int index)
 
 bool process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 {
+	Log("process_keys");
 	cli();
 	/* TODO: Traverse the key states. Find a key just pressed or released.
 	 * If a pressed key is found, call `key_press_callback' with the keycode.
