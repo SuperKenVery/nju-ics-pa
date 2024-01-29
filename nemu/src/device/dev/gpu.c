@@ -47,6 +47,7 @@ make_pio_handler(gpu_cmd_handler){
   // Flat mode, seg doesn't matter
   GPU_CMD cmd;
   LOAD(cmd, addr.vaddr);
+  hexdump(cmd);
 
   SDL_Surface srcs, dsts;
   SDL_Rect srcr, dstr;
@@ -54,12 +55,9 @@ make_pio_handler(gpu_cmd_handler){
   LOAD(dsts, cmd.dst_surface);
   LOAD(srcr, cmd.src_rect);
   LOAD(dstr, cmd.dst_rect);
-  hexdump(srcs);
 
   for(int y=srcr.y;y<srcr.y+srcr.h;y++){
     for(int x=srcr.x;x<srcr.x+srcr.w;x++){
-      printf("gpu_blit: srcs.pixels=0x%x, y=%d, srcs.w=%d, x=%d, addr=0x%x\n",
-              (uint32_t)srcs.pixels, (uint32_t)y, (uint32_t)srcs.w, (uint32_t)x, (uint32_t)(srcs.pixels+y*srcs.w+x));
       fflush(stdout);
       uint8_t data=vaddr_read((vaddr_t)(srcs.pixels+y*srcs.w+x), SREG_DS, 1);
       vaddr_write((vaddr_t)(dsts.pixels+y*dsts.w+x), SREG_DS, 1, data);
