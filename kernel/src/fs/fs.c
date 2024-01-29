@@ -2,6 +2,10 @@
 #include "debug.h"
 #include "string.h"
 #include "sys/types.h"
+#include <ctype.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct
 {
@@ -39,6 +43,12 @@ void ide_write(uint8_t *, uint32_t, uint32_t);
 
 int fs_open(const char *pathname, int flags)
 {
+	size_t len=strlen(pathname);
+	char *low_pathname=malloc(len+1);
+	for(int i=0;i<len;i++){
+		low_pathname[i]=tolower(pathname[i]);
+	}
+	low_pathname[len]=0;
 	for(int findex=0;findex<NR_FILES;findex++){
 		const file_info *f=&file_table[findex];
 		if(strcmp(f->name,pathname)==0){
@@ -52,14 +62,17 @@ int fs_open(const char *pathname, int flags)
 					// int headsize=f->size>64?64:f->size;
 					// ide_read((void*)buf,f->disk_offset, headsize);
 					// hexdump_pointer(buf, headsize);
+					free(low_pathname);
 					return fd;
 				}
 
 			Log("File found, but no remaining fd");
+			free(low_pathname);
 			return -1;
 		}
 	}
 	Log("File not found: %s",pathname);
+	fflush(stdout);
 	assert(0);
 	return -1;
 }
