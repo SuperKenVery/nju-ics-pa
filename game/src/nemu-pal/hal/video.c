@@ -24,6 +24,7 @@ void gpu_blit(SDL_Surface *srcs, SDL_Surface *dsts, SDL_Rect *srcr, SDL_Rect *ds
 		.src_rect=(vaddr_t) srcr,
 		.dst_rect=(vaddr_t) dstr,
 	};
+	hexdump(cmd);
 
 	vaddr_t addr=(vaddr_t)&cmd;
 	char *r=(char*)&addr;
