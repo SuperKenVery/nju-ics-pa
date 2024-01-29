@@ -14,7 +14,7 @@ void write_byte(uint32_t, uint8_t);
 void add_irq_handle(int, void (*)(void));
 
 #ifdef QUICK_DISK
-const uint32_t QDISK_BASE=((uint32_t)3300)*1024*1024;
+static const uint32_t QDISK_BASE=((uint32_t)3300)*1024*1024;
 #endif
 
 /* The loader acts as a monolithic kernel, therefore we do not need
