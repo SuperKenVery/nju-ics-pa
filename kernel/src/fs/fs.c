@@ -21,12 +21,12 @@ typedef struct
 	uint32_t offset;
 } Fstate;
 
-enum
-{
-	SEEK_SET,
-	SEEK_CUR,
-	SEEK_END
-};
+// enum
+// {
+// 	SEEK_SET,
+// 	SEEK_CUR,
+// 	SEEK_END
+// };
 
 static const file_info file_table[] = {
 	{"1.rpg", 188864, 1048576}, {"2.rpg", 188864, 1237440}, {"3.rpg", 188864, 1426304}, {"4.rpg", 188864, 1615168}, {"5.rpg", 188864, 1804032}, {"abc.mkf", 1022564, 1992896}, {"ball.mkf", 134704, 3015460}, {"data.mkf", 66418, 3150164}, {"desc.dat", 16027, 3216582}, {"fbp.mkf", 1128064, 3232609}, {"fire.mkf", 834728, 4360673}, {"f.mkf", 186966, 5195401}, {"gop.mkf", 11530322, 5382367}, {"map.mkf", 1496578, 16912689}, {"mgo.mkf", 1577442, 18409267}, {"m.msg", 188232, 19986709}, {"mus.mkf", 331284, 20174941}, {"pat.mkf", 8488, 20506225}, {"rgm.mkf", 453202, 20514713}, {"rng.mkf", 4546074, 20967915}, {"sss.mkf", 557004, 25513989}, {"voc.mkf", 1997044, 26070993}, {"wor16.asc", 5374, 28068037}, {"wor16.fon", 82306, 28073411}, {"word.dat", 5650, 28155717}, {"credits_bgm.wav", 6631340, 1048576},
@@ -46,7 +46,7 @@ int fs_open(const char *pathname, int flags)
 	size_t len=strlen(pathname);
 	char *low_pathname=malloc(len+1);
 	for(int i=0;i<len;i++){
-		low_pathname[i]=tolower(pathname[i]);
+		low_pathname[i]=tolower(((unsigned char*)pathname)[i]);
 	}
 	low_pathname[len]=0;
 	for(int findex=0;findex<NR_FILES;findex++){
