@@ -6,6 +6,7 @@
 #include "device/timer.h"
 #include "device/vga.h"
 #include "device/audio.h"
+#include "device/gpu.h"
 // references
 // http://wiki.osdev.org/I/O_Ports
 // http://bochs.sourceforge.net/techspec/PORTS.LST
@@ -71,7 +72,15 @@ static struct pio_handler_map
 
 #ifdef HAS_DEVICE_AUDIO
 	{AUDIO_DATA, audio_io_handler},
-	{AUDIO_CTL, audio_io_handler}
+	{AUDIO_CTL, audio_io_handler},
+#endif
+
+#ifdef HAS_DEVICE_GPU
+	{GPU_DATA_PORT_BASE + 0, gpu_data_handler},
+	{GPU_DATA_PORT_BASE + 1, gpu_data_handler},
+	{GPU_DATA_PORT_BASE + 2, gpu_data_handler},
+	{GPU_DATA_PORT_BASE + 3, gpu_data_handler},
+	{GPU_CMD_PORT,           gpu_cmd_handler},
 #endif
 };
 

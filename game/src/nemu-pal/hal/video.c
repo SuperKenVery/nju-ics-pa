@@ -1,11 +1,37 @@
 #include "hal.h"
 #include "device/video.h"
 #include "device/palette.h"
+#include "x86.h"
 
+#include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
 
 int get_fps();
+
+typedef uint32_t vaddr_t;
+typedef struct GPU_CMD{
+  vaddr_t src_surface,dst_surface,src_rect,dst_rect;
+} GPU_CMD;
+#define GPU_DATA_PORT_BASE 0x5da
+#define GPU_CMD_PORT 0x5de
+#define BLIT_CMD 0x01
+
+void gpu_blit(SDL_Surface *srcs, SDL_Surface *dsts, SDL_Rect *srcr, SDL_Rect *dstr){
+	GPU_CMD cmd={
+		.src_surface=(vaddr_t) srcs,
+		.dst_surface=(vaddr_t) dsts,
+		.src_rect=(vaddr_t) srcr,
+		.dst_rect=(vaddr_t) dstr,
+	};
+
+	vaddr_t addr=(vaddr_t)&cmd;
+	char *r=(char*)&addr;
+	for(int i=0;i<sizeof(addr);i++){
+		out_byte(GPU_DATA_PORT_BASE+i, r[i]);
+	}
+	out_byte(GPU_CMD_PORT, BLIT_CMD);
+}
 
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 					 SDL_Surface *dst, SDL_Rect *dstrect)
@@ -27,12 +53,21 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect,
 	 * `w' X `h' of `src' surface to position (`dx', `dy') of
 	 * `dst' surface.
 	 */
+	SDL_Rect srcr={
+		.x=sx, .y=sy, .w=w, .h=h
+	};
+	SDL_Rect dstr={
+		.x=dx, .y=dy, .w=w, .h=h
+	};
 
-	for(int y=0;y<h;y++){
-		for(int x=0;x<w;x++){
-			dst->pixels[(dy+y)*dst->w+dx+x]=src->pixels[(sy+y)*src->w+sx+x];
-		}
-	}
+	gpu_blit(src, dst, &srcr, &dstr);
+
+
+	// for(int y=0;y<h;y++){
+	// 	for(int x=0;x<w;x++){
+	// 		dst->pixels[(dy+y)*dst->w+dx+x]=src->pixels[(sy+y)*src->w+sx+x];
+	// 	}
+	// }
 
 }
 

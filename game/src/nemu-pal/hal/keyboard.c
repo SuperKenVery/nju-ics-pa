@@ -19,7 +19,6 @@ static int key_state[NR_KEYS];
 
 void keyboard_event(void)
 {
-	Log("got keyboard interrupt");
 	uint32_t code = in_byte(0x60);
 	uint32_t keycode = code & 0x7f;
 	int i;
