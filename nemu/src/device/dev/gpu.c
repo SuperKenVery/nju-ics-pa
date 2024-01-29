@@ -6,6 +6,7 @@
 #include <SDL/SDL_video.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
 
 #ifdef HAS_DEVICE_GPU
 
@@ -61,6 +62,7 @@ make_pio_handler(gpu_cmd_handler){
     for(int x=srcr.x;x<srcr.x+srcr.w;x++){
       printf("gpu_blit: srcs.pixels=0x%x, y=%d, srcs.w=%d, x=%d, addr=0x%x\n",
               (uint32_t)srcs.pixels, (uint32_t)y, (uint32_t)srcs.w, (uint32_t)x, (uint32_t)(srcs.pixels+y*srcs.w+x));
+      fflush(stdout);
       uint8_t data=vaddr_read((vaddr_t)(srcs.pixels+y*srcs.w+x), SREG_DS, 1);
       vaddr_write((vaddr_t)(dsts.pixels+y*dsts.w+x), SREG_DS, 1, data);
     }

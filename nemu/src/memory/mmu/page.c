@@ -5,6 +5,7 @@
 #include "debug.h"
 #include "memory/mmu/segment.h"
 #include "device/ide.h"
+#include <stdio.h>
 
 void debug_print_page_tables(laddr_t laddr){
 	CR3 *cr=&cpu.cr3;
@@ -45,7 +46,7 @@ void debug_print_page_tables(laddr_t laddr){
 		printf("\n");
 	}
 	printf("\n\n");
-
+	fflush(stdout);
 	// page_translate(segment_translate(cpu.eip, SREG_CS))
 
 
