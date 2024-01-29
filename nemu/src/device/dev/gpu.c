@@ -102,7 +102,6 @@ make_pio_handler(gpu_cmd_handler){
 
   for(int y=srcr.y;y<srcr.y+srcr.h;y++){
     for(int x=srcr.x;x<srcr.x+srcr.w;x++){
-      fflush(stdout);
       uint8_t data=vaddr_read((vaddr_t)(srcs.pixels+y*srcs.w+x), SREG_DS, 1);
       vaddr_write((vaddr_t)(dsts.pixels+y*dsts.w+x), SREG_DS, 1, data);
     }

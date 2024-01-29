@@ -52,13 +52,13 @@ testcase/src/*
 !testcase/src/*.S
 testcase/src/cmprun/pyrsp/
 # game/data/
-*.wav
-*.rpg
-*.mkf
-*.dat
-*.msg
-*.asc
-*.fon
+# *.wav
+# *.rpg
+# *.mkf
+# *.dat
+# *.msg
+# *.asc
+# *.fon
 .lock_tmux
 
 # Debug files
