@@ -149,11 +149,9 @@ static bool main_arg_fpu_test(char *operation)
 static bool main_arg_game(char *input_stu_id)
 {
 	strcpy(elf_path, "./game/game");
-	// strcpy(elf_path, "./testcase/bin/mov-c");
 	strcpy(elf_path_score, "./scripts/score_testcases/game");
 	strcpy(stu_id, input_stu_id);
 	flag_game = true;
-	// flag_testcase=true;
 	return true;
 }
 
