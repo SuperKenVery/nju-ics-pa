@@ -3,8 +3,6 @@
 #include "string.h"
 #include "sys/types.h"
 #include <ctype.h>
-#include <stddef.h>
-#include <stdlib.h>
 
 typedef struct
 {
@@ -43,7 +41,7 @@ void ide_write(uint8_t *, uint32_t, uint32_t);
 int fs_open(const char *pathname, int flags)
 {
 	size_t len=strlen(pathname);
-	char *low_pathname=malloc(len+1);
+	char low_pathname[100];
 	for(int i=0;i<len;i++){
 		low_pathname[i]=tolower(((unsigned char*)pathname)[i]);
 	}
