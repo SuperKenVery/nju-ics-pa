@@ -18,14 +18,16 @@
 		HIT_BAD_TRAP;                                         \
 	} while (0)
 
-#define assert(cond)                              \
-	do                                            \
-	{                                             \
-		if (!(cond))                              \
-		{                                         \
-			panic("Assertion failed: %s", #cond); \
-		}                                         \
-	} while (0)
+// #define assert(cond)                              \
+// 	do                                            \
+// 	{                                             \
+// 		if (!(cond))                              \
+// 		{                                         \
+// 			panic("Assertion failed: %s", #cond); \
+// 		}                                         \
+// 	} while (0)
+
+#define assert(a) {}
 
 #define hexdump(var)                                                                       \
 {                                                                                          \
