@@ -51,7 +51,7 @@ int fs_open(const char *pathname, int flags)
 	low_pathname[len]=0;
 	for(int findex=0;findex<NR_FILES;findex++){
 		const file_info *f=&file_table[findex];
-		if(strcmp(f->name,pathname)==0){
+		if(strcmp(f->name,low_pathname)==0){
 			for(int fd=3;fd<NR_FILES+3;fd++)
 				if(files[fd].used==false){
 					files[fd].used=true;
@@ -71,7 +71,7 @@ int fs_open(const char *pathname, int flags)
 			return -1;
 		}
 	}
-	Log("File not found: %s",pathname);
+	Log("File not found: %s",low_pathname);
 	fflush(stdout);
 	assert(0);
 	return -1;
