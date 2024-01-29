@@ -2,6 +2,7 @@
 #include "device/video.h"
 #include "device/palette.h"
 #include "x86.h"
+#include "config.h"
 
 #include <stdint.h>
 #include <string.h>
