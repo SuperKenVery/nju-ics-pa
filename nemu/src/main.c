@@ -40,7 +40,6 @@ static void load_exec(const char *image_file, const uint32_t load_off)
 	ret = fread(get_mem_addr() + load_off, file_size, 1, fp);
 	assert(ret == 1);
 	fclose(fp);
-	printf("Loaded kernel to 0x%x - 0x%x\n",load_off, load_off+file_size);
 }
 
 static void restart(const uint32_t init_eip)
