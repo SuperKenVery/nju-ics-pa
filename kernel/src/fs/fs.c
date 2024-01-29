@@ -182,6 +182,6 @@ int fs_close(int fd)
 		Log("Closing a not opened file");
 		return -1;
 	}
-	f->used=true;
+	f->used=false;
 	return 0;
 }
